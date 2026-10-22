@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inside India's Internet</title>
+<meta name="description" content="How an Indian user's connection works today, who controls each part, and the layered controls that protect it, with their limits.">
+<link rel="stylesheet" href="shared/base.css">
+<link rel="stylesheet" href="app2/app2.css">
+</head>
+<body>
+<main id="main">
+  <section class="block" aria-labelledby="h1" style="padding-top:40px">
+    <div class="kicker">App 2 of 3</div>
+    <h1 id="h1">Inside India's Internet: Infrastructure, Governance and Digital Sovereignty</h1>
+    <p class="lead">How an Indian user's connection works today, who is responsible for each part, and how technical and legal controls protect national security. Security comes from layers of controls, and every layer has limits. No network is risk-free.</p>
+    <div class="notice">Operators can see addresses, timing and volume, but they cannot read the content of a correctly configured HTTPS connection. <span id="intro-claim"></span></div>
+  </section>
+
+  <section class="block" id="paths" aria-labelledby="h-paths">
+    <div class="kicker">1 · Two connection paths</div>
+    <h2 id="h-paths">Mobile and home broadband</h2>
+    <div class="card controls2" id="path-controls"></div>
+    <div class="split" style="margin-top:14px">
+      <div>
+        <div class="diagram-wrap" id="path-diagram"></div>
+        <div class="legend"><span class="l-radio">Radio</span><span class="l-fibre">Fibre</span><span class="l-wired">Ethernet / copper</span></div>
+        <div class="card" id="path-player" style="margin-top:10px"></div>
+        <p class="muted" style="margin-top:8px">Real routes depend on peering, caching, routing policy and destination. The path shown is illustrative.</p>
+      </div>
+      <aside class="card panel-sticky" id="path-panel" aria-live="polite"></aside>
+    </div>
+  </section>
+
+  <section class="block" id="map" aria-labelledby="h-map">
+    <div class="kicker">2 · Conceptual map</div>
+    <h2 id="h-map">A schematic of India's network layers</h2>
+    <div class="notice warn">This is a schematic: city positions are approximate and it does not show national boundaries. Only public, city-level information is used. No protected site location is shown or implied.</div>
+    <div class="split">
+      <div class="diagram-wrap" id="map-svg"></div>
+      <div>
+        <div class="card"><h3>Layers</h3><div id="map-layers" class="layer-list"></div></div>
+        <div class="card" style="margin-top:12px"><h3>Trace a route</h3><div id="map-trace"></div></div>
+      </div>
+    </div>
+    <div id="map-claims" style="margin-top:10px"></div>
+  </section>
+
+  <section class="block" id="who" aria-labelledby="h-who">
+    <div class="kicker">3 · Who controls what</div>
+    <h2 id="h-who">Responsibilities, legal basis and limits</h2>
+    <p class="lead">Each body has different powers. Select a card to see what it does, the legal source, and what it cannot do.</p>
+    <div class="grid g3" id="who-cards"></div>
+    <div class="card" id="who-detail" style="margin-top:14px" aria-live="polite"></div>
+  </section>
+
+  <section class="block" id="controls" aria-labelledby="h-ctl">
+    <div class="kicker">4 · Security control dashboard</div>
+    <h2 id="h-ctl">Ten layers of control</h2>
+    <div class="btnrow" id="ctl-filter"></div>
+    <div class="grid g2" id="ctl-cards"></div>
+  </section>
+
+  <section class="block" id="sims" aria-labelledby="h-sims">
+    <div class="kicker">5 · Safe simulations</div>
+    <h2 id="h-sims">Prevent, detect, respond, recover</h2>
+    <p class="lead">Fictional incidents on a fictional operator, "Bharat Example Telecom". No real network, person or company is involved.</p>
+    <div class="grid g3" id="sim-cards"></div>
+    <div class="card" id="sim-stage" style="margin-top:14px" aria-live="polite"></div>
+  </section>
+
+  <section class="block" id="hosting" aria-labelledby="h-host">
+    <div class="kicker">6 · Domestic vs overseas hosting</div>
+    <h2 id="h-host">Where the website lives changes the picture</h2>
+    <div id="host-seg"></div>
+    <div class="grid g2" id="host-out" style="margin-top:14px"></div>
+  </section>
+
+  <section class="block" id="lab" aria-labelledby="h-lab">
+    <div class="kicker">7 · Resilience lab</div>
+    <h2 id="h-lab">Turn the dials <span class="chip t-illustrative">EDUCATIONAL MODEL</span></h2>
+    <p class="notice warn"><strong>Educational model, not an official Indian government rating.</strong> The formula is shown below the results.</p>
+    <div class="split">
+      <div class="card" id="lab-sliders"></div>
+      <div class="card" id="lab-out" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section class="block" id="timeline-sec" aria-labelledby="h-tl">
+    <div class="kicker">8 · Timeline</div>
+    <h2 id="h-tl">Regulation and controls over time</h2>
+    <ol class="timeline" id="timeline"></ol>
+  </section>
+
+  <section class="block" aria-labelledby="h-quiz">
+    <h2 id="h-quiz">Quiz</h2>
+    <div id="quiz"></div>
+  </section>
+
+  <section class="block" aria-labelledby="h-src">
+    <h2 id="h-src">Sources</h2>
+    <div id="sources-list"></div>
+    <h2 style="margin-top:28px">Glossary</h2>
+    <div id="glossary-list"></div>
+    <p style="margin-top:20px"><a class="btn" href="app1.html">← App 1</a> <a class="btn primary" href="app3.html">Next: Design the protocol →</a></p>
+  </section>
+</main>
+<script src="data/claims.js"></script>
+<script src="data/glossary.js"></script>
+<script src="shared/shell.js"></script>
+<script src="shared/netdiagram.js"></script>
+<script src="app2/app2.js"></script>
+</body>
+</html>

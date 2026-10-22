@@ -1,0 +1,26 @@
+.hero { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 20px; align-items: center; padding: 40px 0 20px; }
+@media (max-width: 880px) { .hero { grid-template-columns: 1fr; } .hero-art { order: -1; max-width: 420px; margin: 0 auto; } }
+.hero-art svg { width: 100%; height: auto; display: block; }
+.orbit-spin { transform-origin: 200px 200px; animation: spin 40s linear infinite; }
+.orbit-spin.b { animation-duration: 64s; animation-direction: reverse; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.twinkle { animation: tw 3s ease-in-out infinite; }
+@keyframes tw { 50% { opacity: .25; } }
+.controls { display: flex; flex-wrap: wrap; gap: 12px 22px; align-items: center; }
+.controls .grp { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.controls .grp > span { color: var(--muted); font-size: .9em; }
+#hop-panel h3 { margin-bottom: 4px; }
+#hop-panel .who { color: var(--cyan); font-size: .85em; margin-bottom: 8px; }
+.dir { display: inline-block; font-size: .75rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; background: rgba(246, 210, 126, .15); color: var(--gold-2); margin-bottom: 6px; }
+.dir.resp { background: rgba(69, 217, 154, .15); color: var(--green); }
+.player-status { font-size: .9em; color: var(--muted); }
+.scen-card h3 { margin-bottom: 4px; font-size: 1rem; }
+.scen-card p { font-size: .9em; color: var(--muted); margin: 0; }
+.status-row { display: grid; grid-template-columns: 1fr auto; gap: 8px; padding: 5px 0; border-bottom: 1px solid var(--line); font-size: .92em; }
+.st { font-weight: 700; font-size: .78rem; padding: 2px 8px; border-radius: 6px; }
+.st.ok { color: var(--green); background: rgba(69, 217, 154, .14); }
+.st.warn { color: var(--amber); background: rgba(255, 181, 71, .14); }
+.st.down { color: var(--red); background: rgba(255, 107, 107, .16); }
+.predict-opts { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0; }
+.layer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+.mini-wrap { background: radial-gradient(ellipse at 50% 0%, #142a63 0%, #0a1533 70%); border: 1px solid var(--line); border-radius: var(--radius); padding: 4px; }

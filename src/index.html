@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trusted Satellite Internet Kit</title>
+<meta name="description" content="Three linked interactive apps and the Trusted Satellite Internet Protocol Challenge for students and engineers in India.">
+<link rel="stylesheet" href="shared/base.css">
+<style>
+  .hub-hero { padding: 48px 0 24px; max-width: 900px; }
+  .app-card { display: flex; flex-direction: column; gap: 8px; text-decoration: none; color: inherit; }
+  .app-card .n { font-size: 2.4rem; font-weight: 800; color: var(--gold); line-height: 1; }
+  .app-card:hover { border-color: var(--gold); }
+  .app-card .go { margin-top: auto; color: var(--gold-2); font-weight: 600; }
+  .flow { counter-reset: s; list-style: none; padding: 0; display: grid; gap: 10px; }
+  .flow li { counter-increment: s; display: grid; grid-template-columns: 54px 1fr auto; gap: 12px; align-items: center; }
+  .flow li::before { content: counter(s); display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--panel-2); color: var(--gold-2); font-weight: 800; }
+  .flow .min { color: var(--cyan); font-weight: 700; white-space: nowrap; }
+</style>
+</head>
+<body>
+<main id="main">
+  <section class="hub-hero">
+    <div class="kicker">India Secure Satellite Internet Challenge Kit</div>
+    <h1>Secure India's Connected Future</h1>
+    <p class="lead">Three linked interactive apps: how satellite internet works, how India's networks are built and secured today, and a workbench to design a trusted satellite internet protocol. Together they make a 20-minute presentation that ends with an open challenge for students and engineers.</p>
+    <div class="btnrow"><a class="btn primary" href="app1.html">Start with App 1 →</a><a class="btn" href="#challenge">The challenge</a></div>
+  </section>
+
+  <section class="block" aria-labelledby="h-apps" style="padding-top:12px">
+    <h2 id="h-apps">The three apps</h2>
+    <div class="grid g3">
+      <a class="card app-card" href="app1.html"><span class="n">1</span><h3>From Earth to Orbit</h3><p>Follow one HTTPS request through a satellite internet service: what each hop does, what it can see, and what it cannot read.</p><span class="go">Open App 1 →</span></a>
+      <a class="card app-card" href="app2.html"><span class="n">2</span><h3>Inside India's Internet</h3><p>Mobile and broadband paths, a schematic of network layers, who controls what, ten security controls, and where their limits are.</p><span class="go">Open App 2 →</span></a>
+      <a class="card app-card" href="app3.html"><span class="n">3</span><h3>Design the Protocol</h3><p>Compare the two architectures, explore 15 threats, then build a protocol, stress-test it and export your entry.</p><span class="go">Open App 3 →</span></a>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="h-flow">
+    <h2 id="h-flow">20-minute presentation flow</h2>
+    <ol class="flow">
+      <li><div><strong>App 1 · Send a request in Demo mode</strong><br><span class="muted">Turn on inter-satellite links, step through the hops, then run the control-plane outage scenario.</span></div><span class="min">6 min</span></li>
+      <li><div><strong>App 2 · Trace a city to an overseas site</strong><br><span class="muted">Show the control dashboard and one simulation. Stress that every control has limits.</span></div><span class="min">6 min</span></li>
+      <li><div><strong>App 3 · Compare, then load the demo design</strong><br><span class="muted">Toggle an overseas gateway and an outage, show the evidence panel, then run the sandbox.</span></div><span class="min">6 min</span></li>
+      <li><div><strong>Announce the challenge</strong><br><span class="muted">Tracks, deadline, judging, and how to submit.</span></div><span class="min">2 min</span></li>
+    </ol>
+    <p class="muted">Tip: turn on <strong>Teacher mode</strong> for larger text and on-screen narration. <strong>Demo mode</strong> loads a prepared state on each app.</p>
+  </section>
+
+  <section class="block" id="challenge" aria-labelledby="h-ch">
+    <div class="kicker">The challenge</div>
+    <h2 id="h-ch">Trusted Satellite Internet Protocol Challenge</h2>
+    <p class="lead">Design a protocol or architecture that protects India's networks while keeping competition and consumer choice. Judging looks at the design, not at the company or country behind any technology it is compared with.</p>
+    <div class="grid g2">
+      <div class="card"><h3>Key dates</h3><dl class="kv" id="dates"></dl><p class="muted" style="margin-top:8px;font-size:.88em">Dates may change. The rules page is the reference.</p></div>
+      <div class="card"><h3>Tracks</h3><ul class="tight">
+        <li><strong>Student:</strong> undergraduate and postgraduate teams of 1–4</li>
+        <li><strong>Engineer:</strong> professionals and researchers, teams of 1–4</li>
+        <li><strong>Policy and governance:</strong> legal, audit and accountability designs; no code required</li>
+        <li><strong>Bonus prize:</strong> best post-quantum-ready key management design</li></ul></div>
+      <div class="card"><h3>A valid entry contains</h3><ul class="tight">
+        <li>A design of 6 pages or fewer: the protocol, the threats it addresses and the threats it leaves open</li>
+        <li>The JSON file exported from App 3, or an equivalent simulation or code</li>
+        <li>A map to the 15 threats, with one stated trade-off per threat</li>
+        <li>Optional: a 3-minute video for the finale</li></ul></div>
+      <div class="card"><h3>Judging</h3><div class="tablewrap"><table class="data"><tbody>
+        <tr><th>Security strength</th><td>30%</td></tr><tr><th>Honesty about limits</th><td>15%</td></tr>
+        <tr><th>Privacy and accountability</th><td>15%</td></tr><tr><th>Practicality and cost</th><td>15%</td></tr>
+        <tr><th>Openness and competition</th><td>10%</td></tr><tr><th>Clarity and demo</th><td>15%</td></tr></tbody></table></div></div>
+    </div>
+    <div class="notice" style="margin-top:14px">
+      <strong>Ground rules.</strong> Use only the simulator and fictional data: no testing against real networks, systems or accounts. Entries are submitted through the official form, not through likes or comments. Participants keep ownership of their work. This is an independent contest and is not run or endorsed by any government body or company.
+    </div>
+  </section>
+</main>
+<script src="data/claims.js"></script>
+<script src="data/glossary.js"></script>
+<script src="shared/shell.js"></script>
+<script>
+  K.init({ app: 'hub', demo: false, intro: 'Start with App 1. Teacher mode stays on as you move between apps.' });
+  // Contest dates from the kit plan; edit here if they change.
+  const DATES = [['Teaser', '26 Oct 2026'], ['Launch', '2 Nov 2026'], ['Live walkthrough', '14 Nov 2026'], ['Submissions close', '7 Dec 2026, 23:59 IST'], ['Finalists announced', '21 Dec 2026'], ['Live finale', '9 Jan 2027']];
+  const dl = document.getElementById('dates');
+  for (const [k, v] of DATES) dl.append(K.h('dt', null, k), K.h('dd', null, v));
+</script>
+</body>
+</html>

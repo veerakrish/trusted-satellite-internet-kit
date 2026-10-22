@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Earth to Orbit</title>
+<meta name="description" content="How one HTTPS request travels from a phone to a website and back over a low-Earth-orbit satellite internet service.">
+<link rel="stylesheet" href="shared/base.css">
+<link rel="stylesheet" href="app1/app1.css">
+</head>
+<body>
+<main id="main">
+  <section class="hero" aria-labelledby="h1">
+    <div class="hero-text">
+      <div class="kicker">App 1 of 3 · 10 minutes</div>
+      <h1 id="h1">From Earth to Orbit: How Satellite Internet Connects the World</h1>
+      <p class="lead">Follow one HTTPS request from a phone to a website and back over a low-Earth-orbit (LEO) satellite service. At every hop you'll see who runs it, what it can see and what it cannot read.</p>
+      <div class="btnrow">
+        <a class="btn primary" href="#journey">Start the journey</a>
+        <a class="btn" href="#layers">Explore the layers</a>
+      </div>
+      <div id="hero-claims"></div>
+    </div>
+    <div class="hero-art" id="hero-art" aria-hidden="true"></div>
+  </section>
+
+  <section class="block" id="journey" aria-labelledby="h-journey">
+    <div class="kicker">1 · Main diagram and 2 · Packet journey</div>
+    <h2 id="h-journey">Follow one request</h2>
+    <p class="lead">Click any component to learn about it, or press <strong>Send request</strong>. The route shown is illustrative.</p>
+    <div class="controls card" id="route-controls"></div>
+    <div class="split" style="margin-top:14px">
+      <div>
+        <div class="diagram-wrap" id="main-diagram"></div>
+        <div class="legend"><span class="l-radio">Radio</span><span class="l-laser">Optical (laser)</span><span class="l-fibre">Fibre</span><span class="l-wired">Ethernet cable</span></div>
+        <div class="card" id="player" style="margin-top:10px"></div>
+      </div>
+      <aside class="card panel-sticky" id="hop-panel" aria-live="polite"></aside>
+    </div>
+    <div id="route-claims" style="margin-top:12px"></div>
+  </section>
+
+  <section class="block" id="layers" aria-labelledby="h-layers">
+    <div class="kicker">3 · Layer view</div>
+    <h2 id="h-layers">The same request, five layers deep</h2>
+    <div id="layer-tabs"></div>
+  </section>
+
+  <section class="block" id="compare" aria-labelledby="h-compare">
+    <div class="kicker">4 · Satellite vs mobile</div>
+    <h2 id="h-compare">Two ways to reach the same fibre</h2>
+    <div class="grid g2" id="compare-grid"></div>
+    <div class="tablewrap" style="margin-top:14px" id="compare-table"></div>
+    <div id="compare-claims" style="margin-top:10px"></div>
+  </section>
+
+  <section class="block" id="scenarios" aria-labelledby="h-scen">
+    <div class="kicker">5 · Safe security scenarios</div>
+    <h2 id="h-scen">What can go wrong, and how far it reaches</h2>
+    <p class="lead">Every scenario uses invented data and a model network. Choose one: the affected parts light up in the diagram above and in the dashboard below.</p>
+    <div class="grid g3" id="scen-cards"></div>
+    <div class="card" id="scen-detail" style="margin-top:14px" aria-live="polite"></div>
+  </section>
+
+  <section class="block" id="dashboard" aria-labelledby="h-dash">
+    <div class="kicker">6 · Learning dashboard</div>
+    <h2 id="h-dash">Dashboard <span class="chip t-simulated">SIMULATED</span></h2>
+    <p class="muted">Numbers come from a teaching model and are not measured Starlink performance.</p>
+    <div class="grid g2">
+      <div class="card"><h3>Latency breakdown (one way)</h3><div id="lat-bars"></div><p id="lat-total" class="muted"></p></div>
+      <div class="card"><h3>Hops and availability</h3><div id="stats"></div></div>
+      <div class="card"><h3>Timeline</h3><ol id="timeline" class="tight"></ol></div>
+      <div class="card"><h3>Security status per component</h3><div id="sec-status"></div></div>
+    </div>
+    <div class="card" style="margin-top:14px" id="predict"></div>
+  </section>
+
+  <section class="block" id="quiz-sec" aria-labelledby="h-quiz">
+    <div class="kicker">Check yourself</div>
+    <h2 id="h-quiz">Quiz</h2>
+    <div id="quiz"></div>
+  </section>
+
+  <section class="block" id="sources-sec" aria-labelledby="h-src">
+    <div class="kicker">7 · Sources and glossary</div>
+    <h2 id="h-src">Sources</h2>
+    <div id="sources-list"></div>
+    <h2 style="margin-top:28px">Glossary</h2>
+    <div id="glossary-list"></div>
+    <p style="margin-top:20px"><a class="btn primary" href="app2.html">Next: Inside India's Internet →</a></p>
+  </section>
+</main>
+<script src="data/claims.js"></script>
+<script src="data/glossary.js"></script>
+<script src="shared/shell.js"></script>
+<script src="shared/netdiagram.js"></script>
+<script src="app1/app1.js"></script>
+</body>
+</html>

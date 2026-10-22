@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Secure India's Connected Future</title>
+<meta name="description" content="Compare India's terrestrial internet with a LEO satellite architecture, explore a 15-threat model, and design and stress-test a trusted satellite internet protocol.">
+<link rel="stylesheet" href="shared/base.css">
+<link rel="stylesheet" href="app3/app3.css">
+</head>
+<body>
+<main id="main">
+  <section class="block" aria-labelledby="h1" style="padding-top:40px">
+    <div class="kicker">App 3 of 3 · The challenge</div>
+    <h1 id="h1">Secure India's Connected Future: Designing a Trusted Satellite Internet Protocol</h1>
+    <p class="lead">Compare India's terrestrial internet with a Starlink-style LEO satellite architecture. Explore 15 threats, then design a protocol and test it against all of them.</p>
+    <div class="notice"><strong>Architecture, not nationality.</strong> This app assesses how systems are designed and who controls them. It does not state or imply that any named company has done anything wrong. Ratings are qualitative judgements, never measurements.</div>
+  </section>
+
+  <section class="block" id="compare" aria-labelledby="h-cmp">
+    <div class="kicker">1 · Side-by-side comparison</div>
+    <h2 id="h-cmp">Two architectures, one destination</h2>
+    <div class="card toggles" id="cmp-toggles"></div>
+    <div class="btnrow"><button class="btn primary" type="button" id="cmp-play">▶ Send a packet through both</button><button class="btn" type="button" id="cmp-reset">⟲ Reset</button></div>
+    <div class="grid" style="gap:14px">
+      <div class="card"><h3>Architecture A · Terrestrial (Indian operator)</h3><div class="diagram-wrap" id="cmp-a"></div><div class="cmp-note" id="note-a" aria-live="polite"></div></div>
+      <div class="card"><h3>Architecture B · LEO satellite</h3><div class="diagram-wrap" id="cmp-b"></div><div class="cmp-note" id="note-b" aria-live="polite"></div></div>
+    </div>
+    <div class="legend"><span class="l-radio">Radio</span><span class="l-laser">Optical (laser)</span><span class="l-fibre">Fibre</span><span class="l-intl">International link</span><span class="l-border">Link down</span></div>
+  </section>
+
+  <section class="block" id="threats" aria-labelledby="h-thr">
+    <div class="kicker">2 · Threat model</div>
+    <h2 id="h-thr">15 threats, both architectures</h2>
+    <p class="lead">Select a threat to see the assets at risk, the attacker, the preconditions and the consequences, plus the reasoning behind each rating.</p>
+    <div class="tablewrap"><table class="data" id="thr-table"></table></div>
+    <div class="card" id="thr-detail" style="margin-top:14px" aria-live="polite"></div>
+  </section>
+
+  <section class="block" id="evidence" aria-labelledby="h-ev">
+    <div class="kicker">3 · Evidence panel</div>
+    <h2 id="h-ev">Fact, risk or allegation?</h2>
+    <div class="card lesson" id="ev-lesson"></div>
+    <div class="grid g3" id="ev-groups" style="margin-top:14px"></div>
+  </section>
+
+  <section class="block" id="workbench" aria-labelledby="h-wb">
+    <div class="kicker">4 · Protocol design workbench</div>
+    <h2 id="h-wb">Build your protocol</h2>
+    <p class="lead">Pick building blocks. The 15 threats and the scorecard update immediately. Watch for warnings: some fixes create new problems.</p>
+    <div class="btnrow"><button class="btn" type="button" id="wb-demo">Load demo design</button><button class="btn" type="button" id="wb-clear">Clear design</button><a class="btn ghost" href="#how-scoring">How scoring works</a></div>
+    <div class="wb">
+      <div id="wb-blocks"></div>
+      <div class="wb-side">
+        <div class="card" id="wb-score" aria-live="polite"></div>
+        <div id="wb-warn" aria-live="polite"></div>
+        <div class="card" id="wb-threats"></div>
+      </div>
+    </div>
+    <details class="card" id="how-scoring" style="margin-top:14px"><summary><strong>How scoring works</strong></summary><div id="scoring-rules"></div></details>
+  </section>
+
+  <section class="block" id="sandbox" aria-labelledby="h-sb">
+    <div class="kicker">5 · Attack-simulation sandbox</div>
+    <h2 id="h-sb">Replay the 15 threats against your design</h2>
+    <p class="muted">Fictional scenarios with invented data. Nothing connects to a real network, and no attack instructions are given.</p>
+    <div class="btnrow"><button class="btn primary" type="button" id="sb-run">▶ Run all 15 scenarios</button><button class="btn" type="button" id="sb-clear">Clear</button></div>
+    <div id="sb-summary" aria-live="polite"></div>
+    <div class="grid g3" id="sb-out"></div>
+  </section>
+
+  <section class="block" id="export" aria-labelledby="h-ex">
+    <div class="kicker">6 · Submission export</div>
+    <h2 id="h-ex">Export your design</h2>
+    <div class="grid g2">
+      <div class="card">
+        <label class="fld">Design name <input id="ex-title" type="text" maxlength="80" placeholder="e.g. Sovereign Split Gateway v1"></label>
+        <label class="fld">Team or entrant name <input id="ex-team" type="text" maxlength="80"></label>
+        <label class="fld">Assumptions <textarea id="ex-assume" rows="3"></textarea></label>
+        <label class="fld">Open questions <textarea id="ex-open" rows="3"></textarea></label>
+        <div class="btnrow"><button class="btn primary" type="button" id="ex-pdf">⬇ One-page PDF</button><button class="btn primary" type="button" id="ex-json">⬇ JSON file</button></div>
+        <p class="muted" id="ex-status" aria-live="polite">Drafts are kept in this browser only.</p>
+      </div>
+      <div class="card"><h3>One trade-off per threat</h3><p class="muted">A valid entry states a trade-off for each threat.</p><div id="ex-tradeoffs"></div></div>
+    </div>
+    <h3 style="margin-top:22px">Peer review: compare designs</h3>
+    <p class="muted">Load another participant's JSON file to compare it with your current design, or load two files to compare them with each other. There is no leaderboard.</p>
+    <div class="btnrow">
+      <label class="btn" for="pr-file">📂 Load JSON file(s)</label><input type="file" id="pr-file" accept=".json,application/json" multiple class="sr-only">
+      <button class="btn" type="button" id="pr-clear">Clear comparison</button>
+    </div>
+    <div id="pr-out" aria-live="polite"></div>
+  </section>
+
+  <section class="block" aria-labelledby="h-quiz">
+    <h2 id="h-quiz">Quiz</h2>
+    <div id="quiz"></div>
+  </section>
+
+  <section class="block" aria-labelledby="h-src">
+    <h2 id="h-src">Sources</h2>
+    <div id="sources-list"></div>
+    <h2 style="margin-top:28px">Glossary</h2>
+    <div id="glossary-list"></div>
+    <p style="margin-top:20px"><a class="btn" href="app2.html">← App 2</a> <a class="btn primary" href="index.html">Back to the hub</a></p>
+  </section>
+</main>
+<script src="data/claims.js"></script>
+<script src="data/glossary.js"></script>
+<script src="data/protocol.js"></script>
+<script src="shared/shell.js"></script>
+<script src="shared/netdiagram.js"></script>
+<script src="shared/pdf.js"></script>
+<script src="app3/app3.js"></script>
+</body>
+</html>

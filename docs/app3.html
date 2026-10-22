@@ -1,0 +1,1787 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Secure India's Connected Future</title>
+<meta name="description" content="Compare India's terrestrial internet with a LEO satellite architecture, explore a 15-threat model, and design and stress-test a trusted satellite internet protocol.">
+<style>
+/* Shared design system: navy, gold, restrained neon. Used by the hub and all three apps. */
+:root {
+  --bg: #08122b;
+  --bg-2: #0d1a3a;
+  --panel: #111f45;
+  --panel-2: #172a5a;
+  --line: #2a3d73;
+  --text: #e9edf8;
+  --muted: #a9b4d4;
+  --gold: #e3b54d;
+  --gold-2: #f6d27e;
+  --cyan: #3fd0ff;
+  --violet: #a78bfa;
+  --green: #45d99a;
+  --amber: #ffb547;
+  --red: #ff6b6b;
+  --focus: #ffe08a;
+  --radius: 12px;
+  --shadow: 0 8px 30px rgba(0, 0, 0, .35);
+  --font: "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --fs: 16px;
+  color-scheme: dark;
+}
+body.teacher { --fs: 20px; }
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body.reduce-motion, body.reduce-motion * { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
+body {
+  margin: 0; background: var(--bg); color: var(--text); font: 400 var(--fs)/1.55 var(--font);
+  background-image: radial-gradient(1200px 600px at 80% -10%, #1b2f6b 0%, transparent 60%), radial-gradient(800px 500px at -10% 10%, #13265a 0%, transparent 55%);
+  background-attachment: fixed; min-height: 100vh;
+}
+a { color: var(--gold-2); }
+a:hover { color: #fff; }
+h1, h2, h3, h4 { line-height: 1.2; margin: 0 0 .5em; }
+h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); letter-spacing: -.01em; }
+h2 { font-size: clamp(1.35rem, 2.6vw, 1.85rem); color: var(--gold-2); }
+h3 { font-size: 1.12rem; }
+p { margin: 0 0 .8em; }
+small, .muted { color: var(--muted); }
+code { font-family: var(--mono); font-size: .92em; background: #0a1736; padding: .05em .35em; border-radius: 5px; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 6px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.skip { position: absolute; left: -999px; top: 8px; background: var(--gold); color: #000; padding: 8px 12px; border-radius: 8px; z-index: 100; }
+.skip:focus { left: 8px; }
+
+/* ---------- top bar ---------- */
+.topbar {
+  position: sticky; top: 0; z-index: 50; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px;
+  padding: 10px 16px; background: rgba(8, 18, 43, .92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line);
+}
+.brand { display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--gold-2); text-decoration: none; margin-right: 6px; }
+.brand-mark { width: 26px; height: 26px; }
+.navlinks { display: flex; flex-wrap: wrap; gap: 4px; margin: 0; padding: 0; list-style: none; }
+.navlinks a { display: block; padding: 6px 10px; border-radius: 8px; color: var(--text); text-decoration: none; font-size: .92rem; }
+.navlinks a:hover { background: var(--panel); }
+.navlinks a[aria-current="page"] { background: var(--panel-2); color: var(--gold-2); box-shadow: inset 0 -2px 0 var(--gold); }
+.tools { display: flex; flex-wrap: wrap; gap: 6px; margin-left: auto; }
+
+/* ---------- buttons ---------- */
+.btn {
+  appearance: none; border: 1px solid var(--line); background: var(--panel); color: var(--text); font: inherit; font-size: .92rem;
+  padding: 7px 12px; border-radius: 9px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; min-height: 36px;
+}
+.btn:hover { border-color: var(--gold); }
+.btn[aria-pressed="true"], .btn.on { background: var(--gold); color: #1a1300; border-color: var(--gold); font-weight: 600; }
+.btn.primary { background: linear-gradient(180deg, var(--gold-2), var(--gold)); color: #1a1300; border-color: var(--gold); font-weight: 600; }
+.btn.ghost { background: transparent; }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.btnrow { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0; }
+
+/* ---------- layout ---------- */
+main { max-width: 1240px; margin: 0 auto; padding: 0 16px 120px; }
+section.block { padding: 36px 0 12px; border-bottom: 1px solid rgba(42, 61, 115, .5); }
+.kicker { text-transform: uppercase; letter-spacing: .12em; font-size: .78rem; color: var(--cyan); font-weight: 700; margin-bottom: 6px; }
+.lead { font-size: 1.08em; color: var(--muted); max-width: 70ch; }
+.grid { display: grid; gap: 14px; }
+.g2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.g3 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.split { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(280px, 1fr); gap: 16px; align-items: start; }
+@media (max-width: 980px) { .split { grid-template-columns: 1fr; } .panel-sticky { position: static; } }
+.card { background: linear-gradient(180deg, var(--panel), var(--bg-2)); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow); }
+.card h3 { color: var(--gold-2); }
+.card.clickable { cursor: pointer; text-align: left; width: 100%; color: inherit; font: inherit; }
+.card.clickable:hover { border-color: var(--gold); }
+.card.selected { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold), var(--shadow); }
+.panel-sticky { position: sticky; top: 76px; }
+.kv { display: grid; grid-template-columns: max-content 1fr; gap: 4px 12px; font-size: .95em; }
+.kv dt { color: var(--muted); }
+.kv dd { margin: 0; }
+dl.fields { margin: 0; }
+dl.fields dt { font-weight: 700; color: var(--cyan); font-size: .82em; text-transform: uppercase; letter-spacing: .06em; margin-top: 10px; }
+dl.fields dd { margin: 2px 0 0; }
+ul.tight { margin: .2em 0 .6em; padding-left: 1.2em; }
+ul.tight li { margin: .15em 0; }
+table.data { width: 100%; border-collapse: collapse; font-size: .93em; }
+table.data th, table.data td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.data th { color: var(--gold-2); font-weight: 600; background: rgba(23, 42, 90, .6); }
+.tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); }
+
+/* ---------- chips / tags ---------- */
+.chip { display: inline-block; font-size: .68rem; font-weight: 700; letter-spacing: .06em; padding: 2px 7px; border-radius: 999px; border: 1px solid currentColor; vertical-align: middle; white-space: nowrap; }
+.t-documented, .t-verified, .t-mandatory { color: var(--green); }
+.t-practice, .t-recommended { color: var(--cyan); }
+.t-illustrative, .t-simulated, .t-some { color: var(--violet); }
+.t-plausible { color: var(--amber); }
+.t-unverified { color: var(--red); }
+.rate { display: inline-block; min-width: 4.6em; text-align: center; font-weight: 700; font-size: .78rem; padding: 2px 8px; border-radius: 6px; }
+.rate.Low { background: rgba(69, 217, 154, .18); color: var(--green); }
+.rate.Medium { background: rgba(255, 181, 71, .18); color: var(--amber); }
+.rate.High { background: rgba(255, 107, 107, .2); color: var(--red); }
+.rate.Unknown { background: rgba(167, 139, 250, .2); color: var(--violet); }
+
+.claim { margin: .4em 0; }
+.claim .meta { font-size: .78em; color: var(--muted); margin-left: 4px; white-space: nowrap; }
+.claim .meta a { color: var(--muted); }
+.claim-error { border: 1px dashed var(--red); color: var(--red); padding: 6px 10px; border-radius: 8px; }
+.notice { border-left: 4px solid var(--gold); background: rgba(227, 181, 77, .08); padding: 10px 14px; border-radius: 0 10px 10px 0; margin: 10px 0; }
+.notice.warn { border-color: var(--amber); background: rgba(255, 181, 71, .08); }
+.notice.bad { border-color: var(--red); background: rgba(255, 107, 107, .08); }
+
+/* ---------- tabs ---------- */
+.tabs [role="tablist"] { display: flex; flex-wrap: wrap; gap: 4px; border-bottom: 1px solid var(--line); margin-bottom: 14px; }
+.tabs [role="tab"] { appearance: none; background: transparent; color: var(--muted); border: 0; border-bottom: 3px solid transparent; padding: 10px 14px; font: inherit; cursor: pointer; }
+.tabs [role="tab"][aria-selected="true"] { color: var(--gold-2); border-bottom-color: var(--gold); }
+
+/* ---------- switches / inputs ---------- */
+.switch { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; padding: 4px 0; }
+.switch input { appearance: none; width: 42px; height: 24px; border-radius: 999px; background: #22305a; border: 1px solid var(--line); position: relative; cursor: pointer; flex: none; margin: 0; }
+.switch input::after { content: ""; position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; border-radius: 50%; background: var(--muted); transition: left .15s; }
+.switch input:checked { background: var(--gold); border-color: var(--gold); }
+.switch input:checked::after { left: 20px; background: #1a1300; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; flex-wrap: wrap; }
+.seg button { appearance: none; border: 0; background: transparent; color: var(--text); padding: 7px 12px; font: inherit; font-size: .9rem; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--gold); color: #1a1300; font-weight: 600; }
+.seg button:disabled { opacity: .4; cursor: not-allowed; }
+input[type="range"] { width: 100%; accent-color: var(--gold); }
+select { background: var(--panel); color: var(--text); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; font: inherit; }
+label.opt { display: flex; gap: 10px; align-items: flex-start; padding: 8px 10px; border: 1px solid var(--line); border-radius: 10px; cursor: pointer; background: rgba(13, 26, 58, .6); }
+label.opt:hover { border-color: var(--gold); }
+label.opt input { margin-top: 4px; accent-color: var(--gold); width: 18px; height: 18px; flex: none; }
+label.opt:has(input:checked) { border-color: var(--gold); background: rgba(227, 181, 77, .08); }
+
+/* ---------- drawers / narration ---------- */
+.drawer { position: fixed; top: 0; right: 0; height: 100%; width: min(520px, 100%); background: var(--bg-2); border-left: 1px solid var(--line); z-index: 80; transform: translateX(105%); transition: transform .2s; overflow-y: auto; padding: 16px 18px 40px; box-shadow: var(--shadow); }
+.drawer.open { transform: none; }
+.drawer header { display: flex; justify-content: space-between; align-items: center; position: sticky; top: -16px; background: var(--bg-2); padding: 6px 0 10px; margin-top: -6px; }
+.drawer input[type="search"] { width: 100%; padding: 8px 10px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; color: var(--text); font: inherit; margin-bottom: 10px; }
+.drawer dt { font-weight: 700; color: var(--gold-2); margin-top: 10px; }
+.drawer dd { margin: 2px 0 0; color: var(--text); }
+.scrim { position: fixed; inset: 0; background: rgba(0, 0, 0, .45); z-index: 70; display: none; }
+.scrim.open { display: block; }
+.narration { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); width: min(900px, calc(100% - 24px)); z-index: 60; background: rgba(13, 26, 58, .97); border: 1px solid var(--gold); border-radius: 14px; padding: 12px 16px; box-shadow: var(--shadow); display: none; gap: 10px; align-items: flex-start; }
+body.teacher .narration { display: flex; }
+.narration .txt { flex: 1; font-size: 1.05em; }
+.narration .lbl { color: var(--gold-2); font-weight: 700; margin-right: 6px; }
+
+/* ---------- quiz ---------- */
+.quiz .q { margin-bottom: 16px; }
+.quiz .opts { display: grid; gap: 6px; margin-top: 6px; }
+.quiz .opts button { text-align: left; }
+.quiz .opts button.right { background: rgba(69, 217, 154, .2); border-color: var(--green); }
+.quiz .opts button.wrong { background: rgba(255, 107, 107, .18); border-color: var(--red); }
+.quiz .fb { margin-top: 6px; font-size: .95em; }
+
+/* ---------- network diagram ---------- */
+.diagram-wrap { background: radial-gradient(ellipse at 50% 0%, #142a63 0%, #0a1533 70%); border: 1px solid var(--line); border-radius: var(--radius); padding: 6px; overflow: hidden; }
+svg.net { width: 100%; height: auto; display: block; }
+svg.net .link { fill: none; stroke-width: 3; stroke-linecap: round; }
+svg.net .link.radio { stroke: var(--cyan); stroke-dasharray: 2 7; }
+svg.net .link.laser { stroke: #ff5ca8; stroke-width: 2.5; filter: url(#glow); }
+svg.net .link.fibre { stroke: var(--gold); }
+svg.net .link.wired { stroke: #8fa0c9; stroke-width: 2.5; }
+svg.net .link.border { stroke: var(--red); }
+svg.net .link.intl { stroke: var(--gold); stroke-dasharray: 12 6; }
+svg.net .link.hidden { display: none; }
+svg.net .link.dim { opacity: .18; }
+svg.net .link.active { stroke-width: 5; opacity: 1; }
+svg.net .link.down { stroke: var(--red); stroke-dasharray: 4 6; opacity: .6; }
+body:not(.reduce-motion) svg.net .link.radio { animation: dash 1.4s linear infinite; }
+@keyframes dash { to { stroke-dashoffset: -18; } }
+svg.net .node { cursor: pointer; }
+svg.net .node circle.ring { fill: #10204a; stroke: #4a5f9a; stroke-width: 2; }
+svg.net .node text.icon { font-size: 22px; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+svg.net .node text.lbl { fill: var(--text); font-size: 12.5px; text-anchor: middle; pointer-events: none; paint-order: stroke; stroke: #08122b; stroke-width: 4px; }
+svg.net .node text.org { fill: var(--muted); font-size: 10.5px; text-anchor: middle; pointer-events: none; paint-order: stroke; stroke: #08122b; stroke-width: 4px; }
+svg.net .node:hover circle.ring, svg.net .node:focus circle.ring { stroke: var(--gold); }
+svg.net .node:focus { outline: none; }
+svg.net .node:focus-visible circle.ring { stroke: var(--focus); stroke-width: 4; }
+svg.net .node.selected circle.ring { stroke: var(--gold); stroke-width: 3.5; }
+svg.net .node.active circle.ring { stroke: var(--gold-2); stroke-width: 4; fill: #2a3a10; }
+svg.net .node.warn circle.ring { stroke: var(--amber); stroke-width: 3.5; fill: #3a2a08; }
+svg.net .node.down circle.ring { stroke: var(--red); stroke-width: 3.5; fill: #3a0f16; }
+svg.net .node.dim { opacity: .3; }
+svg.net .node.hidden { display: none; }
+svg.net .packet { fill: var(--gold-2); filter: url(#glow); }
+svg.net .packet.resp { fill: var(--green); }
+svg.net .zone { fill: rgba(63, 208, 255, .05); stroke: rgba(63, 208, 255, .25); stroke-dasharray: 6 6; }
+svg.net .zone-lbl { fill: var(--cyan); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; opacity: .8; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: .85em; color: var(--muted); padding: 6px 8px; }
+.legend span::before { content: ""; display: inline-block; width: 26px; height: 0; border-top: 3px solid; vertical-align: middle; margin-right: 6px; }
+.legend .l-radio::before { border-top: 3px dotted var(--cyan); }
+.legend .l-laser::before { border-color: #ff5ca8; }
+.legend .l-fibre::before { border-color: var(--gold); }
+.legend .l-wired::before { border-color: #8fa0c9; }
+.legend .l-border::before { border-top: 3px dashed var(--red); }
+.legend .l-intl::before { border-top: 3px dashed var(--gold); }
+
+/* bars */
+.bar { height: 12px; border-radius: 6px; background: #1a2a55; overflow: hidden; }
+.bar > i { display: block; height: 100%; background: linear-gradient(90deg, var(--cyan), var(--gold)); }
+.barrow { display: grid; grid-template-columns: 150px 1fr 64px; gap: 10px; align-items: center; font-size: .9em; margin: 5px 0; }
+@media (max-width: 520px) { .barrow { grid-template-columns: 100px 1fr 54px; } }
+
+footer.site { max-width: 1240px; margin: 0 auto; padding: 24px 16px 140px; color: var(--muted); font-size: .88em; }
+
+@media print {
+  .topbar, .narration, .drawer, .scrim, .no-print { display: none !important; }
+  body { background: #fff; color: #000; }
+}
+
+/* ---------- phone ---------- */
+@media (max-width: 700px) {
+  .topbar { position: static; padding: 8px 12px; gap: 6px; }
+  .navlinks a { padding: 5px 8px; font-size: .85rem; }
+  .tools { margin-left: 0; }
+  .tools .btn { padding: 5px 9px; min-height: 32px; font-size: .82rem; }
+  .panel-sticky, .wb-side { top: 8px; }
+  /* Wide diagrams scroll inside their frame instead of shrinking past legibility. */
+  .diagram-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .diagram-wrap > svg.net { min-width: 720px; }
+  #map-svg > svg.net { min-width: 0; }
+}
+.split > *, .grid > *, .wb > * { min-width: 0; }
+
+</style>
+<style>
+.toggles { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 10px 18px; }
+.toggles .t { display: flex; flex-direction: column; gap: 4px; }
+.toggles .t > span { font-size: .85em; color: var(--muted); }
+.cmp-note { font-size: .92em; margin-top: 8px; min-height: 1.5em; }
+.cmp-note .bad { color: var(--red); font-weight: 600; }
+.cmp-note .warn { color: var(--amber); font-weight: 600; }
+.cmp-note .ok { color: var(--green); font-weight: 600; }
+#thr-table tbody tr { cursor: pointer; }
+#thr-table tbody tr:hover, #thr-table tbody tr.sel { background: rgba(227, 181, 77, .08); }
+#thr-table button.linkish { background: none; border: 0; color: var(--text); font: inherit; text-align: left; cursor: pointer; padding: 0; }
+.lesson { border-color: var(--gold); }
+.ev-group h3 { display: flex; gap: 8px; align-items: center; }
+.wb { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(300px, 1fr); gap: 16px; align-items: start; }
+@media (max-width: 980px) { .wb { grid-template-columns: 1fr; } .wb-side { position: static !important; } }
+.wb-side { position: sticky; top: 76px; display: grid; gap: 12px; max-height: calc(100vh - 90px); overflow-y: auto; padding-right: 2px; }
+.grp { margin-bottom: 14px; }
+.grp h3 { color: var(--gold-2); font-size: 1rem; margin: 0 0 8px; }
+.grp .opts { display: grid; gap: 6px; }
+.opt .d { display: block; font-size: .85em; color: var(--muted); }
+.opt .fx { display: block; font-size: .78em; color: var(--cyan); margin-top: 2px; }
+.score-row { display: grid; grid-template-columns: 110px 1fr 44px; gap: 8px; align-items: center; margin: 6px 0; font-size: .92em; }
+.score-row .bar > i.cost { background: linear-gradient(90deg, var(--green), var(--amber), var(--red)); }
+.thr-mini { display: grid; grid-template-columns: 36px 1fr auto; gap: 6px; align-items: center; font-size: .86em; padding: 3px 0; border-bottom: 1px solid rgba(42, 61, 115, .6); }
+.thr-mini .delta { color: var(--green); font-size: .8em; }
+.thr-mini .delta.up { color: var(--red); }
+.sb-card h3 { font-size: .98rem; margin-bottom: 4px; }
+.sb-card .res { font-weight: 700; }
+.sb-card .res.contained { color: var(--green); }
+.sb-card .res.partial { color: var(--amber); }
+.sb-card .res.serious { color: var(--red); }
+.sb-card ul { font-size: .86em; }
+label.fld { display: block; margin-bottom: 10px; font-size: .92em; color: var(--muted); }
+label.fld input, label.fld textarea, .to-row input { display: block; width: 100%; margin-top: 4px; background: var(--bg-2); border: 1px solid var(--line); color: var(--text); border-radius: 8px; padding: 8px 10px; font: inherit; }
+.to-row { display: grid; grid-template-columns: 44px 1fr; gap: 8px; align-items: center; margin-bottom: 6px; }
+.to-row label { font-weight: 700; color: var(--gold-2); font-size: .85em; }
+.to-row input { margin: 0; padding: 6px 8px; font-size: .9em; }
+.diff-yes { color: var(--green); }
+.diff-no { color: var(--muted); }
+
+</style>
+</head>
+<body>
+<main id="main">
+  <section class="block" aria-labelledby="h1" style="padding-top:40px">
+    <div class="kicker">App 3 of 3 · The challenge</div>
+    <h1 id="h1">Secure India's Connected Future: Designing a Trusted Satellite Internet Protocol</h1>
+    <p class="lead">Compare India's terrestrial internet with a Starlink-style LEO satellite architecture. Explore 15 threats, then design a protocol and test it against all of them.</p>
+    <div class="notice"><strong>Architecture, not nationality.</strong> This app assesses how systems are designed and who controls them. It does not state or imply that any named company has done anything wrong. Ratings are qualitative judgements, never measurements.</div>
+  </section>
+
+  <section class="block" id="compare" aria-labelledby="h-cmp">
+    <div class="kicker">1 · Side-by-side comparison</div>
+    <h2 id="h-cmp">Two architectures, one destination</h2>
+    <div class="card toggles" id="cmp-toggles"></div>
+    <div class="btnrow"><button class="btn primary" type="button" id="cmp-play">▶ Send a packet through both</button><button class="btn" type="button" id="cmp-reset">⟲ Reset</button></div>
+    <div class="grid" style="gap:14px">
+      <div class="card"><h3>Architecture A · Terrestrial (Indian operator)</h3><div class="diagram-wrap" id="cmp-a"></div><div class="cmp-note" id="note-a" aria-live="polite"></div></div>
+      <div class="card"><h3>Architecture B · LEO satellite</h3><div class="diagram-wrap" id="cmp-b"></div><div class="cmp-note" id="note-b" aria-live="polite"></div></div>
+    </div>
+    <div class="legend"><span class="l-radio">Radio</span><span class="l-laser">Optical (laser)</span><span class="l-fibre">Fibre</span><span class="l-intl">International link</span><span class="l-border">Link down</span></div>
+  </section>
+
+  <section class="block" id="threats" aria-labelledby="h-thr">
+    <div class="kicker">2 · Threat model</div>
+    <h2 id="h-thr">15 threats, both architectures</h2>
+    <p class="lead">Select a threat to see the assets at risk, the attacker, the preconditions and the consequences, plus the reasoning behind each rating.</p>
+    <div class="tablewrap"><table class="data" id="thr-table"></table></div>
+    <div class="card" id="thr-detail" style="margin-top:14px" aria-live="polite"></div>
+  </section>
+
+  <section class="block" id="evidence" aria-labelledby="h-ev">
+    <div class="kicker">3 · Evidence panel</div>
+    <h2 id="h-ev">Fact, risk or allegation?</h2>
+    <div class="card lesson" id="ev-lesson"></div>
+    <div class="grid g3" id="ev-groups" style="margin-top:14px"></div>
+  </section>
+
+  <section class="block" id="workbench" aria-labelledby="h-wb">
+    <div class="kicker">4 · Protocol design workbench</div>
+    <h2 id="h-wb">Build your protocol</h2>
+    <p class="lead">Pick building blocks. The 15 threats and the scorecard update immediately. Watch for warnings: some fixes create new problems.</p>
+    <div class="btnrow"><button class="btn" type="button" id="wb-demo">Load demo design</button><button class="btn" type="button" id="wb-clear">Clear design</button><a class="btn ghost" href="#how-scoring">How scoring works</a></div>
+    <div class="wb">
+      <div id="wb-blocks"></div>
+      <div class="wb-side">
+        <div class="card" id="wb-score" aria-live="polite"></div>
+        <div id="wb-warn" aria-live="polite"></div>
+        <div class="card" id="wb-threats"></div>
+      </div>
+    </div>
+    <details class="card" id="how-scoring" style="margin-top:14px"><summary><strong>How scoring works</strong></summary><div id="scoring-rules"></div></details>
+  </section>
+
+  <section class="block" id="sandbox" aria-labelledby="h-sb">
+    <div class="kicker">5 · Attack-simulation sandbox</div>
+    <h2 id="h-sb">Replay the 15 threats against your design</h2>
+    <p class="muted">Fictional scenarios with invented data. Nothing connects to a real network, and no attack instructions are given.</p>
+    <div class="btnrow"><button class="btn primary" type="button" id="sb-run">▶ Run all 15 scenarios</button><button class="btn" type="button" id="sb-clear">Clear</button></div>
+    <div id="sb-summary" aria-live="polite"></div>
+    <div class="grid g3" id="sb-out"></div>
+  </section>
+
+  <section class="block" id="export" aria-labelledby="h-ex">
+    <div class="kicker">6 · Submission export</div>
+    <h2 id="h-ex">Export your design</h2>
+    <div class="grid g2">
+      <div class="card">
+        <label class="fld">Design name <input id="ex-title" type="text" maxlength="80" placeholder="e.g. Sovereign Split Gateway v1"></label>
+        <label class="fld">Team or entrant name <input id="ex-team" type="text" maxlength="80"></label>
+        <label class="fld">Assumptions <textarea id="ex-assume" rows="3"></textarea></label>
+        <label class="fld">Open questions <textarea id="ex-open" rows="3"></textarea></label>
+        <div class="btnrow"><button class="btn primary" type="button" id="ex-pdf">⬇ One-page PDF</button><button class="btn primary" type="button" id="ex-json">⬇ JSON file</button></div>
+        <p class="muted" id="ex-status" aria-live="polite">Drafts are kept in this browser only.</p>
+      </div>
+      <div class="card"><h3>One trade-off per threat</h3><p class="muted">A valid entry states a trade-off for each threat.</p><div id="ex-tradeoffs"></div></div>
+    </div>
+    <h3 style="margin-top:22px">Peer review: compare designs</h3>
+    <p class="muted">Load another participant's JSON file to compare it with your current design, or load two files to compare them with each other. There is no leaderboard.</p>
+    <div class="btnrow">
+      <label class="btn" for="pr-file">📂 Load JSON file(s)</label><input type="file" id="pr-file" accept=".json,application/json" multiple class="sr-only">
+      <button class="btn" type="button" id="pr-clear">Clear comparison</button>
+    </div>
+    <div id="pr-out" aria-live="polite"></div>
+  </section>
+
+  <section class="block" aria-labelledby="h-quiz">
+    <h2 id="h-quiz">Quiz</h2>
+    <div id="quiz"></div>
+  </section>
+
+  <section class="block" aria-labelledby="h-src">
+    <h2 id="h-src">Sources</h2>
+    <div id="sources-list"></div>
+    <h2 style="margin-top:28px">Glossary</h2>
+    <div id="glossary-list"></div>
+    <p style="margin-top:20px"><a class="btn" href="app2.html">← App 2</a> <a class="btn primary" href="index.html">Back to the hub</a></p>
+  </section>
+</main>
+<script>
+/* Claims registry. Every factual statement shown in the apps lives here with a tag, sources and a check date.
+   The shell refuses to render a claim that lacks a source or date.
+   Tags: documented, practice, illustrative, simulated, mandatory, recommended, some, verified, plausible, unverified. */
+(function () {
+  const D = '2026-10-22';
+  const S = {
+    rfc: (n, t) => ({ title: `IETF RFC ${n}: ${t}`, url: `https://www.rfc-editor.org/rfc/rfc${n}` }),
+    starlinkTech: { title: 'Starlink — Technology (official page)', url: 'https://www.starlink.com/technology' },
+    fcc2148: { title: 'US FCC Order FCC 21-48 (Space Exploration Holdings, April 2021)', url: 'https://docs.fcc.gov/public/attachments/FCC-21-48A1.pdf' },
+    esaBands: { title: 'ESA — Satellite frequency bands', url: 'https://www.esa.int/Applications/Connectivity_and_Secure_Communications/Satellite_frequency_bands' },
+    esaOrbits: { title: 'ESA — Types of orbits', url: 'https://www.esa.int/Enabling_Support/Space_Transportation/Types_of_orbits' },
+    ts33501: { title: '3GPP TS 33.501: Security architecture and procedures for 5G System', url: 'https://www.3gpp.org/dynareport/33501.htm' },
+    kit: { title: 'Educational simplification by the kit authors (not a measurement or official statement)' },
+    kitArch: { title: 'Architectural reasoning by the kit authors; possible in principle, not evidence of any event' },
+    dotAct: { title: 'Sanchar Saathi (Ministry of Communications) — Gazette copy of the Telecommunications Act, 2023', url: 'https://www.sancharsaathi.gov.in/Home/documents.jsp' },
+    gaz2026: { title: 'Gazette of India — section 3(1) and 3(6) in force from 23 June 2026', url: 'https://egazette.gov.in/WriteReadData/2026/273762.pdf' },
+    wireAct: { title: 'The Wire — Telecom Act notified partially (June 2024)', url: 'https://m.thewire.in/article/government/telecom-act-notified-partially-govt-to-get-more-powers-to-intercept-and-stop-messages' },
+    interceptIFF: { title: 'Internet Freedom Foundation — First read on the Telecommunications Interception Rules, 2024', url: 'https://www.internetfreedom.in/first-read-telecom-interception-rules-2024/' },
+    interceptMN: { title: 'MediaNama — Telecom interception rules notified (Dec 2024)', url: 'https://www.medianama.com/2024/12/223-telecom-interception-rules-notified-interception-records-destroying-secrecy/' },
+    cyberRules: { title: 'DoT eServices — Telecom Cyber Security (Rules notified 21.11.2024)', url: 'https://www.eservices.dot.gov.in/cyber-security/' },
+    certin: { title: 'CERT-In — Directions under section 70B(6) of the IT Act, 2000 (28 April 2022)', url: 'https://www.cert-in.org.in/Directions70B.jsp' },
+    certinPSA: { title: 'PSA Legal — New CERT-In Directions: Overview and Implications', url: 'https://psalegal.com/new-cert-in-directions-overview-and-implications/' },
+    trusted: { title: 'Tribune — Telecom companies allowed to install only govt-approved gear from June 15 (2021)', url: 'https://www.tribuneindia.com/news/business/telecom-companies-will-be-allowed-to-instal-only-govt-approved-gears-from-june-15-223310' },
+    dpdp: { title: 'MeitY — Digital Personal Data Protection Act, 2023', url: 'https://www.meity.gov.in/data-protection-framework' },
+    trai: { title: 'Telecom Regulatory Authority of India (TRAI Act, 1997)', url: 'https://www.trai.gov.in/' },
+    traiSat: { title: 'Tribune — TRAI releases spectrum allocation guidelines and prices for satcom (May 2025)', url: 'https://www.tribuneindia.com/news/business/trai-releases-spectrum-allocation-guidelines-and-prices-for-satcom/' },
+    traiSat2: { title: 'Outlook Business — TRAI proposes 4% AGR spectrum charge', url: 'https://www.outlookbusiness.com/corporate/trai-releases-service-conditions-for-satcoms-proposes-4-agr-spectrum-charge' },
+    nixi: { title: 'NIXI — National Internet Exchange of India', url: 'https://nixi.in/' },
+    nkn: { title: 'National Knowledge Network', url: 'https://nkn.gov.in/' },
+    cables: { title: 'TeleGeography — Submarine Cable Map (India landing points)', url: 'https://www.submarinecablemap.com/country/india' },
+    aws: { title: 'AWS — Global infrastructure regions (Mumbai, Hyderabad)', url: 'https://aws.amazon.com/about-aws/global-infrastructure/regions_az/' },
+    inspace: { title: 'IN-SPACe (Indian National Space Promotion and Authorization Centre)', url: 'https://www.inspace.gov.in/' },
+    air: { title: 'All India Radio News — Starlink receives licence (31 July 2025)', url: 'https://www.newsonair.gov.in/starlink-receives-license-to-launch-satellite-internet-service-in-india' },
+    mnGmpcs: { title: 'MediaNama — Starlink receives GMPCS permit (June 2025)', url: 'https://www.medianama.com/2025/06/223-starlink-india-gmpcs-license-dot-approval/' },
+    print: { title: 'ThePrint — Starlink says 20 gateways built, Indian user data to stay in India (7 Oct 2026)', url: 'https://theprint.in/tech/as-launch-awaits-clearance-starlink-says-20-gateways-built-indian-user-data-to-stay-in-india/3064053/' },
+    bs: { title: 'Business Standard — Why Starlink\'s India launch is stalled (Oct 2026)', url: 'https://www.business-standard.com/industry/news/starlink-india-entry-why-elon-musk-satellite-internet-launch-clearance-126100800416_1.html' },
+    outage: { title: 'Daily Maverick / Reuters — Starlink network suffers rare global outage (25 July 2025)', url: 'https://www.dailymaverick.co.za/article/2025-07-25-elon-musks-starlink-network-suffers-rare-global-outage/' },
+    fips203: { title: 'NIST FIPS 203: Module-Lattice-Based Key-Encapsulation Mechanism (ML-KEM), Aug 2024', url: 'https://csrc.nist.gov/pubs/fips/203/final' },
+    noPrimary: { title: 'Example of a claim type seen in public debate. The kit authors found no primary evidence for it.' },
+  };
+
+  const C = {
+    /* ---------------- App 1: satellite internet ---------------- */
+    'leo-altitude': { tag: 'documented', text: 'Low Earth orbit is generally below about 2,000 km. The US FCC authorised Starlink\'s first-generation shells at roughly 540–570 km.', sources: [S.esaOrbits, S.fcc2148] },
+    'starlink-isl': { tag: 'documented', text: 'Starlink says each current satellite carries three optical inter-satellite links ("space lasers"), which can pass traffic between satellites before it reaches a gateway.', sources: [S.starlinkTech] },
+    'starlink-antennas': { tag: 'documented', text: 'Starlink says its satellites use Ku-band phased-array antennas and dual-band Ka/E-band antennas.', sources: [S.starlinkTech] },
+    'bands': { tag: 'documented', text: 'Satellite broadband commonly uses Ku-band (about 12–18 GHz) and Ka-band (about 26.5–40 GHz) radio frequencies.', sources: [S.esaBands] },
+    'terminal-array': { tag: 'practice', text: 'LEO user terminals use electronically steered phased-array antennas that follow satellites across the sky and hand over from one satellite to the next.', sources: [S.starlinkTech, S.kit] },
+    'route-depends': { tag: 'practice', text: 'Which satellite, inter-satellite path and gateway carry a packet depends on satellite visibility, congestion, gateway location and operator configuration. Operators do not publish per-packet routes.', sources: [S.kit] },
+    'gateway-role': { tag: 'practice', text: 'A ground gateway (ground station) connects the satellite network to terrestrial fibre and to the operator\'s core network.', sources: [S.kit] },
+    'tls-protects': { tag: 'documented', text: 'TLS 1.3 encrypts the content of an HTTPS exchange and authenticates the website, so networks in between cannot read or silently alter page content.', sources: [S.rfc(8446, 'TLS 1.3')] },
+    'tls-limits': { tag: 'documented', text: 'TLS does not hide IP addresses, timing or traffic volume. The site name sent in the handshake (SNI) stays visible unless Encrypted Client Hello is used, which many sites do not support yet.', sources: [S.rfc(8446, 'TLS 1.3'), S.rfc(6066, 'TLS Extensions (SNI)')] },
+    'dns-visible': { tag: 'documented', text: 'Classic DNS lookups are not encrypted. DNS over HTTPS or TLS hides them from networks along the path, but not from the resolver that answers them.', sources: [S.rfc(8484, 'DNS over HTTPS'), S.rfc(7858, 'DNS over TLS')] },
+    'quic': { tag: 'documented', text: 'QUIC runs over UDP with TLS 1.3 built in. HTTP/3 runs on QUIC.', sources: [S.rfc(9000, 'QUIC'), S.rfc(9114, 'HTTP/3')] },
+    'tcp': { tag: 'documented', text: 'TCP gives a reliable, ordered byte stream and retransmits lost segments. On long or lossy paths, this adds delay.', sources: [S.rfc(9293, 'TCP')] },
+    'bgp': { tag: 'documented', text: 'Independent networks (autonomous systems) exchange reachability with BGP-4. Routers forward IP packets hop by hop using those routes.', sources: [S.rfc(4271, 'BGP-4'), S.rfc(791, 'Internet Protocol')] },
+    'link-separate': { tag: 'practice', text: 'Encryption on the terminal–satellite radio link and security inside the operator network are set by the operator. They are separate from TLS and protect against different attackers.', sources: [S.kit] },
+    'mobile-auth': { tag: 'documented', text: 'In 5G, the mobile core authenticates each subscriber with keys held on the SIM, and radio traffic between phone and base station is encrypted.', sources: [S.ts33501] },
+    'complementary': { tag: 'practice', text: 'Satellite and mobile networks both hand traffic to terrestrial fibre. Satellite reaches places without towers or fibre; dense areas are usually served more cheaply by mobile and fixed networks.', sources: [S.kit] },
+    'latency-sim': { tag: 'simulated', text: 'All latency, hop and availability numbers in this app come from a teaching model. They are not measured performance of Starlink or any other service.', sources: [S.kit] },
+    'outage-2025': { tag: 'verified', text: 'On 24 July 2025 Starlink had a global outage of about two and a half hours. Its engineering lead attributed it to a failure of internal software services that operate the core network.', sources: [S.outage] },
+
+    /* ---------------- App 2: India ---------------- */
+    'telecom-act': { tag: 'documented', text: 'The Telecommunications Act, 2023 (44 of 2023) replaces the Indian Telegraph Act, 1885 framework. It is coming into force in stages: the first sections on 26 June 2024, and the authorisation provisions of section 3(1) and 3(6) on 23 June 2026.', sources: [S.dotAct, S.wireAct, S.gaz2026] },
+    'intercept-rules': { tag: 'documented', text: 'The Telecommunications (Procedures and Safeguards for Lawful Interception of Messages) Rules, 2024, notified in December 2024, set who may order interception, how orders are reviewed and how records are destroyed. Critics note that oversight is executive, not judicial.', sources: [S.interceptMN, S.interceptIFF] },
+    'cyber-rules': { tag: 'documented', text: 'The Telecommunications (Telecom Cyber Security) Rules, 2024, notified on 21 November 2024, require telecom entities to report security incidents within six hours and to appoint a Chief Telecommunication Security Officer.', sources: [S.cyberRules] },
+    'certin': { tag: 'documented', text: 'CERT-In directions of 28 April 2022 (in force 27 June 2022) require specified cyber incidents to be reported within 6 hours and ICT logs to be kept in India for 180 days.', sources: [S.certin, S.certinPSA] },
+    'trusted-source': { tag: 'documented', text: 'Since 15 June 2021, telecom licence conditions require operators to connect only "trusted products" from "trusted sources" designated by the National Cyber Security Coordinator.', sources: [S.trusted] },
+    'dpdp': { tag: 'documented', text: 'The Digital Personal Data Protection Act, 2023 sets duties for organisations that process digital personal data, including security safeguards and breach notification.', sources: [S.dpdp] },
+    'trai-role': { tag: 'documented', text: 'TRAI, set up under the TRAI Act, 1997, regulates tariffs and quality of service and makes recommendations such as on spectrum. Licensing decisions sit with the Department of Telecommunications.', sources: [S.trai] },
+    'trai-satcom': { tag: 'documented', text: 'In May 2025 TRAI recommended administrative assignment of satellite spectrum at 4% of adjusted gross revenue, plus ₹500 per urban subscriber per year for non-geostationary broadband. These were recommendations to DoT, not final rules.', sources: [S.traiSat, S.traiSat2] },
+    'nixi': { tag: 'documented', text: 'NIXI operates internet exchange points in many Indian cities, so traffic between Indian networks can be exchanged within India.', sources: [S.nixi] },
+    'nkn': { tag: 'documented', text: 'The National Knowledge Network is a government network that links research and education institutions.', sources: [S.nkn] },
+    'cables': { tag: 'documented', text: 'Most of India\'s international submarine cables land in Mumbai and Chennai, with others in Kerala and Tamil Nadu.', sources: [S.cables] },
+    'cloud-regions': { tag: 'documented', text: 'Major cloud providers run regions inside India, for example in Mumbai and Hyderabad.', sources: [S.aws] },
+    'inspace': { tag: 'documented', text: 'IN-SPACe authorises space activities by non-government entities, including satellite constellations serving India.', sources: [S.inspace] },
+    'rpki': { tag: 'documented', text: 'RPKI route-origin validation lets a network reject routes announced by an origin that is not authorised for that address block. Deployment varies by operator.', sources: [S.rfc(6811, 'BGP Prefix Origin Validation'), S.rfc(6480, 'RPKI')] },
+    'no-https-read': { tag: 'documented', text: 'Without control of a device or the website, an operator cannot read the content of a correctly configured HTTPS connection. It can see addresses, timing, volume and often the site name.', sources: [S.rfc(8446, 'TLS 1.3')] },
+    'resilience-model': { tag: 'illustrative', text: 'The Resilience Lab is an educational model, not an official Indian government rating. Its weights are chosen for teaching and shown in full.', sources: [S.kit] },
+
+    /* ---------------- Satellite in India: status ---------------- */
+    'starlink-gmpcs': { tag: 'verified', text: 'The Department of Telecommunications granted Starlink a GMPCS authorisation in June 2025.', sources: [S.mnGmpcs, S.air] },
+    'starlink-inspace': { tag: 'verified', text: 'IN-SPACe authorised Starlink\'s first-generation constellation for India on 8 July 2025.', sources: [S.air] },
+    'satcom-pending': { tag: 'verified', text: 'As of October 2026, Starlink, Jio Satellite and OneWeb India were reported to be awaiting final security clearance and spectrum assignment before starting commercial service.', sources: [S.print, S.bs] },
+    'starlink-gateways': { tag: 'verified', text: 'In October 2026 a SpaceX executive said Starlink had built 20 gateway sites in India and that its goal is to keep Indian user data in India.', sources: [S.print] },
+    'satcom-conditions': { tag: 'verified', text: 'DoT security conditions for satcom operators, as reported, require network traffic and monitoring systems to be located in India.', sources: [S.print] },
+    'ml-kem': { tag: 'verified', text: 'NIST published ML-KEM (FIPS 203) in August 2024 as a standard post-quantum key-establishment method.', sources: [S.fips203] },
+
+    /* ---------------- App 3: plausible risks ---------------- */
+    'pl-central': { tag: 'plausible', text: 'When one operator runs the control plane for every terminal, a single failure or misconfiguration can disconnect all users at once. The July 2025 outage shows that this failure mode is real, but it is not evidence of intent.', sources: [S.kitArch, S.outage] },
+    'pl-jurisdiction': { tag: 'plausible', text: 'An operator subject to laws in several countries can face conflicting legal orders, for example on data access or service suspension.', sources: [S.kitArch] },
+    'pl-metadata': { tag: 'plausible', text: 'Even with TLS, the operator of any access network can see subscriber location, timing and volume metadata. Where that metadata is stored and who can access it decides the risk.', sources: [S.kitArch, S.rfc(8446, 'TLS 1.3')] },
+    'pl-supply': { tag: 'plausible', text: 'Satellites, terminals and gateway equipment are complex supply chains. Compromise of any component or update channel is possible in principle for any vendor.', sources: [S.kitArch] },
+    'pl-harvest': { tag: 'plausible', text: 'Traffic recorded today could be decrypted later if a large quantum computer breaks today\'s key exchange ("harvest now, decrypt later"). Post-quantum key exchange reduces this risk.', sources: [S.kitArch, S.fips203] },
+
+    /* ---------------- App 3: unverified allegations (examples of claim types) ---------------- */
+    'un-killswitch': { tag: 'unverified', text: 'Claim type: "A foreign government can make a satellite operator switch off every user in India instantly." No primary evidence of such an order affecting India was found. The underlying risk of centralised control is covered as a plausible risk.', sources: [S.noPrimary] },
+    'un-bypass': { tag: 'unverified', text: 'Claim type: "Satellite internet lets users bypass Indian lawful interception entirely." This is contradicted by reported licence conditions requiring in-India gateways and monitoring, and it has not been shown for any licensed operator.', sources: [S.noPrimary, S.print] },
+    'un-backdoor': { tag: 'unverified', text: 'Claim type: "Satellite terminals contain hidden backdoors." No public technical evidence was found. Supply-chain compromise remains a plausible risk category for any vendor.', sources: [S.noPrimary] },
+  };
+
+  for (const k of Object.keys(C)) C[k].verified = C[k].verified || D;
+  window.CLAIMS = C;
+  window.CLAIM_SOURCES = S;
+})();
+
+</script>
+<script>
+/* Shared glossary for all three apps. */
+window.GLOSSARY = {
+  'AGR (Adjusted Gross Revenue)': 'The revenue figure on which Indian telecom licence and spectrum fees are calculated.',
+  'Attestation': 'Cryptographic proof that a device or gateway runs approved hardware and software before it is trusted.',
+  'Autonomous system (AS)': 'A network run by one organisation with its own routing policy, identified by an AS number.',
+  'Backhaul': 'The link that carries traffic from an access site (cell tower, gateway) back to the core network.',
+  'Base station': 'The radio site (eNodeB in 4G, gNodeB in 5G) that phones connect to.',
+  'BGP': 'Border Gateway Protocol, which networks use to tell each other which IP addresses they can reach.',
+  'CDN': 'Content delivery network: servers that keep copies of popular content close to users.',
+  'CERT-In': 'Indian Computer Emergency Response Team, the national agency for cyber incident response under the IT Act.',
+  'Control plane': 'The systems that decide how the network behaves (routing, configuration, satellite scheduling), as opposed to the data that flows through it.',
+  'Core network': 'The central part of an operator network that authenticates users, routes traffic and connects to the internet.',
+  'Data plane': 'The path that user traffic actually takes through the network.',
+  'DNS': 'Domain Name System, which turns names like example.in into IP addresses.',
+  'DoT': 'Department of Telecommunications, Government of India, which issues telecom licences and authorisations.',
+  'Gateway (ground station)': 'A ground site with large antennas that links satellites to terrestrial fibre and the operator core.',
+  'GMPCS': 'Global Mobile Personal Communication by Satellite, the Indian authorisation category for satellite communication services to users.',
+  'HTTPS': 'HTTP protected by TLS, so content is encrypted and the website is authenticated.',
+  'IN-SPACe': 'Indian National Space Promotion and Authorization Centre, which authorises space activities by non-government entities.',
+  'Inter-satellite link (ISL)': 'A direct link between two satellites, usually by laser, so traffic can travel in space before coming down.',
+  'Internet exchange point (IXP)': 'A site where networks connect to swap traffic directly with each other.',
+  'IPsec': 'A protocol suite that encrypts and authenticates IP packets, often between operator sites.',
+  'Key custody': 'Who holds and controls the cryptographic keys, and under what rules they may be used.',
+  'Latency': 'The time a packet takes to travel from one point to another, usually in milliseconds.',
+  'Lawful interception': 'Interception of communications by authorised agencies under a legal order and defined safeguards.',
+  'LEO': 'Low Earth orbit, roughly 160–2,000 km above Earth. LEO satellites circle Earth in about 90–120 minutes.',
+  'Metadata': 'Information about a communication (who, when, where, how much) rather than its content.',
+  'ML-KEM': 'A post-quantum key-establishment algorithm standardised by NIST in FIPS 203.',
+  'Phased-array antenna': 'A flat antenna that steers its beam electronically, with no moving parts.',
+  'Post-quantum cryptography': 'Cryptography designed to stay secure even against large quantum computers.',
+  'QUIC': 'A transport protocol over UDP with built-in encryption, used by HTTP/3.',
+  'RPKI': 'Resource Public Key Infrastructure, which lets networks sign which AS may announce which IP addresses.',
+  'Route-origin validation': 'Checking a BGP route against RPKI records and rejecting routes from unauthorised origins.',
+  'SNI': 'Server Name Indication, the website name a browser sends at the start of a TLS connection.',
+  'TLS': 'Transport Layer Security, the protocol that encrypts and authenticates web and app connections.',
+  'TRAI': 'Telecom Regulatory Authority of India, which regulates tariffs and service quality and makes recommendations to government.',
+  'Transit': 'Paid service in which one network carries traffic to the rest of the internet for another.',
+  'Trusted source': 'Under Indian telecom licence conditions, a vendor whose products the designated authority has approved for use in networks.',
+  'Two-person rule': 'A control requiring two authorised people to approve a sensitive action.',
+  'Threat model': 'A structured list of what could go wrong, who could cause it, and what protects against it.',
+};
+
+</script>
+<script>
+/* App 3 data: the 15-threat model and the protocol building blocks.
+   Residual scores run 1 (low) to 10 (high). Ratings: 1–3 Low, 4–6 Medium, 7–10 High.
+   base.A = terrestrial operator architecture today; base.B = LEO satellite architecture under baseline licence conditions.
+   All ratings are qualitative teaching judgements, not measurements. */
+window.THREATS = [
+  { id: 'T1', name: 'Unauthorised access to management systems', short: 'management access',
+    assets: 'Network configuration, terminal fleet management, satellite and gateway control.',
+    capability: 'Skilled external attacker or state-backed group.',
+    pre: 'Exposed management interface, stolen credentials or an unpatched system.',
+    cons: 'Configuration changes, service disruption, access to subscriber data.',
+    mit: { A: 'Segmented management networks; cyber security rules; CERT-In reporting.', B: 'Operator-managed fleet with signed firmware; in-India monitoring under licence conditions.' },
+    base: { A: 5, B: 5 }, unknown: {},
+    why: { A: 'Many operators and systems means many targets, but each is separately run and regulated in India.', B: 'One operator remotely manages every terminal, so one breach reaches far. Strong vendor controls are likely but not publicly verifiable.' },
+    evidence: 'plausible', claims: ['cyber-rules'], leak: 'fictional network configuration', hours: 12 },
+  { id: 'T2', name: 'Misuse of privileged accounts', short: 'privileged accounts',
+    assets: 'Administrator accounts, key-management systems, subscriber databases.',
+    capability: 'Insider with admin rights, or an attacker who stole them.',
+    pre: 'Standing (always-on) privileges and weak approval controls.',
+    cons: 'Unlogged changes, data extraction, sabotage.',
+    mit: { A: 'Operator access policies; audits under licence conditions.', B: 'Operator internal controls; limited external visibility of global admin practice.' },
+    base: { A: 5, B: 6 }, unknown: {},
+    why: { A: 'Common risk across telecoms, partly covered by Indian audit regimes.', B: 'Global admin teams may sit outside India, which makes independent audit harder.' },
+    evidence: 'plausible', claims: [], leak: 'fictional admin actions', hours: 24 },
+  { id: 'T3', name: 'Exposure of subscriber metadata', short: 'subscriber metadata',
+    assets: 'Who connects, when, from where, and how much.',
+    capability: 'Anyone with access to operator logs, or a foreign legal order.',
+    pre: 'Metadata stored or processed outside the reach of Indian safeguards.',
+    cons: 'Profiling of users, including officials and journalists.',
+    mit: { A: 'Logs kept in India (CERT-In); data-protection law.', B: 'Reported licence condition: traffic and monitoring in India.' },
+    base: { A: 5, B: 6 }, unknown: {},
+    why: { A: 'Metadata is held domestically but in many systems.', B: 'In-India conditions help, but control-plane systems may process some metadata globally.' },
+    evidence: 'plausible', claims: ['pl-metadata', 'satcom-conditions'], leak: 'fictional usage metadata', hours: 48 },
+  { id: 'T4', name: 'Access to sensitive government communications', short: 'government traffic',
+    assets: 'Official communications, defence and critical-sector traffic.',
+    capability: 'Well-resourced foreign intelligence service.',
+    pre: 'Government traffic sent over commercial links without its own encryption.',
+    cons: 'Intelligence loss, now or later ("harvest now, decrypt later").',
+    mit: { A: 'Dedicated government networks; end-to-end encryption.', B: 'Same as A if the government does not rely on the satellite operator\'s own protection.' },
+    base: { A: 4, B: 5 }, unknown: {},
+    why: { A: 'Sensitive traffic mostly uses dedicated networks and its own encryption.', B: 'Recorded traffic could be decrypted later if keys or algorithms weaken.' },
+    evidence: 'plausible', claims: ['pl-harvest'], leak: 'fictional encrypted government traffic (recorded, not readable)', hours: 72 },
+  { id: 'T5', name: 'Supply-chain compromise', short: 'supply chain',
+    assets: 'Satellites, terminals, gateway equipment, software updates.',
+    capability: 'Attacker inside a vendor or its update channel.',
+    pre: 'Unverified components or unsigned updates.',
+    cons: 'Hidden access across many devices at once.',
+    mit: { A: 'Trusted-source rules since June 2021.', B: 'Trusted-source coverage of satellite segments is not publicly clear.' },
+    base: { A: 4, B: 6 }, unknown: { B: true },
+    why: { A: 'Equipment must come from designated trusted sources.', B: 'Rated Unknown: there is not enough public information on how space and terminal components are assured in India.' },
+    evidence: 'plausible', claims: ['trusted-source', 'pl-supply'], leak: 'fictional terminal firmware', hours: 120 },
+  { id: 'T6', name: 'Malicious or mistaken routing changes', short: 'routing',
+    assets: 'Route tables, gateway selection, BGP announcements.',
+    capability: 'External attacker, insider, or simple human error.',
+    pre: 'Unsigned configuration changes, no route validation.',
+    cons: 'Traffic sent through unexpected paths or countries; outages.',
+    mit: { A: 'BGP filtering; RPKI by some operators.', B: 'Operator-controlled internal routing; RPKI at the edge where deployed.' },
+    base: { A: 5, B: 5 }, unknown: {},
+    why: { A: 'Route leaks happen regularly worldwide; RPKI adoption is partial.', B: 'Internal satellite routing is invisible from outside, so mistakes are hard to spot.' },
+    evidence: 'plausible', claims: ['rpki'], leak: 'fictional traffic routed abroad', hours: 6 },
+  { id: 'T7', name: 'Denial of service or deliberate disruption', short: 'disruption',
+    assets: 'Radio links, gateways, core network capacity.',
+    capability: 'Botnet operator, or a state with radio jamming capability.',
+    pre: 'Insufficient capacity, few gateways, unprotected radio links.',
+    cons: 'Loss of service for an area or everyone.',
+    mit: { A: 'DDoS scrubbing; many sites; diverse fibre.', B: 'Phased arrays resist some jamming; several gateways.' },
+    base: { A: 5, B: 6 }, unknown: {},
+    why: { A: 'Many independent sites limit the reach of any single attack.', B: 'Radio uplinks can be jammed locally, and gateways are high-value targets.' },
+    evidence: 'plausible', claims: [], leak: 'fictional service availability', hours: 8 },
+  { id: 'T8', name: 'Foreign jurisdiction and conflicting legal duties', short: 'jurisdiction',
+    assets: 'Control decisions, data, and service continuity.',
+    capability: 'A foreign government with legal power over the operator.',
+    pre: 'Operator decision-making or key systems outside India.',
+    cons: 'Orders that conflict with Indian law or interests, such as suspension or data disclosure.',
+    mit: { A: 'Indian operators are mainly subject to Indian law.', B: 'Indian licence conditions apply locally; the operator\'s home law still applies globally.' },
+    base: { A: 3, B: 7 }, unknown: {},
+    why: { A: 'Control sits in India.', B: 'Two legal systems apply to the same control plane. This is a design property, not an accusation.' },
+    evidence: 'plausible', claims: ['pl-jurisdiction'], leak: 'fictional control decisions', hours: 168 },
+  { id: 'T9', name: 'Weak incident response or auditability', short: 'auditability',
+    assets: 'Logs, evidence, response capability.',
+    capability: 'Any attacker benefits when incidents go unseen.',
+    pre: 'Logs that can be edited, or are held outside Indian reach.',
+    cons: 'Late detection, no proof of what happened.',
+    mit: { A: '6-hour reporting; 180-day logs in India.', B: 'Same reporting duties; global systems may be harder to audit.' },
+    base: { A: 4, B: 6 }, unknown: {},
+    why: { A: 'Domestic logs and reporting duties apply directly.', B: 'Evidence may sit in systems an Indian auditor cannot inspect.' },
+    evidence: 'plausible', claims: ['certin', 'cyber-rules'], leak: 'fictional audit evidence', hours: 48 },
+  { id: 'T10', name: 'Insider threat', short: 'insider',
+    assets: 'Anything privileged staff can touch.',
+    capability: 'Employee or contractor acting alone or under pressure.',
+    pre: 'Single-person access to sensitive actions.',
+    cons: 'Data theft, sabotage, unauthorised interception.',
+    mit: { A: 'Background checks; access logs.', B: 'Operator HR and access controls.' },
+    base: { A: 5, B: 5 }, unknown: {},
+    why: { A: 'Present in every large organisation.', B: 'Same, with staff possibly in several countries.' },
+    evidence: 'plausible', claims: [], leak: 'fictional subscriber records', hours: 72 },
+  { id: 'T11', name: 'Weak identity and device authentication', short: 'device identity',
+    assets: 'Terminals, SIMs, user accounts.',
+    capability: 'Fraudster cloning or stealing devices.',
+    pre: 'Weak device credentials, no hardware root of trust.',
+    cons: 'Untraceable use, fraud, impersonation.',
+    mit: { A: 'SIM-based cryptographic authentication; KYC.', B: 'Terminal authentication by the operator; KYC under licence.' },
+    base: { A: 4, B: 4 }, unknown: {},
+    why: { A: 'SIM authentication is mature.', B: 'Terminal authentication is likely strong, but its details are proprietary.' },
+    evidence: 'plausible', claims: ['mobile-auth'], leak: 'fictional cloned terminal', hours: 24 },
+  { id: 'T12', name: 'Loss of connectivity in a crisis', short: 'crisis connectivity',
+    assets: 'Emergency services, disaster response, government continuity.',
+    capability: 'Natural disaster, conflict, or large outage.',
+    pre: 'Single network or single control plane, no fallback.',
+    cons: 'No communication when it matters most.',
+    mit: { A: 'Many operators; but towers and fibre fail in floods and cyclones.', B: 'Works where towers are down, but depends on one operator\'s control plane.' },
+    base: { A: 6, B: 4 }, unknown: {},
+    why: { A: 'Ground infrastructure is exposed to the disaster itself.', B: 'Strong in disasters, but exposed to operator-wide outages, as in July 2025.' },
+    evidence: 'verified', claims: ['outage-2025'], leak: 'fictional emergency calls', hours: 6 },
+  { id: 'T13', name: 'Disclosure of location or usage information', short: 'location',
+    assets: 'Terminal location, usage patterns of sensitive sites.',
+    capability: 'Operator staff, foreign legal order, or attacker in operator systems.',
+    pre: 'Location data retained centrally without strict limits.',
+    cons: 'Tracking of people or facilities.',
+    mit: { A: 'Cell location held by Indian operators under Indian law.', B: 'Terminal location is known to the operator for service; storage rules matter.' },
+    base: { A: 5, B: 6 }, unknown: {},
+    why: { A: 'Location data is inherent to mobile networks but stays domestic.', B: 'Fixed terminal locations are precise and sit with one operator.' },
+    evidence: 'plausible', claims: ['pl-metadata'], leak: 'fictional terminal locations', hours: 48 },
+  { id: 'T14', name: 'Abuse of lawful-access mechanisms', short: 'lawful-access abuse',
+    assets: 'Interception systems and the data they reach.',
+    capability: 'Insider, rogue official, or attacker who reaches the interception interface.',
+    pre: 'Broad orders, weak audit, interfaces without strong access control.',
+    cons: 'Surveillance outside the law; loss of public trust.',
+    mit: { A: '2024 rules: authorisation, review, record destruction.', B: 'Same rules apply to licensed satellite operators in India.' },
+    base: { A: 5, B: 5 }, unknown: {},
+    why: { A: 'Safeguards exist, but oversight is executive rather than judicial.', B: 'Same framework; a new access point to protect.' },
+    evidence: 'plausible', claims: ['intercept-rules'], leak: 'fictional intercepted metadata', hours: 72 },
+  { id: 'T15', name: 'Excessive centralisation of control', short: 'centralisation',
+    assets: 'National connectivity resilience and market choice.',
+    capability: 'Any single failure, decision or pressure on one operator.',
+    pre: 'A large share of users depends on one control plane.',
+    cons: 'Everything fails or changes at once; little bargaining power.',
+    mit: { A: 'Several national operators.', B: 'Few LEO operators; one global control plane per operator.' },
+    base: { A: 3, B: 8 }, unknown: {},
+    why: { A: 'Competition between several operators spreads control.', B: 'By design, one operator controls the whole constellation.' },
+    evidence: 'plausible', claims: ['pl-central'], leak: 'fictional nationwide service', hours: 24 },
+];
+
+window.BLOCK_GROUPS = [
+  { id: 'gw', title: 'Gateway and data-path location', type: 'radio', blocks: ['gw-base', 'gw-india', 'gw-split'], extra: ['gw-attest'] },
+  { id: 'key', title: 'Key custody', type: 'radio', blocks: ['key-op', 'key-joint', 'key-india'], extra: ['key-pq'] },
+  { id: 'pa', title: 'Privileged access', type: 'check', blocks: ['pa-hw', 'pa-two', 'pa-time', 'pa-logs'] },
+  { id: 'la', title: 'Lawful access', type: 'check', blocks: ['la-auth', 'la-scope', 'la-audit', 'la-transp'] },
+  { id: 'rt', title: 'Routing and control plane', type: 'check', blocks: ['rt-signed', 'rt-geo', 'rt-anom'] },
+  { id: 'rs', title: 'Resilience', type: 'check', blocks: ['rs-fallback', 'rs-local', 'rs-emerg'] },
+  { id: 'op', title: 'Openness', type: 'check', blocks: ['op-roam', 'op-term', 'op-price'] },
+];
+
+/* fx: change in residual per threat (negative = better). privacy/resilience/competition: points added to those scores. cost: deployment cost units. */
+window.BLOCKS = {
+  'gw-base': { label: 'Operator chooses gateway (baseline)', desc: 'Today\'s licence conditions only; no extra design.', fx: {}, cost: 0 },
+  'gw-india': { label: 'In-India termination', desc: 'All Indian user traffic comes down at gateways in India and is handled by systems in India.', fx: { T8: -3, T3: -2, T13: -1, T4: -1, T7: +1 }, resilience: -5, cost: 3 },
+  'gw-split': { label: 'Split termination', desc: 'User traffic terminates in India; the global control plane stays with the operator behind an audited interface.', fx: { T8: -2, T3: -2, T13: -2, T4: -1 }, cost: 2 },
+  'gw-attest': { label: 'Mutual gateway attestation', desc: 'Gateways and the operator core prove to each other, cryptographically, that they run approved hardware and software.', fx: { T1: -1, T5: -1, T6: -1, T11: -1 }, cost: 1 },
+  'key-op': { label: 'Operator-held keys (baseline)', desc: 'The operator alone holds network encryption keys.', fx: {}, cost: 0 },
+  'key-joint': { label: 'Jointly held keys', desc: 'Threshold custody: the operator and an Indian trustee must both take part to use or rotate keys.', fx: { T2: -2, T14: -1, T4: -1, T8: -1 }, privacy: 10, resilience: -3, cost: 2 },
+  'key-india': { label: 'India-held keys for specific traffic classes', desc: 'An Indian authority holds keys for defined classes, such as government traffic.', fx: { T4: -2, T8: -2, T14: +2 }, privacy: -15, competition: -5, cost: 2 },
+  'key-pq': { label: 'Post-quantum-ready key exchange', desc: 'Hybrid classical plus ML-KEM key exchange, so recorded traffic stays safe if quantum computers arrive.', fx: { T4: -2, T13: -1 }, cost: 1 },
+  'pa-hw': { label: 'Hardware-backed credentials', desc: 'Admins sign in with hardware security keys; passwords alone never work.', fx: { T1: -2, T11: -1, T2: -1 }, cost: 1 },
+  'pa-two': { label: 'Two-person approval', desc: 'Critical changes need two authorised people.', fx: { T2: -2, T10: -2, T1: -1 }, resilience: -3, cost: 1 },
+  'pa-time': { label: 'Time-limited access', desc: 'Privileges are granted just in time and expire automatically.', fx: { T2: -1, T10: -1, T1: -1 }, cost: 1 },
+  'pa-logs': { label: 'Tamper-evident logs', desc: 'Admin actions are written to append-only, hash-chained logs with a copy in India.', fx: { T9: -3, T10: -1, T14: -1 }, privacy: 3, cost: 1 },
+  'la-auth': { label: 'Authorisation steps', desc: 'Every request carries a verifiable order from a competent authority before any data flows.', fx: { T14: -2 }, privacy: 5, cost: 0 },
+  'la-scope': { label: 'Scope limits', desc: 'Orders name specific identifiers, data types and time windows; bulk collection is blocked.', fx: { T14: -1, T3: -1, T13: -1 }, privacy: 8, cost: 0 },
+  'la-audit': { label: 'Independent audit trail', desc: 'Every lawful-access action is logged where an independent reviewer can check it.', fx: { T14: -2, T9: -1 }, privacy: 5, cost: 1 },
+  'la-transp': { label: 'Transparency reports', desc: 'Aggregate counts of requests are published regularly.', fx: { T14: -1 }, privacy: 5, cost: 0 },
+  'rt-signed': { label: 'Signed route and configuration changes', desc: 'Every routing or configuration change must be cryptographically signed and verified before it applies.', fx: { T6: -3, T1: -1 }, cost: 1 },
+  'rt-geo': { label: 'Geographic policy checks', desc: 'Automatic checks block paths that would take Indian traffic abroad without reason.', fx: { T6: -1, T8: -1, T3: -1 }, cost: 1 },
+  'rt-anom': { label: 'Anomaly alerts', desc: 'Unusual routes, traffic volumes or admin behaviour trigger alerts to an Indian security operations centre.', fx: { T6: -1, T7: -1, T9: -1 }, cost: 1 },
+  'rs-fallback': { label: 'Fallback to terrestrial links', desc: 'Critical users switch automatically to mobile or fibre if satellite service fails.', fx: { T12: -3, T7: -2, T15: -1 }, resilience: 10, cost: 3 },
+  'rs-local': { label: 'Local survivability', desc: 'Indian gateways and terminals keep working for a defined period if the global control plane fails.', fx: { T12: -2, T15: -3, T8: -1 }, resilience: 10, cost: 3 },
+  'rs-emerg': { label: 'Emergency-service continuity', desc: 'Emergency calls and a break-glass procedure keep working, even during maintenance freezes.', fx: { T12: -1, T7: -1 }, resilience: 5, cost: 1 },
+  'op-roam': { label: 'Open interfaces and roaming', desc: 'Standard interfaces let users and critical services move between satellite and terrestrial operators.', fx: { T15: -2, T12: -1 }, competition: 15, cost: 2 },
+  'op-term': { label: 'Certified multi-vendor terminals', desc: 'Terminals from several certified vendors can be used, rather than a single source.', fx: { T5: -1 }, competition: 8, cost: 1 },
+  'op-price': { label: 'No lock-in of gateways or spectrum', desc: 'Gateway sites and access rules are open to other operators on fair terms.', fx: { T15: -1 }, competition: 12, cost: 0 },
+};
+
+window.DEMO_DESIGN = {
+  title: 'Demo: balanced sovereign design', team: 'Kit demo',
+  blocks: ['gw-split', 'gw-attest', 'key-joint', 'key-pq', 'pa-hw', 'pa-two', 'pa-logs', 'la-auth', 'la-scope', 'la-audit', 'rt-signed', 'rt-anom', 'rs-fallback', 'rs-local', 'rs-emerg', 'op-roam'],
+  assumptions: 'The operator agrees to an Indian trustee for joint key custody. Indian gateways have diverse fibre.',
+  openQuestions: 'Who is the independent auditor? How long must local survivability last?',
+};
+
+</script>
+<script>
+/* Shared shell: DOM helpers, top bar, modes, narration, claims, glossary, tabs and quiz.
+   Every app loads data/claims.js and data/glossary.js before this file. */
+(function () {
+  'use strict';
+
+  const SVGNS = 'http://www.w3.org/2000/svg';
+
+  function append(el, kids) {
+    for (const k of kids.flat(Infinity)) {
+      if (k == null || k === false) continue;
+      el.appendChild(k instanceof Node ? k : document.createTextNode(String(k)));
+    }
+    return el;
+  }
+  function setAttrs(el, attrs, isSvg) {
+    if (!attrs) return;
+    for (const [k, v] of Object.entries(attrs)) {
+      if (v == null || v === false) continue;
+      if (k === 'class') isSvg ? el.setAttribute('class', v) : (el.className = v);
+      else if (k === 'html') el.innerHTML = v;
+      else if (k === 'text') el.textContent = v;
+      else if (k.startsWith('on') && typeof v === 'function') el.addEventListener(k.slice(2).toLowerCase(), v);
+      else if (k === 'style' && typeof v === 'object') Object.assign(el.style, v);
+      else el.setAttribute(k, v === true ? '' : v);
+    }
+  }
+  function h(tag, attrs, ...kids) {
+    const el = document.createElement(tag);
+    setAttrs(el, attrs, false);
+    return append(el, kids);
+  }
+  function s(tag, attrs, ...kids) {
+    const el = document.createElementNS(SVGNS, tag);
+    setAttrs(el, attrs, true);
+    return append(el, kids);
+  }
+  const $ = (sel, root = document) => root.querySelector(sel);
+  const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+  const clear = (el) => { while (el.firstChild) el.removeChild(el.firstChild); return el; };
+  // Replaces an element's children; skips null/false and flattens arrays, unlike the native append.
+  const fill = (el, ...kids) => append(clear(el), kids);
+  const add = (el, ...kids) => append(el, kids);
+
+  // localStorage is a convenience only; every access is guarded.
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem('isk:' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+    set(k, v) { try { localStorage.setItem('isk:' + k, JSON.stringify(v)); } catch (e) { /* ignore */ } },
+  };
+
+  /* ---------------- tags ---------------- */
+  const TAGS = {
+    documented: 'DOCUMENTED',
+    practice: 'GENERAL INDUSTRY PRACTICE',
+    illustrative: 'ILLUSTRATIVE ASSUMPTION',
+    simulated: 'SIMULATED',
+    mandatory: 'MANDATORY',
+    recommended: 'RECOMMENDED PRACTICE',
+    some: 'DEPLOYED BY SOME OPERATORS',
+    verified: 'VERIFIED FACT',
+    plausible: 'PLAUSIBLE RISK',
+    unverified: 'UNVERIFIED ALLEGATION',
+  };
+  function chip(tag) {
+    return h('span', { class: 'chip t-' + tag, title: TAGS[tag] || tag }, TAGS[tag] || tag.toUpperCase());
+  }
+
+  /* ---------------- claims ---------------- */
+  const used = new Map();
+  function fmtDate(iso) {
+    const d = new Date(iso + 'T00:00:00');
+    if (isNaN(d)) return iso;
+    return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+  }
+  function claimValid(c) {
+    return c && c.text && c.tag && Array.isArray(c.sources) && c.sources.length && c.sources.every((x) => x.title) && c.verified;
+  }
+  // Renders a claim. A claim without a source and a check date is refused, never shown.
+  function claim(id, opts = {}) {
+    const c = (window.CLAIMS || {})[id];
+    if (!claimValid(c)) {
+      console.error('Claim refused (missing text, tag, source or date):', id);
+      return h('div', { class: 'claim-error', role: 'note' }, `Claim "${id}" hidden: it has no source or check date.`);
+    }
+    used.set(id, c);
+    const src = c.sources[0];
+    const meta = h('span', { class: 'meta' },
+      src.url ? h('a', { href: src.url, target: '_blank', rel: 'noopener', title: src.title }, 'Source') : h('span', { title: src.title, style: { textDecoration: 'underline dotted' } }, 'Kit note'),
+      c.sources.length > 1 ? ` +${c.sources.length - 1}` : '',
+      ' · checked ', fmtDate(c.verified));
+    const tagName = opts.tag || 'span';
+    return h(tagName, { class: 'claim', 'data-claim': id }, c.text, ' ', chip(c.tag), meta);
+  }
+  function claims(ids, tag = 'p') { return ids.map((id) => claim(id, { tag })); }
+
+  /* ---------------- top bar ---------------- */
+  const APPS = [
+    { id: 'hub', href: 'index.html', label: 'Hub' },
+    { id: 'app1', href: 'app1.html', label: '1 · Earth to Orbit' },
+    { id: 'app2', href: 'app2.html', label: '2 · Inside India\'s Internet' },
+    { id: 'app3', href: 'app3.html', label: '3 · Design the Protocol' },
+  ];
+  const state = { teacher: false, demo: false, reduce: false, speak: false };
+  const hooks = { demo: [], teacher: [], reduce: [] };
+
+  function logo() {
+    return s('svg', { class: 'brand-mark', viewBox: '0 0 32 32', 'aria-hidden': 'true' },
+      s('circle', { cx: 16, cy: 18, r: 9, fill: '#1f4fa8' }),
+      s('path', { d: 'M8 20c4 2 12 2 16-2', stroke: '#45d99a', 'stroke-width': 2, fill: 'none' }),
+      s('ellipse', { cx: 16, cy: 16, rx: 15, ry: 6, fill: 'none', stroke: '#e3b54d', 'stroke-width': 1.6, transform: 'rotate(-20 16 16)' }),
+      s('circle', { cx: 28, cy: 9, r: 2.6, fill: '#f6d27e' }));
+  }
+
+  function toggleBtn(label, key, title) {
+    const b = h('button', { class: 'btn', type: 'button', 'aria-pressed': 'false', title }, label);
+    b.addEventListener('click', () => setMode(key, !state[key]));
+    b.dataset.mode = key;
+    return b;
+  }
+  function syncButtons() {
+    $$('[data-mode]').forEach((b) => b.setAttribute('aria-pressed', String(!!state[b.dataset.mode])));
+  }
+  function setMode(key, on, silent) {
+    state[key] = !!on;
+    if (key === 'teacher') document.body.classList.toggle('teacher', state.teacher);
+    if (key === 'reduce') document.body.classList.toggle('reduce-motion', state.reduce);
+    if (key !== 'demo') store.set('mode:' + key, state[key]);
+    syncButtons();
+    if (!silent) (hooks[key] || []).forEach((fn) => fn(state[key]));
+    if (key === 'teacher' && on && !silent) narrate('Teacher mode is on. Text is larger, and each step is explained here.');
+  }
+
+  let narrationTxt = null;
+  function narrate(text, label) {
+    if (!narrationTxt) return;
+    clear(narrationTxt);
+    if (label) narrationTxt.appendChild(h('span', { class: 'lbl' }, label));
+    narrationTxt.appendChild(document.createTextNode(text));
+    if (state.teacher && state.speak && 'speechSynthesis' in window) {
+      try { speechSynthesis.cancel(); speechSynthesis.speak(new SpeechSynthesisUtterance((label ? label + '. ' : '') + text)); } catch (e) { /* ignore */ }
+    }
+  }
+
+  /* ---------------- drawers ---------------- */
+  let scrim;
+  function makeDrawer(id, title) {
+    const body = h('div', { class: 'drawer-body' });
+    const close = h('button', { class: 'btn', type: 'button', 'aria-label': 'Close ' + title }, 'Close ✕');
+    const d = h('aside', { class: 'drawer', id, role: 'dialog', 'aria-modal': 'true', 'aria-label': title, hidden: true },
+      h('header', null, h('h2', { style: { margin: 0 } }, title), close), body);
+    close.addEventListener('click', () => closeDrawer(d));
+    document.body.appendChild(d);
+    return { el: d, body };
+  }
+  let lastFocus = null;
+  function openDrawer(d) {
+    lastFocus = document.activeElement;
+    d.hidden = false;
+    requestAnimationFrame(() => { d.classList.add('open'); scrim.classList.add('open'); });
+    const f = d.querySelector('input, button');
+    if (f) setTimeout(() => f.focus(), 30);
+  }
+  function closeDrawer(d) {
+    d.classList.remove('open'); scrim.classList.remove('open');
+    setTimeout(() => { d.hidden = true; }, 220);
+    if (lastFocus) lastFocus.focus();
+  }
+
+  function renderGlossary(body, q = '') {
+    const list = body.querySelector('dl');
+    clear(list);
+    const terms = Object.entries(window.GLOSSARY || {}).sort((a, b) => a[0].localeCompare(b[0]));
+    const needle = q.trim().toLowerCase();
+    for (const [term, def] of terms) {
+      if (needle && !(term.toLowerCase().includes(needle) || def.toLowerCase().includes(needle))) continue;
+      list.appendChild(h('dt', null, term));
+      list.appendChild(h('dd', null, def));
+    }
+    if (!list.children.length) list.appendChild(h('dd', null, 'No matching term.'));
+  }
+
+  function renderSources(body) {
+    clear(body);
+    body.appendChild(h('p', { class: 'muted' }, 'Every factual claim on this page, with its tag, source and the date it was last checked. Numbers marked SIMULATED come from the teaching model, not from measurements.'));
+    const groups = {};
+    for (const [id, c] of used) (groups[c.tag] = groups[c.tag] || []).push([id, c]);
+    const order = ['verified', 'documented', 'mandatory', 'recommended', 'some', 'practice', 'plausible', 'unverified', 'illustrative', 'simulated'];
+    for (const tag of order) {
+      if (!groups[tag]) continue;
+      body.appendChild(h('h3', { style: { marginTop: '18px' } }, chip(tag)));
+      for (const [, c] of groups[tag]) {
+        body.appendChild(h('div', { class: 'card', style: { margin: '8px 0', padding: '10px 12px' } },
+          h('div', null, c.text),
+          h('ul', { class: 'tight muted', style: { fontSize: '.85em' } },
+            c.sources.map((x) => h('li', null, x.url ? h('a', { href: x.url, target: '_blank', rel: 'noopener' }, x.title) : x.title))),
+          h('div', { class: 'muted', style: { fontSize: '.8em' } }, 'Last checked ' + fmtDate(c.verified))));
+      }
+    }
+  }
+
+  /* ---------------- init ---------------- */
+  function init(opts) {
+    const appId = opts.app;
+    document.documentElement.lang = 'en';
+    const main = $('main');
+    if (main && !main.id) main.id = 'main';
+
+    const skip = h('a', { class: 'skip', href: '#main' }, 'Skip to content');
+    const nav = h('nav', { 'aria-label': 'Kit navigation' },
+      h('ul', { class: 'navlinks' }, APPS.map((a) => h('li', null,
+        h('a', { href: a.href, 'aria-current': a.id === appId ? 'page' : null }, a.label)))));
+    const glossBtn = h('button', { class: 'btn', type: 'button' }, 'Glossary');
+    const srcBtn = h('button', { class: 'btn', type: 'button' }, 'Sources');
+    const tools = h('div', { class: 'tools' },
+      toggleBtn('Teacher mode', 'teacher', 'Larger text and step-by-step narration'),
+      opts.demo !== false ? toggleBtn('Demo mode', 'demo', 'Load a prepared state for presenting') : null,
+      toggleBtn('Reduce motion', 'reduce', 'Turn off animation'),
+      glossBtn, srcBtn);
+    const bar = h('header', { class: 'topbar' },
+      h('a', { class: 'brand', href: 'index.html' }, logo(), h('span', null, 'Trusted Satellite Internet Kit')), nav, tools);
+    document.body.prepend(skip, bar);
+
+    scrim = h('div', { class: 'scrim' });
+    document.body.appendChild(scrim);
+    const gloss = makeDrawer('glossary', 'Glossary');
+    gloss.body.append(h('label', { class: 'sr-only', for: 'gsearch' }, 'Search glossary'),
+      h('input', { id: 'gsearch', type: 'search', placeholder: 'Search terms…', oninput: (e) => renderGlossary(gloss.body, e.target.value) }),
+      h('dl'));
+    renderGlossary(gloss.body);
+    const srcs = makeDrawer('sources', 'Sources and checks');
+    glossBtn.addEventListener('click', () => openDrawer(gloss.el));
+    srcBtn.addEventListener('click', () => { renderSources(srcs.body); openDrawer(srcs.el); });
+    scrim.addEventListener('click', () => $$('.drawer.open').forEach(closeDrawer));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') $$('.drawer.open').forEach(closeDrawer); });
+
+    narrationTxt = h('div', { class: 'txt', 'aria-live': 'polite' });
+    const speak = h('label', { class: 'switch', style: { fontSize: '.85em' } },
+      h('input', { type: 'checkbox', onchange: (e) => { state.speak = e.target.checked; if (!state.speak && 'speechSynthesis' in window) speechSynthesis.cancel(); } }), 'Read aloud');
+    document.body.appendChild(h('div', { class: 'narration', role: 'region', 'aria-label': 'Narration' }, narrationTxt, speak));
+    narrate(opts.intro || 'Teacher mode: each step of the demo is explained here.', 'Narrator');
+
+    const prefersReduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    setMode('reduce', store.get('mode:reduce', prefersReduce), true);
+    setMode('teacher', store.get('mode:teacher', false), true);
+
+    const foot = h('footer', { class: 'site' },
+      h('p', null, 'An independent educational kit. It is not run or endorsed by any government body or company. All simulations use invented data and never touch a real network.'),
+      h('p', null, 'Every claim carries a tag, a source and a check date. Open ', h('a', { href: '#', onclick: (e) => { e.preventDefault(); srcBtn.click(); } }, 'Sources'), ' to see them all.'));
+    document.body.appendChild(foot);
+  }
+
+  function on(key, fn) { (hooks[key] = hooks[key] || []).push(fn); }
+
+  /* ---------------- tabs ---------------- */
+  function tabs(container, items, onChange) {
+    const list = h('div', { role: 'tablist' });
+    const panels = [];
+    const btns = items.map((it, i) => {
+      const id = 'tab-' + Math.random().toString(36).slice(2, 8);
+      const panel = h('div', { role: 'tabpanel', id: id + '-p', 'aria-labelledby': id, tabindex: '0', hidden: i !== 0 });
+      append(panel, [typeof it.render === 'function' ? it.render() : it.content]);
+      panels.push(panel);
+      const b = h('button', { role: 'tab', id, type: 'button', 'aria-controls': id + '-p', 'aria-selected': String(i === 0), tabindex: i === 0 ? '0' : '-1' }, it.label);
+      b.addEventListener('click', () => select(i));
+      b.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+          const n = (i + (e.key === 'ArrowRight' ? 1 : -1) + items.length) % items.length;
+          select(n); btns[n].focus(); e.preventDefault();
+        }
+      });
+      return b;
+    });
+    function select(i) {
+      btns.forEach((b, j) => { b.setAttribute('aria-selected', String(i === j)); b.tabIndex = i === j ? 0 : -1; panels[j].hidden = i !== j; });
+      if (onChange) onChange(i, items[i]);
+    }
+    append(list, btns);
+    container.classList.add('tabs');
+    append(container, [list, panels]);
+    return { select };
+  }
+
+  /* ---------------- segmented control ---------------- */
+  function seg(options, value, onChange, label) {
+    const wrap = h('div', { class: 'seg', role: 'group', 'aria-label': label });
+    const btns = options.map((o) => {
+      const b = h('button', { type: 'button', 'aria-pressed': String(o.value === value) }, o.label);
+      b.addEventListener('click', () => { if (b.disabled) return; set(o.value); onChange(o.value); });
+      b.dataset.value = o.value;
+      return b;
+    });
+    function set(v) { btns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.value === String(v)))); }
+    append(wrap, btns);
+    wrap.set = set;
+    wrap.btn = (v) => btns.find((b) => b.dataset.value === String(v));
+    return wrap;
+  }
+  function toggle(label, checked, onChange) {
+    const input = h('input', { type: 'checkbox', role: 'switch' });
+    input.checked = !!checked;
+    input.addEventListener('change', () => onChange(input.checked));
+    const el = h('label', { class: 'switch' }, input, h('span', null, label));
+    el.input = input;
+    return el;
+  }
+
+  /* ---------------- quiz ---------------- */
+  function quiz(container, questions) {
+    let score = 0, answered = 0;
+    const scoreEl = h('p', { class: 'muted', 'aria-live': 'polite' }, `Score: 0 / ${questions.length}`);
+    container.classList.add('quiz');
+    questions.forEach((q, qi) => {
+      const fb = h('div', { class: 'fb', 'aria-live': 'polite' });
+      const opts = h('div', { class: 'opts' });
+      q.options.forEach((o, oi) => {
+        const b = h('button', { class: 'btn', type: 'button' }, o);
+        b.addEventListener('click', () => {
+          if (opts.dataset.done) return;
+          opts.dataset.done = '1';
+          const right = oi === q.answer;
+          b.classList.add(right ? 'right' : 'wrong');
+          if (!right) opts.children[q.answer].classList.add('right');
+          fb.textContent = (right ? 'Correct. ' : 'Not quite. ') + q.why;
+          answered++; if (right) score++;
+          scoreEl.textContent = `Score: ${score} / ${questions.length}` + (answered === questions.length ? ' — finished.' : '');
+        });
+        opts.appendChild(b);
+      });
+      container.appendChild(h('div', { class: 'q card' }, h('h3', null, `${qi + 1}. ${q.q}`), opts, fb));
+    });
+    const reset = h('button', { class: 'btn', type: 'button' }, 'Reset quiz');
+    reset.addEventListener('click', () => { clear(container); quiz(container, questions); });
+    container.append(scoreEl, reset);
+  }
+
+  function glossaryList(container) {
+    const dl = h('dl', { class: 'grid g2' });
+    for (const [t, d] of Object.entries(window.GLOSSARY || {}).sort((a, b) => a[0].localeCompare(b[0])))
+      dl.appendChild(h('div', { class: 'card', style: { padding: '10px 12px' } }, h('dt', { style: { fontWeight: 700, color: 'var(--gold-2)' } }, t), h('dd', { style: { margin: 0 } }, d)));
+    container.appendChild(dl);
+  }
+  function sourceList(container) {
+    const btn = h('button', { class: 'btn', type: 'button' }, 'Refresh list');
+    const box = h('div');
+    const draw = () => renderSources(box);
+    btn.addEventListener('click', draw);
+    container.append(btn, box);
+    setTimeout(draw, 0);
+    return draw;
+  }
+
+  window.K = { h, s, $, $$, clear, fill, add, store, chip, claim, claims, init, on, setMode, state, narrate, tabs, seg, toggle, quiz, glossaryList, sourceList, fmtDate, TAGS };
+})();
+
+</script>
+<script>
+/* Clickable SVG network diagram with an animated packet and a hop-by-hop player. */
+(function () {
+  'use strict';
+  const { s } = window.K;
+
+  class NetDiagram {
+    /* nodes: [{id, label, icon, x, y, org}], links: [{id, from, to, type, curve}], zones: [{x,y,w,h,label}] */
+    constructor(container, cfg) {
+      this.cfg = cfg;
+      this.nodes = new Map(cfg.nodes.map((n) => [n.id, n]));
+      this.links = cfg.links;
+      this.nodeEls = new Map();
+      this.linkEls = new Map();
+      this.token = 0;
+      this.render(container);
+    }
+    linkId(a, b) {
+      const l = this.links.find((x) => (x.from === a && x.to === b) || (x.from === b && x.to === a));
+      return l ? l.id || l.from + '-' + l.to : null;
+    }
+    pathD(l) {
+      const a = this.nodes.get(l.from), b = this.nodes.get(l.to);
+      if (!l.curve) return `M${a.x},${a.y} L${b.x},${b.y}`;
+      const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2 + l.curve;
+      return `M${a.x},${a.y} Q${mx},${my} ${b.x},${b.y}`;
+    }
+    render(container) {
+      const { width, height } = this.cfg;
+      const svg = s('svg', { class: 'net', viewBox: `0 0 ${width} ${height}`, role: 'group', 'aria-label': this.cfg.ariaLabel || 'Network diagram' });
+      svg.appendChild(s('defs', null,
+        s('filter', { id: 'glow', x: '-50%', y: '-50%', width: '200%', height: '200%' },
+          s('feGaussianBlur', { stdDeviation: 2.4, result: 'b' }),
+          s('feMerge', null, s('feMergeNode', { in: 'b' }), s('feMergeNode', { in: 'SourceGraphic' })))));
+      if (this.cfg.background) svg.appendChild(this.cfg.background());
+      for (const z of this.cfg.zones || []) {
+        svg.appendChild(s('rect', { class: 'zone', x: z.x, y: z.y, width: z.w, height: z.h, rx: 14 }));
+        svg.appendChild(s('text', { class: 'zone-lbl', x: z.x + 10, y: z.y + 16 }, z.label));
+      }
+      const gl = s('g');
+      for (const l of this.links) {
+        const id = l.id || l.from + '-' + l.to;
+        const p = s('path', { class: `link ${l.type}`, d: this.pathD(l) });
+        p.appendChild(s('title', null, l.title || l.type));
+        this.linkEls.set(id, p);
+        gl.appendChild(p);
+      }
+      svg.appendChild(gl);
+      const gn = s('g');
+      for (const n of this.cfg.nodes) {
+        const g = s('g', { class: 'node', tabindex: 0, role: 'button', 'aria-label': n.label + (n.org ? ', operated by ' + n.org : ''), transform: `translate(${n.x},${n.y})` },
+          s('circle', { class: 'ring', r: n.r || 24 }),
+          s('text', { class: 'icon', 'aria-hidden': 'true' }, n.icon || '•'),
+          s('text', { class: 'lbl', y: (n.r || 24) + 16 }, n.label),
+          n.org ? s('text', { class: 'org', y: (n.r || 24) + 30 }, n.org) : null);
+        const fire = () => this.cfg.onNodeClick && this.cfg.onNodeClick(n.id);
+        g.addEventListener('click', fire);
+        g.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fire(); } });
+        this.nodeEls.set(n.id, g);
+        gn.appendChild(g);
+      }
+      svg.appendChild(gn);
+      this.packet = s('circle', { class: 'packet', r: 8, cx: -50, cy: -50, visibility: 'hidden' });
+      svg.appendChild(this.packet);
+      this.svg = svg;
+      container.appendChild(svg);
+    }
+    setOrg(id, org) {
+      const g = this.nodeEls.get(id); if (!g) return;
+      const t = g.querySelector('text.org'); if (t) t.textContent = org;
+      g.setAttribute('aria-label', this.nodes.get(id).label + (org ? ', operated by ' + org : ''));
+    }
+    nodeClass(id, cls, on = true) { const g = this.nodeEls.get(id); if (g) g.classList.toggle(cls, on); }
+    clearNodeClass(cls) { this.nodeEls.forEach((g) => g.classList.remove(cls)); }
+    linkClass(id, cls, on = true) { const p = this.linkEls.get(id); if (p) p.classList.toggle(cls, on); }
+    clearLinkClass(cls) { this.linkEls.forEach((p) => p.classList.remove(cls)); }
+    select(id) { this.clearNodeClass('selected'); if (id) this.nodeClass(id, 'selected'); }
+    // Dim everything not on the route so the path in use stands out.
+    showRoute(route) {
+      const onRoute = new Set();
+      for (let i = 0; i < route.length - 1; i++) onRoute.add(this.linkId(route[i], route[i + 1]));
+      this.linkEls.forEach((p, id) => { p.classList.toggle('dim', !onRoute.has(id)); p.classList.remove('active'); });
+      const nodesOn = new Set(route);
+      this.nodeEls.forEach((g, id) => g.classList.toggle('dim', !nodesOn.has(id)));
+    }
+    hidePacket() { this.packet.setAttribute('visibility', 'hidden'); }
+    placePacket(id, resp) {
+      const n = this.nodes.get(id);
+      this.packet.setAttribute('cx', n.x); this.packet.setAttribute('cy', n.y);
+      this.packet.setAttribute('class', 'packet' + (resp ? ' resp' : ''));
+      this.packet.setAttribute('visibility', 'visible');
+    }
+    cancel() { this.token++; }
+    movePacket(a, b, ms, resp) {
+      const lid = this.linkId(a, b);
+      const path = this.linkEls.get(lid);
+      const tok = ++this.token;
+      this.placePacket(a, resp);
+      this.clearLinkClass('active');
+      if (path) path.classList.add('active');
+      const reduce = document.body.classList.contains('reduce-motion');
+      if (!path || reduce || ms <= 0) {
+        this.placePacket(b, resp);
+        return new Promise((r) => setTimeout(() => r(tok === this.token), reduce ? 120 : 0));
+      }
+      const len = path.getTotalLength();
+      const forward = this.links.find((l) => (l.id || l.from + '-' + l.to) === lid).from === a;
+      return new Promise((resolve) => {
+        const t0 = performance.now();
+        const tick = (t) => {
+          if (tok !== this.token) return resolve(false);
+          const k = Math.min(1, (t - t0) / ms);
+          const e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+          const pt = path.getPointAtLength((forward ? e : 1 - e) * len);
+          this.packet.setAttribute('cx', pt.x); this.packet.setAttribute('cy', pt.y);
+          if (k < 1) requestAnimationFrame(tick); else resolve(true);
+        };
+        requestAnimationFrame(tick);
+      });
+    }
+  }
+
+  /* Plays a route hop by hop. onHop(index, nodeId, info) fires on arrival at each node. */
+  class PathPlayer {
+    constructor(diagram, opts) {
+      this.d = diagram; this.opts = opts;
+      this.route = []; this.idx = 0; this.state = 'idle'; this.busy = false; this.speed = 1; this.resp = false;
+      this.timer = null;
+    }
+    load(route, resp) {
+      this.reset();
+      this.route = route.slice(); this.resp = !!resp; this.idx = 0;
+      this.d.showRoute(this.route);
+      this.d.placePacket(this.route[0], this.resp);
+      this.arrive();
+    }
+    arrive() {
+      this.d.clearNodeClass('active');
+      this.d.nodeClass(this.route[this.idx], 'active');
+      this.opts.onHop && this.opts.onHop(this.idx, this.route[this.idx], this);
+      if (this.idx >= this.route.length - 1) { this.state = 'done'; this.opts.onDone && this.opts.onDone(this); }
+      this.emit();
+    }
+    emit() { this.opts.onState && this.opts.onState(this.state, this); }
+    play(route, resp) { this.load(route, resp); if (this.state !== 'done') { this.state = 'playing'; this.emit(); this.schedule(); } }
+    schedule() { clearTimeout(this.timer); this.timer = setTimeout(() => this.next(), 500 / this.speed); }
+    async hop() {
+      if (this.busy || this.idx >= this.route.length - 1) return false;
+      if (this.opts.beforeHop && !(await this.opts.beforeHop(this.idx, this))) return false;
+      this.busy = true;
+      const ok = await this.d.movePacket(this.route[this.idx], this.route[this.idx + 1], 1100 / this.speed, this.resp);
+      this.busy = false;
+      if (!ok) return false;
+      this.idx++;
+      this.arrive();
+      return true;
+    }
+    async next() {
+      if (this.state !== 'playing') return;
+      const ok = await this.hop();
+      if (ok && this.state === 'playing') this.schedule();
+    }
+    pause() { if (this.state === 'playing') { this.state = 'paused'; clearTimeout(this.timer); this.emit(); } }
+    resume() { if (this.state === 'paused') { this.state = 'playing'; this.emit(); this.next(); } }
+    async step() {
+      if (!this.route.length || this.state === 'done') return;
+      clearTimeout(this.timer);
+      this.state = 'paused'; this.emit();
+      await this.hop();
+    }
+    setSpeed(v) { this.speed = v; }
+    reset() {
+      clearTimeout(this.timer); this.d.cancel(); this.busy = false;
+      this.state = 'idle'; this.idx = 0; this.route = [];
+      this.d.hidePacket(); this.d.clearNodeClass('active'); this.d.clearNodeClass('dim'); this.d.clearLinkClass('dim'); this.d.clearLinkClass('active');
+      this.emit();
+    }
+  }
+
+  window.NetDiagram = NetDiagram;
+  window.PathPlayer = PathPlayer;
+})();
+
+</script>
+<script>
+/* Minimal one-page PDF writer (Helvetica, text, lines, rectangles). No dependencies, works offline.
+   Coordinates are in points from the top-left of an A4 page (595 × 842). */
+(function () {
+  'use strict';
+  const MAP = { '→': '->', '←': '<-', '–': '-', '—': '-', '‘': "'", '’': "'", '“': '"', '”': '"', '…': '...', '₹': 'Rs ', '·': '-', '×': 'x', '≤': '<=', '≥': '>=', '•': '-', '✓': 'v', '−': '-', '⚠': '!' };
+  function clean(str) {
+    return String(str).replace(/[^\x20-\x7e]/g, (c) => (MAP[c] != null ? MAP[c] : (c.charCodeAt(0) < 256 ? c : '?')));
+  }
+  function esc(str) { return clean(str).replace(/\\/g, '\\\\').replace(/\(/g, '\\(').replace(/\)/g, '\\)'); }
+  const rgb = (c) => c.map((v) => (v / 255).toFixed(3)).join(' ');
+
+  class MiniPDF {
+    constructor() { this.ops = []; this.W = 595; this.H = 842; }
+    text(x, y, str, size = 10, bold = false, color = [20, 20, 40]) {
+      this.ops.push(`BT ${rgb(color)} rg /${bold ? 'F2' : 'F1'} ${size} Tf ${x.toFixed(1)} ${(this.H - y).toFixed(1)} Td (${esc(str)}) Tj ET`);
+    }
+    line(x1, y1, x2, y2, color = [180, 180, 200], w = 0.6) {
+      this.ops.push(`${rgb(color)} RG ${w} w ${x1} ${this.H - y1} m ${x2} ${this.H - y2} l S`);
+    }
+    rect(x, y, w, h, color) { this.ops.push(`${rgb(color)} rg ${x} ${this.H - y - h} ${w} ${h} re f`); }
+    // Approximate Helvetica width (average 0.5em) for wrapping.
+    wrap(str, size, maxW) {
+      const words = clean(str).split(/\s+/), lines = [];
+      let cur = '';
+      const maxChars = Math.floor(maxW / (size * 0.5));
+      for (const w of words) {
+        if ((cur + ' ' + w).trim().length > maxChars) { if (cur) lines.push(cur); cur = w; } else cur = (cur + ' ' + w).trim();
+      }
+      if (cur) lines.push(cur);
+      return lines;
+    }
+    para(x, y, str, size, maxW, lead, opts = {}) {
+      let lines = this.wrap(str, size, maxW);
+      if (opts.maxLines && lines.length > opts.maxLines) { lines = lines.slice(0, opts.maxLines); lines[lines.length - 1] += ' ...'; }
+      lines.forEach((l, i) => this.text(x, y + i * lead, l, size, !!opts.bold, opts.color));
+      return y + lines.length * lead;
+    }
+    blob() {
+      const content = this.ops.join('\n');
+      const objs = [
+        '<< /Type /Catalog /Pages 2 0 R >>',
+        '<< /Type /Pages /Kids [3 0 R] /Count 1 >>',
+        `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${this.W} ${this.H}] /Resources << /Font << /F1 4 0 R /F2 5 0 R >> >> /Contents 6 0 R >>`,
+        '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>',
+        '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>',
+        `<< /Length ${content.length} >>\nstream\n${content}\nendstream`,
+      ];
+      let out = '%PDF-1.4\n';
+      const offs = [];
+      objs.forEach((o, i) => { offs.push(out.length); out += `${i + 1} 0 obj\n${o}\nendobj\n`; });
+      const xref = out.length;
+      out += `xref\n0 ${objs.length + 1}\n0000000000 65535 f \n` + offs.map((o) => String(o).padStart(10, '0') + ' 00000 n \n').join('');
+      out += `trailer\n<< /Size ${objs.length + 1} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF`;
+      const bytes = new Uint8Array(out.length);
+      for (let i = 0; i < out.length; i++) bytes[i] = out.charCodeAt(i) & 0xff;
+      return new Blob([bytes], { type: 'application/pdf' });
+    }
+  }
+  window.MiniPDF = MiniPDF;
+})();
+
+</script>
+<script>
+/* App 3: comparison, threat model, evidence, protocol workbench, sandbox, export and peer review. */
+(function () {
+  'use strict';
+  const { h, s, $, clear, fill, add, claim, claims, narrate, seg, toggle, chip, store } = window.K;
+  const THREATS = window.THREATS, BLOCKS = window.BLOCKS, GROUPS = window.BLOCK_GROUPS;
+  const TBY = Object.fromEntries(THREATS.map((t) => [t.id, t]));
+
+  K.init({ app: 'app3', intro: 'App 3 compares the two architectures, sets out the threat model and lets you design and test a protocol.' });
+  const btn = (label, fn, cls) => { const b = h('button', { class: cls || 'btn', type: 'button' }, label); b.addEventListener('click', fn); return b; };
+  const clamp = (v, a = 0, b = 100) => Math.max(a, Math.min(b, v));
+  const rating = (v, unknown) => (unknown ? 'Unknown' : v <= 3 ? 'Low' : v <= 6 ? 'Medium' : 'High');
+  const rateEl = (r) => h('span', { class: 'rate ' + r }, r);
+
+  /* ================= 1. Comparison ================= */
+  const cmp = { dest: 'in', gw: 'in', isl: true, backhaul: 'redundant', access: 'strong', cond: 'normal' };
+  const T = (label, el) => h('div', { class: 't' }, h('span', null, label), el);
+  add($('#cmp-toggles'), 
+    T('Destination website', seg([{ value: 'in', label: 'Domestic' }, { value: 'os', label: 'Overseas' }], cmp.dest, (v) => { cmp.dest = v; drawCmp(); }, 'Destination')),
+    T('Satellite gateway (B)', seg([{ value: 'in', label: 'Indian gateway' }, { value: 'os', label: 'Overseas gateway' }], cmp.gw, (v) => { cmp.gw = v; drawCmp(); }, 'Gateway location')),
+    T('Inter-satellite links (B)', toggle('On', cmp.isl, (v) => { cmp.isl = v; drawCmp(); })),
+    T('Backhaul', seg([{ value: 'single', label: 'Single' }, { value: 'redundant', label: 'Redundant' }], cmp.backhaul, (v) => { cmp.backhaul = v; drawCmp(); }, 'Backhaul')),
+    T('Operator access control', seg([{ value: 'strong', label: 'Strong' }, { value: 'weak', label: 'Weak' }], cmp.access, (v) => { cmp.access = v; drawCmp(); }, 'Access control')),
+    T('Network condition', seg([{ value: 'normal', label: 'Normal' }, { value: 'outage', label: 'Backhaul outage' }], cmp.cond, (v) => { cmp.cond = v; drawCmp(); }, 'Condition')));
+
+  let dA, dB, pA, pB, rA, rB, metaA, metaB;
+  const J = { IN: 'India', OS: 'Overseas', SP: 'In orbit', GL: 'Global control plane' };
+  function buildArch(which) {
+    const destJ = cmp.dest === 'in' ? 'IN' : 'OS';
+    const red = cmp.backhaul === 'redundant', out = cmp.cond === 'outage';
+    let nodes, links, route, jur, bhFrom, bhTo;
+    if (which === 'A') {
+      nodes = [
+        { id: 'user', label: 'User', icon: '👤', x: 50, y: 95, org: 'You · India' },
+        { id: 'acc', label: 'Mobile / fixed access', icon: '🗼', x: 200, y: 95, org: 'Indian operator · India' },
+        { id: 'net', label: 'Operator network', icon: '⚙️', x: 420, y: 95, org: 'Indian operator · India' },
+        { id: 'ix', label: 'Interconnection', icon: '🔀', x: 640, y: 95, org: 'IXP / transit · India' },
+        { id: 'dest', label: destJ === 'IN' ? 'Website (India)' : 'Website (overseas)', icon: '☁️', x: 900, y: 95, org: 'Content provider · ' + J[destJ] },
+      ];
+      jur = { user: 'IN', acc: 'IN', bkp: 'IN', net: 'IN', ix: 'IN', dest: destJ };
+      bhFrom = 'acc'; bhTo = 'net';
+      links = [{ from: 'user', to: 'acc', type: 'radio' }, { from: 'net', to: 'ix', type: 'fibre' }, { from: 'ix', to: 'dest', type: destJ === 'OS' ? 'intl' : 'fibre', title: destJ === 'OS' ? 'Submarine cable abroad' : 'Domestic fibre' }];
+      route = ['user', 'acc'];
+    } else {
+      const gwJ = cmp.gw === 'in' ? 'IN' : 'OS';
+      nodes = [
+        { id: 'user', label: 'User', icon: '👤', x: 50, y: 175, org: 'You · India' },
+        { id: 'term', label: 'Terminal', icon: '📡', x: 150, y: 175, org: 'Satellite operator · India' },
+        { id: 'sat1', label: 'LEO satellite', icon: '🛰️', x: 260, y: 55, org: 'Satellite operator · orbit' },
+        { id: 'gw', label: gwJ === 'IN' ? 'Gateway (India)' : 'Gateway (overseas)', icon: '🗼', x: 470, y: 175, org: 'Satellite operator · ' + J[gwJ] },
+        { id: 'net', label: 'Operator network', icon: '⚙️', x: 640, y: 175, org: 'Satellite operator · global' },
+        { id: 'ix', label: 'Interconnection', icon: '🔀', x: 790, y: 175, org: 'IXP / transit · ' + J[gwJ] },
+        { id: 'dest', label: destJ === 'IN' ? 'Website (India)' : 'Website (overseas)', icon: '☁️', x: 930, y: 175, org: 'Content provider · ' + J[destJ] },
+      ];
+      jur = { user: 'IN', term: 'IN', sat1: 'SP', sat2: 'SP', gw: gwJ, bkp: gwJ, net: 'GL', ix: gwJ, dest: destJ };
+      links = [{ from: 'user', to: 'term', type: 'wired' }, { from: 'term', to: 'sat1', type: 'radio' }, { from: 'net', to: 'ix', type: 'fibre' }, { from: 'ix', to: 'dest', type: gwJ !== destJ ? 'intl' : 'fibre', title: gwJ !== destJ ? 'International link' : 'Local fibre' }];
+      route = ['user', 'term', 'sat1'];
+      if (cmp.isl) {
+        nodes.push({ id: 'sat2', label: 'LEO satellite 2', icon: '🛰️', x: 380, y: 45, org: 'Satellite operator · orbit' });
+        links.push({ from: 'sat1', to: 'sat2', type: 'laser', curve: -20 }, { from: 'sat2', to: 'gw', type: 'radio' });
+        route.push('sat2');
+      } else links.push({ from: 'sat1', to: 'gw', type: 'radio' });
+      route.push('gw');
+      bhFrom = 'gw'; bhTo = 'net';
+    }
+    const bx = (nodes.find((n) => n.id === bhFrom).x + nodes.find((n) => n.id === bhTo).x) / 2;
+    links.push({ id: 'bh', from: bhFrom, to: bhTo, type: out ? 'down' : 'fibre', title: 'Primary backhaul' });
+    if (red) {
+      nodes.push({ id: 'bkp', label: 'Backup route', icon: '↪', x: bx, y: which === 'A' ? 165 : 255, r: 14 });
+      links.push({ from: bhFrom, to: 'bkp', type: 'fibre', title: 'Backup backhaul' }, { from: 'bkp', to: bhTo, type: 'fibre', title: 'Backup backhaul' });
+    }
+    let failed = false;
+    if (out && !red) failed = true;
+    else { if (out) route.push('bkp'); route.push('net', 'ix', 'dest'); }
+    return { nodes, links, route, jur, failed };
+  }
+  function crossings(route, jur) {
+    const seq = route.map((id) => jur[id]).filter((j) => j === 'IN' || j === 'OS');
+    let n = 0; for (let i = 1; i < seq.length; i++) if (seq[i] !== seq[i - 1]) n++;
+    return n;
+  }
+  function note(which, meta) {
+    const box = clear($(which === 'A' ? '#note-a' : '#note-b'));
+    const parts = [];
+    if (meta.failed) parts.push(h('div', { class: 'bad' }, '✖ Backhaul is down and there is no backup: service is lost for these users.'));
+    else if (cmp.cond === 'outage') parts.push(h('div', { class: 'warn' }, '↪ Primary backhaul is down; traffic takes the backup route.'));
+    const n = crossings(meta.route, meta.jur);
+    if (!meta.failed) parts.push(h('div', { class: n ? 'warn' : 'ok' }, n === 0 ? '✓ Traffic stays in India end to end.' : `⚑ Traffic crosses a national border ${n} time${n > 1 ? 's' : ''}.` + (n >= 2 ? ' It leaves India and comes back ("tromboning").' : '')));
+    if (cmp.access === 'weak') parts.push(h('div', { class: 'warn' }, '⚠ Weak operator access control: management access and privileged-account threats (T1, T2) rise.'));
+    if (which === 'B') parts.push(h('div', { class: 'muted' }, 'The satellite operator\'s control plane serves every country it operates in.' + (cmp.cond === 'outage' ? ' This toggle models a backhaul cut; App 1 shows an operator-wide control-plane outage.' : '')));
+    add(box, ...parts);
+  }
+  function drawCmp() {
+    if (pA) pA.reset(); if (pB) pB.reset();
+    metaA = buildArch('A'); metaB = buildArch('B');
+    for (const [which, meta, el] of [['A', metaA, '#cmp-a'], ['B', metaB, '#cmp-b']]) {
+      const box = clear($(el));
+      const d = new NetDiagram(box, { width: 1000, height: which === 'A' ? 215 : 300, nodes: meta.nodes, links: meta.links, ariaLabel: 'Architecture ' + which, onNodeClick: (id) => narrate(meta.nodes.find((n) => n.id === id).org || '', meta.nodes.find((n) => n.id === id).label) });
+      if (cmp.access === 'weak') d.nodeClass('net', 'warn');
+      if (meta.failed) d.nodeClass(which === 'A' ? 'acc' : 'gw', 'down');
+      if (which === 'A') { dA = d; pA = new PathPlayer(d, {}); } else { dB = d; pB = new PathPlayer(d, {}); }
+      note(which, meta);
+    }
+  }
+  drawCmp();
+  $('#cmp-play').addEventListener('click', () => {
+    pA.play(metaA.route); pB.play(metaB.route);
+    narrate('Both packets are travelling. Watch which organisations and countries each one passes through.', 'Comparison');
+  });
+  $('#cmp-reset').addEventListener('click', () => { pA.reset(); pB.reset(); });
+
+  /* ================= 2. Threat model ================= */
+  const tbl = $('#thr-table');
+  add(tbl, h('thead', null, h('tr', null, h('th', null, '#'), h('th', null, 'Threat'), h('th', null, 'A · Terrestrial'), h('th', null, 'B · Satellite'), h('th', null, 'Evidence'))));
+  const tbody = h('tbody');
+  THREATS.forEach((t) => {
+    const nameBtn = h('button', { class: 'linkish', type: 'button' }, t.name);
+    const tr = h('tr', null, h('td', null, t.id), h('td', null, nameBtn), h('td', null, rateEl(rating(t.base.A, t.unknown.A))), h('td', null, rateEl(rating(t.base.B, t.unknown.B))), h('td', null, chip(t.evidence)));
+    tr.addEventListener('click', () => showThreat(t.id));
+    tr.dataset.id = t.id;
+    tbody.appendChild(tr);
+  });
+  tbl.appendChild(tbody);
+  function showThreat(id) {
+    const t = TBY[id];
+    [...tbody.children].forEach((r) => r.classList.toggle('sel', r.dataset.id === id));
+    const safeguards = Object.entries(BLOCKS).filter(([, b]) => (b.fx[id] || 0) < 0).map(([, b]) => b.label);
+    const archCol = (k, label) => h('div', { class: 'card' }, h('h4', null, label, ' ', rateEl(rating(t.base[k], t.unknown[k]))),
+      h('dl', { class: 'fields' }, h('dt', null, 'Existing mitigations'), h('dd', null, t.mit[k]),
+        h('dt', null, 'Residual risk'), h('dd', null, rating(t.base[k], t.unknown[k]) + (t.unknown[k] ? ' (not enough public evidence to rate)' : ''))),
+      h('details', null, h('summary', null, 'Why this rating?'), h('p', null, t.why[k]), h('p', { class: 'muted', style: { fontSize: '.85em' } }, 'A qualitative judgement for teaching, not a measurement.')));
+    fill($('#thr-detail'), 
+      h('h3', null, `${t.id} · ${t.name}`),
+      h('div', { class: 'grid g2' },
+        h('dl', { class: 'fields' }, h('dt', null, 'Assets at risk'), h('dd', null, t.assets), h('dt', null, 'Attacker capability'), h('dd', null, t.capability)),
+        h('dl', { class: 'fields' }, h('dt', null, 'Preconditions'), h('dd', null, t.pre), h('dt', null, 'Consequences'), h('dd', null, t.cons))),
+      h('div', { class: 'grid g2', style: { marginTop: '12px' } }, archCol('A', 'Architecture A · Terrestrial'), archCol('B', 'Architecture B · Satellite')),
+      h('h4', { style: { marginTop: '12px' } }, 'Evidence quality ', chip(t.evidence)),
+      ...(t.claims.length ? claims(t.claims) : [h('p', { class: 'muted' }, 'No specific public evidence cited; this is a general architectural risk.')]),
+      h('h4', null, 'Proposed safeguards (from the workbench)'),
+      h('ul', { class: 'tight' }, safeguards.map((x) => h('li', null, x))));
+    narrate(`${t.name}. Terrestrial: ${rating(t.base.A, t.unknown.A)}. Satellite: ${rating(t.base.B, t.unknown.B)}. ${t.why.B}`, t.id);
+  }
+  showThreat('T1');
+
+  /* ================= 3. Evidence ================= */
+  add($('#ev-lesson'), h('h3', null, 'A risk is not an allegation'),
+    h('p', null, h('strong', null, 'A verified fact'), ' has a primary or reputable source and a date: "IN-SPACe authorised the constellation on 8 July 2025."'),
+    h('p', null, h('strong', null, 'A plausible risk'), ' follows from how a system is designed: "If one control plane serves everyone, one failure can affect everyone." It says what ', h('em', null, 'could'), ' happen. It is not proof that anything did.'),
+    h('p', null, h('strong', null, 'An unverified allegation'), ' claims something happened or exists without evidence. Do not treat it as fact or build a design argument on it.'),
+    h('p', { class: 'muted' }, 'In the challenge, argue from facts and risks only. A claim without a source and date is not shown here.'));
+  const EV = [
+    ['verified', 'A · Verified facts', ['starlink-gmpcs', 'starlink-inspace', 'satcom-pending', 'starlink-gateways', 'satcom-conditions', 'outage-2025', 'trusted-source', 'certin', 'ml-kem']],
+    ['plausible', 'B · Plausible architectural risks', ['pl-central', 'pl-jurisdiction', 'pl-metadata', 'pl-supply', 'pl-harvest']],
+    ['unverified', 'C · Unverified allegations (do not treat as fact)', ['un-killswitch', 'un-bypass', 'un-backdoor']],
+  ];
+  for (const [tag, title, ids] of EV) $('#ev-groups').appendChild(h('div', { class: 'card ev-group' }, h('h3', null, chip(tag), title), claims(ids)));
+
+  /* ================= 4. Workbench ================= */
+  const saved = store.get('app3:design', null);
+  const design = {
+    sel: new Set(saved && Array.isArray(saved.blocks) ? saved.blocks.filter((b) => BLOCKS[b]) : ['gw-base', 'key-op']),
+    notes: (saved && saved.notes) || {}, title: (saved && saved.title) || '', team: (saved && saved.team) || '',
+    assumptions: (saved && saved.assumptions) || '', openQuestions: (saved && saved.openQuestions) || '',
+  };
+  function persist() {
+    store.set('app3:design', { blocks: [...design.sel], notes: design.notes, title: design.title, team: design.team, assumptions: design.assumptions, openQuestions: design.openQuestions });
+  }
+  function fxText(b) {
+    const parts = Object.entries(b.fx).map(([k, v]) => `${k} ${v > 0 ? '+' : ''}${v}`);
+    if (b.privacy) parts.push(`privacy ${b.privacy > 0 ? '+' : ''}${b.privacy}`);
+    if (b.resilience) parts.push(`resilience ${b.resilience > 0 ? '+' : ''}${b.resilience}`);
+    if (b.competition) parts.push(`competition ${b.competition > 0 ? '+' : ''}${b.competition}`);
+    if (b.cost) parts.push(`cost ${b.cost}`);
+    return parts.length ? parts.join(' · ') : 'no change';
+  }
+  const inputs = {};
+  const wbBlocks = $('#wb-blocks');
+  for (const g of GROUPS) {
+    const opts = h('div', { class: 'opts', role: g.type === 'radio' ? 'radiogroup' : 'group', 'aria-label': g.title });
+    const mk = (id, type) => {
+      const b = BLOCKS[id];
+      const input = h('input', { type, name: type === 'radio' ? 'g-' + g.id : null, value: id });
+      input.addEventListener('change', () => {
+        if (type === 'radio') g.blocks.forEach((x) => design.sel.delete(x));
+        if (input.checked) design.sel.add(id); else design.sel.delete(id);
+        update();
+      });
+      inputs[id] = input;
+      return h('label', { class: 'opt' }, input, h('span', null, h('strong', null, b.label), h('span', { class: 'd' }, b.desc), h('span', { class: 'fx' }, fxText(b))));
+    };
+    g.blocks.forEach((id) => opts.appendChild(mk(id, g.type === 'radio' ? 'radio' : 'checkbox')));
+    (g.extra || []).forEach((id) => opts.appendChild(mk(id, 'checkbox')));
+    wbBlocks.appendChild(h('div', { class: 'grp card' }, h('h3', null, g.title), opts));
+  }
+  function syncInputs() {
+    for (const g of GROUPS) if (g.type === 'radio' && !g.blocks.some((b) => design.sel.has(b))) design.sel.add(g.blocks[0]);
+    for (const [id, input] of Object.entries(inputs)) input.checked = design.sel.has(id);
+  }
+
+  function compute(sel) {
+    const res = {}, unk = {};
+    let privacy = 50, resil = 0, comp = 50, cost = 0;
+    for (const t of THREATS) res[t.id] = t.base.B;
+    const touched = new Set();
+    for (const id of sel) {
+      const b = BLOCKS[id]; if (!b) continue;
+      for (const [k, v] of Object.entries(b.fx)) { res[k] += v; touched.add(k); }
+      privacy += b.privacy || 0; resil += b.resilience || 0; comp += b.competition || 0; cost += b.cost || 0;
+    }
+    for (const t of THREATS) { res[t.id] = clamp(res[t.id], 1, 10); unk[t.id] = !!t.unknown.B && !touched.has(t.id); }
+    const mean = THREATS.reduce((a, t) => a + res[t.id], 0) / THREATS.length;
+    const costIdx = clamp(cost * 4);
+    const scores = {
+      security: clamp(Math.round(100 - 10 * (mean - 1))),
+      privacy: clamp(privacy),
+      resilience: clamp(Math.round(100 - 10 * ((res.T7 + res.T12 + res.T15) / 3 - 1)) + resil),
+      cost: costIdx,
+      competition: clamp(comp - (costIdx > 60 ? 10 : 0)),
+    };
+    const warnings = [];
+    for (const id of sel) {
+      const b = BLOCKS[id]; if (!b) continue;
+      const ups = Object.entries(b.fx).filter(([, v]) => v > 0).map(([k]) => `${k} (${TBY[k].short})`);
+      if (ups.length) warnings.push(`"${b.label}" fixes some threats but raises ${ups.join(', ')}.`);
+    }
+    if (sel.has('key-india') && !(sel.has('la-auth') && sel.has('la-audit'))) warnings.push('India-held keys without authorisation steps and an independent audit trail make abuse of lawful access (T14) more likely. Stronger control, lower privacy.');
+    if (sel.has('gw-india') && !sel.has('rs-fallback') && !sel.has('rs-local')) warnings.push('In-India termination concentrates traffic at a few gateway sites. Add terrestrial fallback or local survivability so they do not become a single disruption target (T7).');
+    if (sel.has('pa-two') && !sel.has('rs-emerg')) warnings.push('Two-person approval slows emergency changes. Add emergency-service continuity with a break-glass procedure.');
+    if (sel.has('key-joint')) warnings.push('Joint key custody adds a key ceremony, so emergency key rotation is slower (resilience −3).');
+    if (costIdx > 60) warnings.push(`The cost index is ${costIdx}. Costs this high may reach consumers as higher prices: the competition score is reduced by 10.`);
+    if (scores.privacy < 40) warnings.push('This design gains control at the expense of privacy.');
+    if (![...sel].some((x) => x.startsWith('la-'))) warnings.push('No lawful-access safeguards selected. The baseline 2024 rules still apply, but nothing extra limits or audits access.');
+    return { res, unk, scores, warnings, mean };
+  }
+
+  const SC = [['security', 'Security'], ['privacy', 'Privacy'], ['resilience', 'Resilience'], ['cost', 'Cost (lower is better)'], ['competition', 'Competition']];
+  function update() {
+    syncInputs(); persist();
+    const r = compute(design.sel);
+    fill($('#wb-score'), h('h3', null, 'Scorecard ', chip('illustrative')),
+      ...SC.map(([k, l]) => h('div', { class: 'score-row' }, h('span', null, l), h('div', { class: 'bar' }, h('i', { class: k === 'cost' ? 'cost' : '', style: { width: r.scores[k] + '%' } })), h('strong', null, r.scores[k]))));
+    const wb = clear($('#wb-warn'));
+    r.warnings.forEach((w) => wb.appendChild(h('div', { class: 'notice warn', style: { margin: '0 0 8px' } }, '⚠ ' + w)));
+    const tb = clear($('#wb-threats'));
+    add(tb, h('h3', null, 'Threats after your design'), h('p', { class: 'muted', style: { fontSize: '.85em', margin: '0 0 6px' } }, 'Satellite architecture B, baseline → your design'));
+    for (const t of THREATS) {
+      const d = r.res[t.id] - t.base.B;
+      tb.appendChild(h('div', { class: 'thr-mini' }, h('strong', null, t.id), h('span', null, t.name, ' ', d ? h('span', { class: 'delta' + (d > 0 ? ' up' : '') }, `${d > 0 ? '+' : ''}${d}`) : null), rateEl(rating(r.res[t.id], r.unk[t.id]))));
+    }
+    drawTradeoffs();
+    return r;
+  }
+  add($('#scoring-rules'), 
+    h('p', null, 'Each threat starts at its satellite baseline (1–10, from the threat model). Each building block adds or subtracts points, shown on the block as T-numbers. Scores are clamped to 1–10. Ratings: 1–3 Low, 4–6 Medium, 7–10 High. A threat rated Unknown stays Unknown until a block addresses it.'),
+    h('div', { class: 'formula', style: { fontFamily: 'var(--mono)', fontSize: '.85em', background: '#0a1736', padding: '10px', borderRadius: '8px', whiteSpace: 'pre-wrap' } },
+      `Security    = 100 − 10 × (mean residual of 15 threats − 1)
+Privacy     = 50 + Σ block privacy points
+Resilience  = 100 − 10 × (mean of T7, T12, T15 − 1) + Σ block resilience points
+Cost index  = 4 × Σ block cost units          (lower is better)
+Competition = 50 + Σ block competition points − 10 if cost index > 60
+All scores are clamped to 0–100.`),
+    h('p', { class: 'muted' }, 'The weights are teaching choices made openly so they can be challenged. Entrants may argue for different weights in their write-up.'),
+    h('div', { class: 'tablewrap' }, h('table', { class: 'data' }, h('thead', null, h('tr', null, h('th', null, 'Block'), h('th', null, 'Effects'))),
+      h('tbody', null, Object.values(BLOCKS).map((b) => h('tr', null, h('td', null, b.label), h('td', null, fxText(b))))))));
+
+  $('#wb-demo').addEventListener('click', () => loadDemo());
+  $('#wb-clear').addEventListener('click', () => { design.sel = new Set(['gw-base', 'key-op']); update(); narrate('Design cleared to the baseline.', 'Workbench'); });
+
+  /* ================= 5. Sandbox ================= */
+  let sbTimer = null;
+  function runSandbox() {
+    clearTimeout(sbTimer);
+    const r = compute(design.sel);
+    const out = clear($('#sb-out'));
+    const counts = { contained: 0, partial: 0, serious: 0 };
+    const cards = THREATS.map((t) => {
+      const v = r.res[t.id];
+      const trig = [...design.sel].filter((id) => (BLOCKS[id].fx[t.id] || 0) < 0).map((id) => BLOCKS[id].label);
+      const lvl = v <= 3 ? 'contained' : v <= 6 ? 'partial' : 'serious';
+      counts[lvl]++;
+      const leaked = { contained: 'Nothing. The attempt was stopped or detected early.', partial: `Partial: some ${t.leak} affected before controls responded.`, serious: `Serious: ${t.leak} exposed or service lost.` }[lvl];
+      const hrs = Math.max(1, Math.round(t.hours * v / t.base.B));
+      return h('div', { class: 'card sb-card' },
+        h('h3', null, `${t.id} · ${t.name}`),
+        h('p', { class: 'muted', style: { fontSize: '.86em', margin: '0 0 6px' } }, `Fictional scenario: ${t.capability.toLowerCase().replace(/\.$/, '')} exploits ${t.pre.toLowerCase().replace(/\.$/, '')}`),
+        h('div', { class: 'res ' + lvl }, { contained: '✓ Contained', partial: '◐ Partly contained', serious: '✖ Not contained' }[lvl]),
+        h('div', { style: { fontSize: '.86em', marginTop: '4px' } }, h('strong', null, 'Controls triggered: '), trig.length ? trig.join(', ') : 'none from your design'),
+        h('div', { style: { fontSize: '.86em' } }, h('strong', null, 'What leaked: '), leaked),
+        h('div', { style: { fontSize: '.86em' } }, h('strong', null, 'Recovery time: '), hrs >= 48 ? `${Math.round(hrs / 24)} days` : `${hrs} hours`, ' ', chip('simulated')));
+    });
+    const reduce = document.body.classList.contains('reduce-motion');
+    let i = 0;
+    const next = () => { if (i < cards.length) { out.appendChild(cards[i++]); sbTimer = setTimeout(next, reduce ? 0 : 110); } };
+    next();
+    fill($('#sb-summary'), h('p', null, h('strong', null, `${counts.contained} contained, ${counts.partial} partly contained, ${counts.serious} not contained.`), ' Recovery times scale with residual risk. All results are simulated.'));
+    narrate(`Sandbox run: ${counts.contained} contained, ${counts.partial} partly contained, ${counts.serious} not contained.`, 'Sandbox');
+  }
+  $('#sb-run').addEventListener('click', runSandbox);
+  $('#sb-clear').addEventListener('click', () => { clearTimeout(sbTimer); clear($('#sb-out')); clear($('#sb-summary')); });
+
+  /* ================= 6. Export ================= */
+  const fTitle = $('#ex-title'), fTeam = $('#ex-team'), fAssume = $('#ex-assume'), fOpen = $('#ex-open');
+  function syncFields() { fTitle.value = design.title; fTeam.value = design.team; fAssume.value = design.assumptions; fOpen.value = design.openQuestions; }
+  syncFields();
+  fTitle.addEventListener('input', () => { design.title = fTitle.value; persist(); });
+  fTeam.addEventListener('input', () => { design.team = fTeam.value; persist(); });
+  fAssume.addEventListener('input', () => { design.assumptions = fAssume.value; persist(); });
+  fOpen.addEventListener('input', () => { design.openQuestions = fOpen.value; persist(); });
+  const toBox = $('#ex-tradeoffs');
+  const toInputs = {};
+  for (const t of THREATS) {
+    const inp = h('input', { id: 'to-' + t.id, type: 'text', maxlength: 240, placeholder: t.name });
+    inp.addEventListener('input', () => { design.notes[t.id] = inp.value; persist(); });
+    toInputs[t.id] = inp;
+    toBox.appendChild(h('div', { class: 'to-row' }, h('label', { for: 'to-' + t.id, title: t.name }, t.id), inp));
+  }
+  function drawTradeoffs() { for (const t of THREATS) if (document.activeElement !== toInputs[t.id]) toInputs[t.id].value = design.notes[t.id] || ''; }
+
+  function exportObj() {
+    const r = compute(design.sel);
+    return {
+      schema: 'isk-protocol-design/1', kit: 'Trusted Satellite Internet Kit', exported: new Date().toISOString(),
+      title: design.title || 'Untitled design', team: design.team || '',
+      blocks: [...design.sel],
+      blockLabels: [...design.sel].map((id) => BLOCKS[id].label),
+      scores: r.scores,
+      threats: THREATS.map((t) => ({ id: t.id, name: t.name, baseline: t.base.B, residual: r.res[t.id], rating: rating(r.res[t.id], r.unk[t.id]), tradeoff: design.notes[t.id] || '' })),
+      warnings: r.warnings, assumptions: design.assumptions, openQuestions: design.openQuestions,
+      note: 'Ratings are qualitative teaching judgements from the kit\'s model, not measurements.',
+    };
+  }
+  function download(blob, name) {
+    const a = h('a', { href: URL.createObjectURL(blob), download: name });
+    document.body.appendChild(a); a.click();
+    setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+  }
+  const slug = () => (design.title || 'design').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40) || 'design';
+  const exStatus = $('#ex-status');
+  function missingNotes() { return THREATS.filter((t) => !(design.notes[t.id] || '').trim()).length; }
+  $('#ex-json').addEventListener('click', () => {
+    download(new Blob([JSON.stringify(exportObj(), null, 2)], { type: 'application/json' }), slug() + '.json');
+    const m = missingNotes();
+    exStatus.textContent = 'JSON downloaded.' + (m ? ` ${m} threat${m > 1 ? 's have' : ' has'} no trade-off note yet.` : '');
+  });
+  $('#ex-pdf').addEventListener('click', () => {
+    const o = exportObj();
+    const pdf = new MiniPDF();
+    const navy = [8, 18, 43], gold = [190, 140, 40], grey = [90, 95, 120];
+    pdf.rect(0, 0, 595, 64, navy);
+    pdf.text(36, 30, o.title, 17, true, [246, 210, 126]);
+    pdf.text(36, 50, 'Trusted Satellite Internet Protocol Challenge - design summary', 9.5, false, [220, 225, 240]);
+    let y = 84;
+    pdf.text(36, y, `Team: ${o.team || '-'}`, 9.5, true); pdf.text(330, y, `Exported: ${o.exported.slice(0, 10)}`, 9.5, false, grey);
+    y += 20;
+    SC.forEach(([k, l], i) => { const x = 36 + i * 106; pdf.text(x, y, l.replace(' (lower is better)', ' (low=good)'), 7.5, false, grey); pdf.text(x, y + 14, String(o.scores[k]), 13, true, navy); });
+    y += 32; pdf.line(36, y, 559, y);
+    y += 14; pdf.text(36, y, 'Building blocks', 10, true, gold); y += 12;
+    for (const g of GROUPS) {
+      const chosen = [...g.blocks, ...(g.extra || [])].filter((b) => design.sel.has(b)).map((b) => BLOCKS[b].label);
+      y = pdf.para(36, y, `${g.title}: ${chosen.length ? chosen.join('; ') : 'none'}`, 8, 523, 10.5, { maxLines: 2 });
+    }
+    if (o.warnings.length) {
+      y += 6; pdf.text(36, y, 'Warnings', 10, true, gold); y += 12;
+      o.warnings.slice(0, 3).forEach((w) => { y = pdf.para(36, y, '- ' + w, 7.5, 523, 9.5, { maxLines: 2 }); });
+    }
+    y += 6; pdf.text(36, y, 'Threats (satellite baseline -> this design) and trade-offs', 10, true, gold); y += 12;
+    for (const t of o.threats) {
+      pdf.text(36, y, t.id, 7.8, true); pdf.text(58, y, t.name.slice(0, 52), 7.8);
+      pdf.text(300, y, `${t.baseline} -> ${t.residual}`, 7.8); pdf.text(340, y, t.rating, 7.8, true, t.rating === 'High' ? [190, 40, 40] : t.rating === 'Low' ? [20, 130, 80] : [170, 110, 0]);
+      const to = pdf.wrap(t.tradeoff || '(no trade-off stated)', 7, 175);
+      pdf.text(390, y, to[0] + (to.length > 1 ? ' ...' : ''), 7, false, t.tradeoff ? [20, 20, 40] : grey);
+      y += 11.5;
+    }
+    y += 6; pdf.text(36, y, 'Assumptions', 10, true, gold); y += 12;
+    y = pdf.para(36, y, o.assumptions || '-', 8, 523, 10, { maxLines: 3 });
+    y += 4; pdf.text(36, y, 'Open questions', 10, true, gold); y += 12;
+    y = pdf.para(36, y, o.openQuestions || '-', 8, 523, 10, { maxLines: 3 });
+    pdf.line(36, 800, 559, 800);
+    pdf.para(36, 812, 'Ratings and scores are qualitative teaching judgements from the kit model, not measurements. Simulations used invented data only. Full detail, including every trade-off, is in the JSON export.', 7, 523, 9, { color: grey });
+    download(pdf.blob(), slug() + '.pdf');
+    exStatus.textContent = 'PDF downloaded.';
+  });
+
+  /* ================= Peer review ================= */
+  function validDesign(o) { return o && typeof o === 'object' && Array.isArray(o.blocks); }
+  function compareView(a, b) {
+    const ra = compute(new Set(a.blocks.filter((x) => BLOCKS[x]))), rb = compute(new Set(b.blocks.filter((x) => BLOCKS[x])));
+    const name = (o) => o.title || 'Untitled';
+    const out = clear($('#pr-out'));
+    add(out, h('p', { class: 'muted' }, 'Scores are recomputed from each file\'s building blocks with this app\'s model, so files cannot carry edited scores.'));
+    add(out, h('div', { class: 'tablewrap' }, h('table', { class: 'data' },
+      h('thead', null, h('tr', null, h('th', null, ''), h('th', null, name(a) + (a.team ? ` (${a.team})` : '')), h('th', null, name(b) + (b.team ? ` (${b.team})` : '')))),
+      h('tbody', null,
+        SC.map(([k, l]) => h('tr', null, h('th', null, l), h('td', null, String(ra.scores[k])), h('td', null, String(rb.scores[k])))),
+        THREATS.map((t) => h('tr', null, h('th', null, `${t.id} ${t.name}`),
+          h('td', null, rateEl(rating(ra.res[t.id], ra.unk[t.id])), ' ', h('span', { class: 'muted', style: { fontSize: '.85em' } }, ((a.threats || []).find((x) => x.id === t.id) || {}).tradeoff || '')),
+          h('td', null, rateEl(rating(rb.res[t.id], rb.unk[t.id])), ' ', h('span', { class: 'muted', style: { fontSize: '.85em' } }, ((b.threats || []).find((x) => x.id === t.id) || {}).tradeoff || '')))),
+        Object.entries(BLOCKS).filter(([id]) => a.blocks.includes(id) || b.blocks.includes(id)).map(([id, bl]) => h('tr', null, h('th', null, bl.label),
+          h('td', { class: a.blocks.includes(id) ? 'diff-yes' : 'diff-no' }, a.blocks.includes(id) ? '✓ used' : '–'),
+          h('td', { class: b.blocks.includes(id) ? 'diff-yes' : 'diff-no' }, b.blocks.includes(id) ? '✓ used' : '–')))))));
+    add(out, h('div', { class: 'grid g2', style: { marginTop: '10px' } },
+      h('div', { class: 'card' }, h('h4', null, name(a) + ': assumptions and questions'), h('p', null, a.assumptions || '–'), h('p', { class: 'muted' }, a.openQuestions || '–')),
+      h('div', { class: 'card' }, h('h4', null, name(b) + ': assumptions and questions'), h('p', null, b.assumptions || '–'), h('p', { class: 'muted' }, b.openQuestions || '–'))));
+  }
+  $('#pr-file').addEventListener('change', async (e) => {
+    const files = [...e.target.files].slice(0, 2);
+    const out = clear($('#pr-out'));
+    try {
+      const objs = await Promise.all(files.map((f) => f.text().then((t) => JSON.parse(t))));
+      if (!objs.every(validDesign)) throw new Error('This does not look like a design file exported from App 3.');
+      if (objs.length === 1) compareView(exportObj(), objs[0]); else compareView(objs[0], objs[1]);
+    } catch (err) {
+      out.appendChild(h('div', { class: 'notice bad' }, 'Could not read the file: ' + err.message));
+    }
+    e.target.value = '';
+  });
+  $('#pr-clear').addEventListener('click', () => clear($('#pr-out')));
+
+  /* ================= quiz, sources, glossary ================= */
+  K.quiz($('#quiz'), [
+    { q: 'Which statement is a plausible risk rather than an allegation?', options: ['"Operator X secretly shares data."', '"If one control plane serves all users, one failure affects all users."', '"Terminals have hidden backdoors."', '"A foreign order switched off India."'], answer: 1, why: 'It follows from the design and makes no claim that anything happened.' },
+    { q: 'What does in-India termination mainly reduce?', options: ['Radio jamming', 'Foreign-jurisdiction exposure and metadata leaving India', 'Cost', 'Insider risk'], answer: 1, why: 'Keeping traffic and systems in India lowers T8 and T3, but concentrates traffic at a few gateways.' },
+    { q: 'Why can India-held keys lower the privacy score?', options: ['They are slower', 'They concentrate lawful-access power unless strongly audited', 'They break TLS', 'They need more satellites'], answer: 1, why: 'Stronger state control can mean weaker privacy without scope limits and audit.' },
+    { q: 'What protects recorded traffic against future quantum computers?', options: ['Longer passwords', 'Post-quantum-ready key exchange such as ML-KEM', 'More gateways', 'Transparency reports'], answer: 1, why: 'Hybrid post-quantum key exchange defends against "harvest now, decrypt later".' },
+    { q: 'Why is T5 (supply chain) rated Unknown for satellite?', options: ['It is impossible', 'There is not enough public information to rate it', 'It is always high', 'Satellites have no supply chain'], answer: 1, why: 'Where evidence is thin, saying Unknown is more honest than guessing.' },
+  ]);
+  K.sourceList($('#sources-list'));
+  K.glossaryList($('#glossary-list'));
+
+  function loadDemo() {
+    const d = window.DEMO_DESIGN;
+    design.sel = new Set(d.blocks); design.title = d.title; design.team = d.team; design.assumptions = d.assumptions; design.openQuestions = d.openQuestions;
+    const r = compute(design.sel);
+    for (const t of THREATS) {
+      if (design.notes[t.id]) continue;
+      const helped = d.blocks.filter((id) => (BLOCKS[id].fx[t.id] || 0) < 0).map((id) => BLOCKS[id].label.toLowerCase());
+      design.notes[t.id] = helped.length ? `Lowered by ${helped.slice(0, 2).join(' and ')}. Residual: ${rating(r.res[t.id], r.unk[t.id]).toLowerCase()}. Still watch for: ${t.pre.charAt(0).toLowerCase() + t.pre.slice(1)}` : `Not addressed by this design; accepted as ${rating(r.res[t.id], r.unk[t.id]).toLowerCase()} residual risk.`;
+    }
+    syncFields(); update();
+    narrate('Demo design loaded: split termination, joint keys, strong privileged access, audited lawful access and terrestrial fallback.', 'Workbench');
+  }
+
+  K.on('demo', (on) => {
+    if (on) {
+      loadDemo();
+      document.getElementById('compare').scrollIntoView();
+      pA.play(metaA.route); pB.play(metaB.route);
+      runSandbox();
+    }
+  });
+
+  update();
+})();
+
+</script>
+</body>
+</html>

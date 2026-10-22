@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Secure India's Connected Future</title>
-<meta name="description" content="Compare India's terrestrial internet with a LEO satellite architecture, explore a 16-threat model, and design and stress-test a trusted satellite internet protocol.">
+<meta name="description" content="Compare India's terrestrial internet with a LEO satellite architecture, explore a 17-threat model, and design and stress-test a trusted satellite internet protocol.">
 <style>
 /* Shared design system: navy, gold, restrained neon. Used by the hub and all three apps. */
 :root {
@@ -285,13 +285,13 @@ label.fld input, label.fld textarea, .to-row input { display: block; width: 100%
 .diff-no { color: var(--muted); }
 
 </style>
-</head>
+<script>window.KIT_NO_RULES = true;</script></head>
 <body>
 <main id="main">
   <section class="block" aria-labelledby="h1" style="padding-top:40px">
     <div class="kicker">App 3 of 3 · The challenge</div>
     <h1 id="h1">Secure India's Connected Future: Designing a Trusted Satellite Internet Protocol</h1>
-    <p class="lead">Compare India's terrestrial internet with a Starlink-style LEO satellite architecture. Explore 16 threats, then design a protocol and test it against all of them.</p>
+    <p class="lead">Compare India's terrestrial internet with a Starlink-style LEO satellite architecture. Explore 17 threats, then design a protocol and test it against all of them.</p>
     <div class="notice"><strong>Architecture, not nationality.</strong> This app assesses how systems are designed and who controls them. It does not state or imply that any named company has done anything wrong. Ratings are qualitative judgements, never measurements.</div>
   </section>
 
@@ -309,7 +309,7 @@ label.fld input, label.fld textarea, .to-row input { display: block; width: 100%
 
   <section class="block" id="threats" aria-labelledby="h-thr">
     <div class="kicker">2 · Threat model</div>
-    <h2 id="h-thr">16 threats, both architectures</h2>
+    <h2 id="h-thr">17 threats, both architectures</h2>
     <p class="lead">Select a threat to see the assets at risk, the attacker, the preconditions and the consequences, plus the reasoning behind each rating.</p>
     <div class="tablewrap"><table class="data" id="thr-table"></table></div>
     <div class="card" id="thr-detail" style="margin-top:14px" aria-live="polite"></div>
@@ -325,7 +325,7 @@ label.fld input, label.fld textarea, .to-row input { display: block; width: 100%
   <section class="block" id="workbench" aria-labelledby="h-wb">
     <div class="kicker">4 · Protocol design workbench</div>
     <h2 id="h-wb">Build your protocol</h2>
-    <p class="lead">Pick building blocks. The 16 threats and the scorecard update immediately. Watch for warnings: some fixes create new problems.</p>
+    <p class="lead">Pick building blocks. The 17 threats and the scorecard update immediately. Watch for warnings: some fixes create new problems.</p>
     <div class="notice"><strong>India's security comes first.</strong> A design is eligible only when it passes the sovereignty gate: India keeps control of service continuity, data jurisdiction and dependence on any single provider. Cost, privacy and competition are then compared within that limit.</div>
     <div class="btnrow"><button class="btn" type="button" id="wb-demo">Load demo design</button><button class="btn" type="button" id="wb-clear">Clear design</button><a class="btn ghost" href="#how-scoring">How scoring works</a></div>
     <div class="wb">
@@ -341,9 +341,9 @@ label.fld input, label.fld textarea, .to-row input { display: block; width: 100%
 
   <section class="block" id="sandbox" aria-labelledby="h-sb">
     <div class="kicker">5 · Attack-simulation sandbox</div>
-    <h2 id="h-sb">Replay the 16 threats against your design</h2>
+    <h2 id="h-sb">Replay the 17 threats against your design</h2>
     <p class="muted">Fictional scenarios with invented data. Nothing connects to a real network, and no attack instructions are given.</p>
-    <div class="btnrow"><button class="btn primary" type="button" id="sb-run">▶ Run all 16 scenarios</button><button class="btn" type="button" id="sb-clear">Clear</button></div>
+    <div class="btnrow"><button class="btn primary" type="button" id="sb-run">▶ Run all 17 scenarios</button><button class="btn" type="button" id="sb-clear">Clear</button></div>
     <div id="sb-summary" aria-live="polite"></div>
     <div class="grid g3" id="sb-out"></div>
   </section>
@@ -434,6 +434,17 @@ label.fld input, label.fld textarea, .to-row input { display: block; width: 100%
     wsjOct: { title: 'U.S. News / WSJ — Musk ordered Starlink slowdown that blindsided Ukraine (20 Oct 2026)', url: 'https://www.usnews.com/news/world/articles/2026-10-20/musk-ordered-starlink-slowdown-that-blindsided-ukraine-wsj-reports' },
     stripesOct: { title: 'Stars and Stripes — Lawmakers call for investigation into Starlink disruptions (21 Oct 2026)', url: 'https://www.stripes.com/theaters/us/2026-10-21/lawmakers-investigation-ukraine-starlink-disruptions-23218791.html' },
     wikiUA: { title: 'Wikipedia — 2026 in Ukraine (secondary summary; 1 February entry)', url: 'https://en.wikipedia.org/wiki/2026_in_Ukraine' },
+    outlookBrahmos: { title: 'Outlook India — BrahMos engineer arrested for allegedly leaking data over Facebook (Oct 2018)', url: 'https://www.outlookindia.com/national/spying-for-pakistan-brahmos-engineer-arrested-for-allegedly-leaking-sensitive-data-over-facebook-news-318012' },
+    weekBrahmos2024: { title: 'The Week — Former BrahMos engineer sentenced to life (3 June 2024)', url: 'https://www.theweek.in/news/india/2024/06/03/former-brahmos-engineer-sentenced-to-life-for-spying-for-pakistans-isi.amp.html' },
+    weekBrahmos2025: { title: 'The Week / PTI — Ex-BrahMos engineer walks out of jail after 7 years (3 Dec 2025)', url: 'https://www.theweek.in/wire-updates/national/2025/12/03/bom26-mh-brahmos-engineer.html' },
+    wireKurulkar: { title: 'The Wire — Maharashtra ATS arrests DRDO scientist (May 2023)', url: 'https://thewire.in/security/maharashtra-ats-arrests-senior-drdo-scientist-for-wrongful-communication-with-pakistani-agent' },
+    scrollKurulkar: { title: 'Scroll — DRDO scientist Pradeep Kurulkar chargesheeted (June 2023)', url: 'https://scroll.in/latest/1052271/drdo-scientist-pradeep-kurulkar-chargesheeted-in-espionage-case-by-maharashtra-police' },
+    weekArmy: { title: 'The Week — Beware of honey trap: Army warns soldiers (Nov 2019)', url: 'https://www.theweek.in/news/india/2019/11/07/beware-of-honey-trap-army-warns-soldiers.html' },
+    dhApps: { title: 'Deccan Herald — Army asks personnel to delete 89 apps (July 2020)', url: 'https://www.deccanherald.com/amp/story/india%2Findian-army-asks-personnel-to-delete-facebook-tiktok-pubg-86-other-apps-858884.html' },
+    navyBan: { title: 'Inc42 — Indian Navy bans Facebook and smartphones after honey traps (Dec 2019)', url: 'https://inc42.com/?p=186193' },
+    puttaswamy: { title: 'Justice K.S. Puttaswamy (Retd.) v. Union of India (2017) — summary', url: 'https://www.understandupsc.com/justice-k-s-puttaswamy-retd-v-union-of-india-2017/' },
+    waWhitepaper: { title: 'WhatsApp Encryption Overview (technical white paper)', url: 'https://www.whatsapp.com/security/WhatsApp-Security-Whitepaper.pdf' },
+    signalDocs: { title: 'Signal Protocol technical documentation', url: 'https://signal.org/docs/' },
   };
 
   const C = {
@@ -491,6 +502,15 @@ label.fld input, label.fld textarea, .to-row input { display: block; width: 100%
     'ukraine-oct2026': { tag: 'verified', text: 'In October 2026 the military version of Starlink (Starshield) used by Ukraine was capped at about 100 mph (160 km/h), so fast drones lost connection. The Wall Street Journal reported that Musk ordered the slowdown. Musk said limits are decided by the US military and ultimately the President; the White House and Pentagon denied any role. Zelensky said access was "still limited", and US lawmakers have called for an investigation.', sources: [S.stripesOct, S.wsjOct, S.hillOct, S.axiosOct] },
     'reuters-minerals': { tag: 'unverified', text: 'Reported, not confirmed: in February 2025 Reuters, citing anonymous sources, reported that US negotiators raised cutting Ukraine’s Starlink access to secure a minerals deal. Elon Musk denied it.', sources: [S.kiMinerals] },
     'pl-killswitch': { tag: 'plausible', text: 'A country that relies on one foreign-controlled network for critical connectivity can have that service limited by the operator or by the operator’s home government, and cannot override the decision. This applies to any foreign provider, whatever its nationality.', sources: [S.kitArch, S.hillOct, S.cbsCrimea] },
+
+
+    /* ---------------- Honey traps and social-engineering espionage ---------------- */
+    'ht-agarwal': { tag: 'verified', text: 'A BrahMos Aerospace engineer, Nishant Agarwal, was arrested in 2018 after contact through fake social-media profiles linked by investigators to Pakistan’s ISI, and was convicted in 2024. In December 2025 the Bombay High Court cleared him of spying, finding intent and wrongful communication not proven, but upheld one charge of failing to take reasonable care after he downloaded malware at a fake contact’s request.', sources: [S.outlookBrahmos, S.weekBrahmos2024, S.weekBrahmos2025] },
+    'ht-kurulkar': { tag: 'verified', text: 'In May 2023 a senior DRDO scientist, Pradeep Kurulkar, was arrested and later charged under the Official Secrets Act, accused of passing information to a Pakistani operative he met on social media, through WhatsApp voice and video calls. The charges have not been proven in court as of the last check.', sources: [S.wireKurulkar, S.scrollKurulkar] },
+    'ht-forces': { tag: 'verified', text: 'The Indian armed forces treat honey traps as a live threat: the Army warned soldiers about fake profiles in 2019, the Navy restricted social media after sailors were honey-trapped, and in July 2020 the Army ordered personnel to delete 89 apps including Facebook, WhatsApp and Tinder.', sources: [S.weekArmy, S.navyBan, S.dhApps] },
+    'e2e': { tag: 'documented', text: 'End-to-end encrypted messengers such as WhatsApp and Signal encrypt messages on the sender’s device. Networks that carry the traffic, including gateways, cannot read the content; they can see metadata such as which servers are contacted, when and how much.', sources: [S.waWhitepaper, S.signalDocs] },
+    'puttaswamy': { tag: 'documented', text: 'In 2017 a nine-judge Supreme Court bench held privacy to be a fundamental right. Any intrusion must meet three tests: legality, a legitimate aim, and proportionality.', sources: [S.puttaswamy] },
+    'pl-blindspot': { tag: 'plausible', text: 'If satellite traffic for Indian users did not pass through Indian gateways, lawful, targeted interception and metadata requests would not work on it, and a suspect could use satellite internet to avoid an investigation.', sources: [S.kitArch, S.print] },
 
     /* ---------------- App 3: plausible risks ---------------- */
     'pl-central': { tag: 'plausible', text: 'When one operator runs the control plane for every terminal, a single failure or misconfiguration can disconnect all users at once. The July 2025 outage shows that this failure mode is real, but it is not evidence of intent.', sources: [S.kitArch, S.outage] },
@@ -556,7 +576,7 @@ window.GLOSSARY = {
 
 </script>
 <script>
-/* App 3 data: the 16-threat model and the protocol building blocks.
+/* App 3 data: the 17-threat model and the protocol building blocks.
    Residual scores run 1 (low) to 10 (high). Ratings: 1–3 Low, 4–6 Medium, 7–10 High.
    base.A = terrestrial operator architecture today; base.B = LEO satellite architecture under baseline licence conditions.
    All ratings are qualitative teaching judgements, not measurements. */
@@ -705,6 +725,15 @@ window.THREATS = [
     base: { A: 3, B: 8 }, unknown: {},
     why: { A: 'Control of terrestrial networks sits with Indian operators under Indian law.', B: 'Satellites and the global control plane stay under the operator’s control. Public reporting shows a provider limiting service in wartime, and the affected country could not override it. This is a property of the architecture and applies to any foreign provider.' },
     evidence: 'verified', claims: ['ukraine-oct2026', 'crimea-2022', 'pl-killswitch'], leak: 'fictional national service in a crisis', hours: 168 },
+  { id: 'T17', name: 'Social-engineering espionage (honey traps) against personnel with sensitive access', short: 'honey traps',
+    assets: 'Defence, research and government personnel, their devices, and the information they can reach.',
+    capability: 'A foreign intelligence service running fake online identities over months.',
+    pre: 'People with sensitive access using personal phones and open social media, with no reporting channel or device controls.',
+    cons: 'Leaks of classified information, malware on devices, compromised staff.',
+    mit: { A: 'Lawful, targeted interception on Indian networks; armed-forces app restrictions; awareness advisories.', B: 'The same, provided satellite traffic for Indian users comes down at Indian gateways so it can be investigated.' },
+    base: { A: 8, B: 8 }, unknown: {},
+    why: { A: 'The attack targets people, not networks, and uses end-to-end encrypted apps that no network can read. Documented Indian cases show it is active.', B: 'Same as A. Satellite must not become a blind spot: if traffic bypassed Indian gateways, targeted investigation would be harder.' },
+    evidence: 'verified', claims: ['ht-agarwal', 'ht-kurulkar', 'ht-forces', 'e2e', 'pl-blindspot'], leak: 'fictional sensitive documents', hours: 336 },
 ];
 
 window.BLOCK_GROUPS = [
@@ -714,6 +743,7 @@ window.BLOCK_GROUPS = [
   { id: 'la', title: 'Lawful access', type: 'check', blocks: ['la-auth', 'la-scope', 'la-audit', 'la-transp'] },
   { id: 'rt', title: 'Routing and control plane', type: 'check', blocks: ['rt-signed', 'rt-geo', 'rt-anom'] },
   { id: 'rs', title: 'Resilience', type: 'check', blocks: ['rs-fallback', 'rs-local', 'rs-emerg', 'rs-sovereign'] },
+  { id: 'ce', title: 'Counter-espionage', type: 'check', blocks: ['ce-parity', 'ce-meta', 'ce-devices', 'ce-bulk'] },
   { id: 'op', title: 'Openness', type: 'check', blocks: ['op-roam', 'op-multi', 'op-term', 'op-price'] },
 ];
 
@@ -742,6 +772,10 @@ window.BLOCKS = {
   'rs-local': { label: 'Local survivability', desc: 'Indian gateways and terminals keep working for a defined period if the global control plane fails.', fx: { T12: -2, T15: -3, T8: -1, T16: -3 }, resilience: 10, cost: 3 },
   'rs-emerg': { label: 'Emergency-service continuity', desc: 'Emergency calls and a break-glass procedure keep working, even during maintenance freezes.', fx: { T12: -1, T7: -1, T16: -1 }, resilience: 5, cost: 1 },
   'rs-sovereign': { label: 'Indian-controlled satellite capacity', desc: 'A share of critical capacity runs on satellites and control systems under Indian control, so it cannot be withdrawn from abroad.', fx: { T16: -3, T8: -2, T15: -1 }, resilience: 5, competition: 3, cost: 4 },
+  'ce-parity': { label: 'Lawful-interception parity', desc: 'Satellite traffic for Indian users comes down at Indian gateways, so lawful, targeted interception under the 2024 rules works exactly as on Indian mobile and fibre networks.', fx: { T17: -2, T14: +1 }, privacy: -3, cost: 1 },
+  'ce-meta': { label: 'Targeted metadata analytics under legal order', desc: 'For named suspects and designated sensitive users only, with an order: patterns such as repeated contact with foreign accounts are analysed. Never applied to everyone.', fx: { T17: -2, T3: +1 }, privacy: -5, cost: 2 },
+  'ce-devices': { label: 'Managed devices and approved apps for sensitive personnel', desc: 'Organisations issue managed phones with approved apps to people with sensitive access, train them to spot fake profiles, and give them a safe channel to report suspicious contact.', fx: { T17: -3, T11: -1 }, cost: 2 },
+  'ce-bulk': { label: 'Bulk scanning of all message content at the gateway', desc: 'Inspect every user’s messages as they leave India. Included so you can see why it fails: end-to-end encrypted content cannot be read at the gateway, and mass surveillance is unlikely to be proportionate under Puttaswamy.', fx: { T14: +3, T3: +2, T13: +1 }, privacy: -30, competition: -5, cost: 4 },
   'op-roam': { label: 'Open interfaces and roaming', desc: 'Standard interfaces let users and critical services move between satellite and terrestrial operators.', fx: { T15: -2, T12: -1, T16: -1 }, competition: 15, cost: 2 },
   'op-multi': { label: 'Two or more independent satellite providers', desc: 'Critical users can switch between providers from different jurisdictions, so no single operator or government holds a kill switch.', fx: { T16: -3, T15: -2 }, competition: 8, cost: 3 },
   'op-term': { label: 'Certified multi-vendor terminals', desc: 'Terminals from several certified vendors can be used, rather than a single source.', fx: { T5: -1 }, competition: 8, cost: 1 },
@@ -753,7 +787,7 @@ window.SOVEREIGNTY_GATE = ['T8', 'T12', 'T15', 'T16'];
 
 window.DEMO_DESIGN = {
   title: 'Demo: balanced sovereign design', team: 'Kit demo',
-  blocks: ['gw-split', 'gw-attest', 'key-joint', 'key-pq', 'pa-hw', 'pa-two', 'pa-logs', 'la-auth', 'la-scope', 'la-audit', 'rt-signed', 'rt-anom', 'rs-fallback', 'rs-local', 'rs-emerg', 'op-roam'],
+  blocks: ['gw-split', 'gw-attest', 'key-joint', 'key-pq', 'pa-hw', 'pa-two', 'pa-logs', 'la-auth', 'la-scope', 'la-audit', 'rt-signed', 'rt-anom', 'rs-fallback', 'rs-local', 'rs-emerg', 'ce-parity', 'ce-meta', 'ce-devices', 'op-roam'],
   assumptions: 'The operator agrees to an Indian trustee for joint key custody. Indian gateways have diverse fibre.',
   openQuestions: 'Who is the independent auditor? How long must local survivability last?',
 };
@@ -860,6 +894,7 @@ window.DEMO_DESIGN = {
     { id: 'app1', href: 'app1.html', label: '1 · Earth to Orbit' },
     { id: 'app2', href: 'app2.html', label: '2 · Inside India\'s Internet' },
     { id: 'app3', href: 'app3.html', label: '3 · Design the Protocol' },
+    { id: 'rules', href: 'rules.html', label: 'Rules' },
   ];
   const state = { teacher: false, demo: false, reduce: false, speak: false };
   const hooks = { demo: [], teacher: [], reduce: [] };
@@ -968,7 +1003,7 @@ window.DEMO_DESIGN = {
 
     const skip = h('a', { class: 'skip', href: '#main' }, 'Skip to content');
     const nav = h('nav', { 'aria-label': 'Kit navigation' },
-      h('ul', { class: 'navlinks' }, APPS.map((a) => h('li', null,
+      h('ul', { class: 'navlinks' }, APPS.filter((a) => !(window.KIT_NO_RULES && a.id === 'rules')).map((a) => h('li', null,
         h('a', { href: a.href, 'aria-current': a.id === appId ? 'page' : null }, a.label)))));
     const glossBtn = h('button', { class: 'btn', type: 'button' }, 'Glossary');
     const srcBtn = h('button', { class: 'btn', type: 'button' }, 'Sources');
@@ -980,6 +1015,8 @@ window.DEMO_DESIGN = {
     const bar = h('header', { class: 'topbar' },
       h('a', { class: 'brand', href: 'index.html' }, logo(), h('span', null, 'Trusted Satellite Internet Kit')), nav, tools);
     document.body.prepend(skip, bar);
+    // Until the rules page is published, hide every link to it.
+    if (window.KIT_NO_RULES) $$('[data-rules-link]').forEach((el) => el.remove());
 
     scrim = h('div', { class: 'scrim' });
     document.body.appendChild(scrim);
@@ -1513,8 +1550,8 @@ window.DEMO_DESIGN = {
     h('p', null, h('strong', null, 'An unverified allegation'), ' claims something happened or exists without evidence. Do not treat it as fact or build a design argument on it.'),
     h('p', { class: 'muted' }, 'In the challenge, argue from facts and risks only. A claim without a source and date is not shown here.'));
   const EV = [
-    ['verified', 'A · Verified facts', ['starlink-gmpcs', 'starlink-inspace', 'satcom-pending', 'starlink-gateways', 'satcom-conditions', 'outage-2025', 'us-tariff', 'crimea-2022', 'ukraine-feb2026', 'ukraine-oct2026', 'trusted-source', 'certin', 'ml-kem']],
-    ['plausible', 'B · Plausible architectural risks', ['pl-killswitch', 'pl-central', 'pl-jurisdiction', 'pl-metadata', 'pl-supply', 'pl-harvest']],
+    ['verified', 'A · Verified facts', ['starlink-gmpcs', 'starlink-inspace', 'satcom-pending', 'starlink-gateways', 'satcom-conditions', 'outage-2025', 'ht-agarwal', 'ht-kurulkar', 'ht-forces', 'e2e', 'puttaswamy', 'us-tariff', 'crimea-2022', 'ukraine-feb2026', 'ukraine-oct2026', 'trusted-source', 'certin', 'ml-kem']],
+    ['plausible', 'B · Plausible architectural risks', ['pl-killswitch', 'pl-blindspot', 'pl-central', 'pl-jurisdiction', 'pl-metadata', 'pl-supply', 'pl-harvest']],
     ['unverified', 'C · Unverified allegations (do not treat as fact)', ['reuters-minerals', 'un-killswitch', 'un-bypass', 'un-backdoor']],
   ];
   for (const [tag, title, ids] of EV) $('#ev-groups').appendChild(h('div', { class: 'card ev-group' }, h('h3', null, chip(tag), title), claims(ids)));
@@ -1594,6 +1631,8 @@ window.DEMO_DESIGN = {
     if (costIdx > 60) warnings.push(`The cost index is ${costIdx}. Costs this high may reach consumers as higher prices: the competition score is reduced by 10.`);
     if (scores.privacy < 40) warnings.push('This design gains control at the expense of privacy.');
     if (![...sel].some((x) => x.startsWith('la-'))) warnings.push('No lawful-access safeguards selected. The baseline 2024 rules still apply, but nothing extra limits or audits access.');
+    if (sel.has('ce-bulk')) warnings.push('Bulk scanning of message content does not work against honey traps: WhatsApp, Signal and similar apps are end-to-end encrypted, so the gateway sees only metadata. It also raises T3, T13 and T14 sharply and is unlikely to pass the Puttaswamy proportionality test. Use lawful-interception parity, targeted metadata analytics and managed devices instead.');
+    if (sel.has('ce-meta') && !(sel.has('la-scope') && sel.has('la-audit'))) warnings.push('Metadata analytics without scope limits and an independent audit trail can drift into bulk surveillance. Add both lawful-access safeguards.');
     const failing = GATE.filter((id) => rating(res[id], unk[id]) !== 'Low');
     if (sel.has('gw-india') && !sel.has('rs-local') && !sel.has('op-multi') && !sel.has('rs-sovereign')) warnings.push('In-India gateways decide where traffic lands, not whether the satellites keep serving India. Add local survivability, a second provider or Indian-controlled capacity to cover the kill-switch threat (T16).');
     return { res, unk, scores, warnings, mean, gate: { passed: failing.length === 0, failing } };
@@ -1623,7 +1662,7 @@ window.DEMO_DESIGN = {
     h('p', null, h('strong', null, 'Sovereignty gate (pass/fail): '), 'a design is eligible only if T8 (foreign jurisdiction), T12 (crisis connectivity), T15 (centralisation) and T16 (kill switch) all reach Low. India’s security comes first; within that limit, designs are compared on the five scores below.'),
     h('p', null, 'Each threat starts at its satellite baseline (1–10, from the threat model). Each building block adds or subtracts points, shown on the block as T-numbers. Scores are clamped to 1–10. Ratings: 1–3 Low, 4–6 Medium, 7–10 High. A threat rated Unknown stays Unknown until a block addresses it.'),
     h('div', { class: 'formula', style: { fontFamily: 'var(--mono)', fontSize: '.85em', background: '#0a1736', padding: '10px', borderRadius: '8px', whiteSpace: 'pre-wrap' } },
-      `Security    = 100 − 10 × (mean residual of 16 threats − 1)
+      `Security    = 100 − 10 × (mean residual of 17 threats − 1)
 Privacy     = 50 + Σ block privacy points
 Resilience  = 100 − 10 × (mean of T7, T12, T15, T16 − 1) + Σ block resilience points
 Cost index  = 4 × Σ block cost units          (lower is better)
@@ -1797,6 +1836,7 @@ All scores are clamped to 0–100.`),
     { q: 'Why can India-held keys lower the privacy score?', options: ['They are slower', 'They concentrate lawful-access power unless strongly audited', 'They break TLS', 'They need more satellites'], answer: 1, why: 'Stronger state control can mean weaker privacy without scope limits and audit.' },
     { q: 'What protects recorded traffic against future quantum computers?', options: ['Longer passwords', 'Post-quantum-ready key exchange such as ML-KEM', 'More gateways', 'Transparency reports'], answer: 1, why: 'Hybrid post-quantum key exchange defends against "harvest now, decrypt later".' },
     { q: 'Why do in-India gateways alone not remove the kill-switch threat (T16)?', options: ['Gateways are too slow', 'The operator still controls the satellites and the global control plane', 'Gateways cannot be encrypted', 'They do remove it'], answer: 1, why: 'Gateway location decides where traffic lands. Local survivability, a second provider or Indian-controlled capacity are needed so service cannot be withdrawn from abroad.' },
+    { q: 'Why can’t a gateway read a honey-trap conversation on WhatsApp?', options: ['Gateways are too slow', 'The messages are end-to-end encrypted on the phone; the gateway sees only metadata', 'WhatsApp traffic avoids gateways', 'It can read it'], answer: 1, why: 'Defences against honey traps work on people and devices, plus lawful, targeted investigation using metadata.' },
     { q: 'Why is T5 (supply chain) rated Unknown for satellite?', options: ['It is impossible', 'There is not enough public information to rate it', 'It is always high', 'Satellites have no supply chain'], answer: 1, why: 'Where evidence is thin, saying Unknown is more honest than guessing.' },
   ]);
   K.sourceList($('#sources-list'));

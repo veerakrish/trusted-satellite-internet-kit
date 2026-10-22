@@ -47,6 +47,17 @@
     wsjOct: { title: 'U.S. News / WSJ — Musk ordered Starlink slowdown that blindsided Ukraine (20 Oct 2026)', url: 'https://www.usnews.com/news/world/articles/2026-10-20/musk-ordered-starlink-slowdown-that-blindsided-ukraine-wsj-reports' },
     stripesOct: { title: 'Stars and Stripes — Lawmakers call for investigation into Starlink disruptions (21 Oct 2026)', url: 'https://www.stripes.com/theaters/us/2026-10-21/lawmakers-investigation-ukraine-starlink-disruptions-23218791.html' },
     wikiUA: { title: 'Wikipedia — 2026 in Ukraine (secondary summary; 1 February entry)', url: 'https://en.wikipedia.org/wiki/2026_in_Ukraine' },
+    outlookBrahmos: { title: 'Outlook India — BrahMos engineer arrested for allegedly leaking data over Facebook (Oct 2018)', url: 'https://www.outlookindia.com/national/spying-for-pakistan-brahmos-engineer-arrested-for-allegedly-leaking-sensitive-data-over-facebook-news-318012' },
+    weekBrahmos2024: { title: 'The Week — Former BrahMos engineer sentenced to life (3 June 2024)', url: 'https://www.theweek.in/news/india/2024/06/03/former-brahmos-engineer-sentenced-to-life-for-spying-for-pakistans-isi.amp.html' },
+    weekBrahmos2025: { title: 'The Week / PTI — Ex-BrahMos engineer walks out of jail after 7 years (3 Dec 2025)', url: 'https://www.theweek.in/wire-updates/national/2025/12/03/bom26-mh-brahmos-engineer.html' },
+    wireKurulkar: { title: 'The Wire — Maharashtra ATS arrests DRDO scientist (May 2023)', url: 'https://thewire.in/security/maharashtra-ats-arrests-senior-drdo-scientist-for-wrongful-communication-with-pakistani-agent' },
+    scrollKurulkar: { title: 'Scroll — DRDO scientist Pradeep Kurulkar chargesheeted (June 2023)', url: 'https://scroll.in/latest/1052271/drdo-scientist-pradeep-kurulkar-chargesheeted-in-espionage-case-by-maharashtra-police' },
+    weekArmy: { title: 'The Week — Beware of honey trap: Army warns soldiers (Nov 2019)', url: 'https://www.theweek.in/news/india/2019/11/07/beware-of-honey-trap-army-warns-soldiers.html' },
+    dhApps: { title: 'Deccan Herald — Army asks personnel to delete 89 apps (July 2020)', url: 'https://www.deccanherald.com/amp/story/india%2Findian-army-asks-personnel-to-delete-facebook-tiktok-pubg-86-other-apps-858884.html' },
+    navyBan: { title: 'Inc42 — Indian Navy bans Facebook and smartphones after honey traps (Dec 2019)', url: 'https://inc42.com/?p=186193' },
+    puttaswamy: { title: 'Justice K.S. Puttaswamy (Retd.) v. Union of India (2017) — summary', url: 'https://www.understandupsc.com/justice-k-s-puttaswamy-retd-v-union-of-india-2017/' },
+    waWhitepaper: { title: 'WhatsApp Encryption Overview (technical white paper)', url: 'https://www.whatsapp.com/security/WhatsApp-Security-Whitepaper.pdf' },
+    signalDocs: { title: 'Signal Protocol technical documentation', url: 'https://signal.org/docs/' },
   };
 
   const C = {
@@ -104,6 +115,15 @@
     'ukraine-oct2026': { tag: 'verified', text: 'In October 2026 the military version of Starlink (Starshield) used by Ukraine was capped at about 100 mph (160 km/h), so fast drones lost connection. The Wall Street Journal reported that Musk ordered the slowdown. Musk said limits are decided by the US military and ultimately the President; the White House and Pentagon denied any role. Zelensky said access was "still limited", and US lawmakers have called for an investigation.', sources: [S.stripesOct, S.wsjOct, S.hillOct, S.axiosOct] },
     'reuters-minerals': { tag: 'unverified', text: 'Reported, not confirmed: in February 2025 Reuters, citing anonymous sources, reported that US negotiators raised cutting Ukraine’s Starlink access to secure a minerals deal. Elon Musk denied it.', sources: [S.kiMinerals] },
     'pl-killswitch': { tag: 'plausible', text: 'A country that relies on one foreign-controlled network for critical connectivity can have that service limited by the operator or by the operator’s home government, and cannot override the decision. This applies to any foreign provider, whatever its nationality.', sources: [S.kitArch, S.hillOct, S.cbsCrimea] },
+
+
+    /* ---------------- Honey traps and social-engineering espionage ---------------- */
+    'ht-agarwal': { tag: 'verified', text: 'A BrahMos Aerospace engineer, Nishant Agarwal, was arrested in 2018 after contact through fake social-media profiles linked by investigators to Pakistan’s ISI, and was convicted in 2024. In December 2025 the Bombay High Court cleared him of spying, finding intent and wrongful communication not proven, but upheld one charge of failing to take reasonable care after he downloaded malware at a fake contact’s request.', sources: [S.outlookBrahmos, S.weekBrahmos2024, S.weekBrahmos2025] },
+    'ht-kurulkar': { tag: 'verified', text: 'In May 2023 a senior DRDO scientist, Pradeep Kurulkar, was arrested and later charged under the Official Secrets Act, accused of passing information to a Pakistani operative he met on social media, through WhatsApp voice and video calls. The charges have not been proven in court as of the last check.', sources: [S.wireKurulkar, S.scrollKurulkar] },
+    'ht-forces': { tag: 'verified', text: 'The Indian armed forces treat honey traps as a live threat: the Army warned soldiers about fake profiles in 2019, the Navy restricted social media after sailors were honey-trapped, and in July 2020 the Army ordered personnel to delete 89 apps including Facebook, WhatsApp and Tinder.', sources: [S.weekArmy, S.navyBan, S.dhApps] },
+    'e2e': { tag: 'documented', text: 'End-to-end encrypted messengers such as WhatsApp and Signal encrypt messages on the sender’s device. Networks that carry the traffic, including gateways, cannot read the content; they can see metadata such as which servers are contacted, when and how much.', sources: [S.waWhitepaper, S.signalDocs] },
+    'puttaswamy': { tag: 'documented', text: 'In 2017 a nine-judge Supreme Court bench held privacy to be a fundamental right. Any intrusion must meet three tests: legality, a legitimate aim, and proportionality.', sources: [S.puttaswamy] },
+    'pl-blindspot': { tag: 'plausible', text: 'If satellite traffic for Indian users did not pass through Indian gateways, lawful, targeted interception and metadata requests would not work on it, and a suspect could use satellite internet to avoid an investigation.', sources: [S.kitArch, S.print] },
 
     /* ---------------- App 3: plausible risks ---------------- */
     'pl-central': { tag: 'plausible', text: 'When one operator runs the control plane for every terminal, a single failure or misconfiguration can disconnect all users at once. The July 2025 outage shows that this failure mode is real, but it is not evidence of intent.', sources: [S.kitArch, S.outage] },

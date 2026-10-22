@@ -149,8 +149,8 @@
     h('p', null, h('strong', null, 'An unverified allegation'), ' claims something happened or exists without evidence. Do not treat it as fact or build a design argument on it.'),
     h('p', { class: 'muted' }, 'In the challenge, argue from facts and risks only. A claim without a source and date is not shown here.'));
   const EV = [
-    ['verified', 'A · Verified facts', ['starlink-gmpcs', 'starlink-inspace', 'satcom-pending', 'starlink-gateways', 'satcom-conditions', 'outage-2025', 'us-tariff', 'crimea-2022', 'ukraine-feb2026', 'ukraine-oct2026', 'trusted-source', 'certin', 'ml-kem']],
-    ['plausible', 'B · Plausible architectural risks', ['pl-killswitch', 'pl-central', 'pl-jurisdiction', 'pl-metadata', 'pl-supply', 'pl-harvest']],
+    ['verified', 'A · Verified facts', ['starlink-gmpcs', 'starlink-inspace', 'satcom-pending', 'starlink-gateways', 'satcom-conditions', 'outage-2025', 'ht-agarwal', 'ht-kurulkar', 'ht-forces', 'e2e', 'puttaswamy', 'us-tariff', 'crimea-2022', 'ukraine-feb2026', 'ukraine-oct2026', 'trusted-source', 'certin', 'ml-kem']],
+    ['plausible', 'B · Plausible architectural risks', ['pl-killswitch', 'pl-blindspot', 'pl-central', 'pl-jurisdiction', 'pl-metadata', 'pl-supply', 'pl-harvest']],
     ['unverified', 'C · Unverified allegations (do not treat as fact)', ['reuters-minerals', 'un-killswitch', 'un-bypass', 'un-backdoor']],
   ];
   for (const [tag, title, ids] of EV) $('#ev-groups').appendChild(h('div', { class: 'card ev-group' }, h('h3', null, chip(tag), title), claims(ids)));
@@ -230,6 +230,8 @@
     if (costIdx > 60) warnings.push(`The cost index is ${costIdx}. Costs this high may reach consumers as higher prices: the competition score is reduced by 10.`);
     if (scores.privacy < 40) warnings.push('This design gains control at the expense of privacy.');
     if (![...sel].some((x) => x.startsWith('la-'))) warnings.push('No lawful-access safeguards selected. The baseline 2024 rules still apply, but nothing extra limits or audits access.');
+    if (sel.has('ce-bulk')) warnings.push('Bulk scanning of message content does not work against honey traps: WhatsApp, Signal and similar apps are end-to-end encrypted, so the gateway sees only metadata. It also raises T3, T13 and T14 sharply and is unlikely to pass the Puttaswamy proportionality test. Use lawful-interception parity, targeted metadata analytics and managed devices instead.');
+    if (sel.has('ce-meta') && !(sel.has('la-scope') && sel.has('la-audit'))) warnings.push('Metadata analytics without scope limits and an independent audit trail can drift into bulk surveillance. Add both lawful-access safeguards.');
     const failing = GATE.filter((id) => rating(res[id], unk[id]) !== 'Low');
     if (sel.has('gw-india') && !sel.has('rs-local') && !sel.has('op-multi') && !sel.has('rs-sovereign')) warnings.push('In-India gateways decide where traffic lands, not whether the satellites keep serving India. Add local survivability, a second provider or Indian-controlled capacity to cover the kill-switch threat (T16).');
     return { res, unk, scores, warnings, mean, gate: { passed: failing.length === 0, failing } };
@@ -259,7 +261,7 @@
     h('p', null, h('strong', null, 'Sovereignty gate (pass/fail): '), 'a design is eligible only if T8 (foreign jurisdiction), T12 (crisis connectivity), T15 (centralisation) and T16 (kill switch) all reach Low. India’s security comes first; within that limit, designs are compared on the five scores below.'),
     h('p', null, 'Each threat starts at its satellite baseline (1–10, from the threat model). Each building block adds or subtracts points, shown on the block as T-numbers. Scores are clamped to 1–10. Ratings: 1–3 Low, 4–6 Medium, 7–10 High. A threat rated Unknown stays Unknown until a block addresses it.'),
     h('div', { class: 'formula', style: { fontFamily: 'var(--mono)', fontSize: '.85em', background: '#0a1736', padding: '10px', borderRadius: '8px', whiteSpace: 'pre-wrap' } },
-      `Security    = 100 − 10 × (mean residual of 16 threats − 1)
+      `Security    = 100 − 10 × (mean residual of 17 threats − 1)
 Privacy     = 50 + Σ block privacy points
 Resilience  = 100 − 10 × (mean of T7, T12, T15, T16 − 1) + Σ block resilience points
 Cost index  = 4 × Σ block cost units          (lower is better)
@@ -433,6 +435,7 @@ All scores are clamped to 0–100.`),
     { q: 'Why can India-held keys lower the privacy score?', options: ['They are slower', 'They concentrate lawful-access power unless strongly audited', 'They break TLS', 'They need more satellites'], answer: 1, why: 'Stronger state control can mean weaker privacy without scope limits and audit.' },
     { q: 'What protects recorded traffic against future quantum computers?', options: ['Longer passwords', 'Post-quantum-ready key exchange such as ML-KEM', 'More gateways', 'Transparency reports'], answer: 1, why: 'Hybrid post-quantum key exchange defends against "harvest now, decrypt later".' },
     { q: 'Why do in-India gateways alone not remove the kill-switch threat (T16)?', options: ['Gateways are too slow', 'The operator still controls the satellites and the global control plane', 'Gateways cannot be encrypted', 'They do remove it'], answer: 1, why: 'Gateway location decides where traffic lands. Local survivability, a second provider or Indian-controlled capacity are needed so service cannot be withdrawn from abroad.' },
+    { q: 'Why can’t a gateway read a honey-trap conversation on WhatsApp?', options: ['Gateways are too slow', 'The messages are end-to-end encrypted on the phone; the gateway sees only metadata', 'WhatsApp traffic avoids gateways', 'It can read it'], answer: 1, why: 'Defences against honey traps work on people and devices, plus lawful, targeted investigation using metadata.' },
     { q: 'Why is T5 (supply chain) rated Unknown for satellite?', options: ['It is impossible', 'There is not enough public information to rate it', 'It is always high', 'Satellites have no supply chain'], answer: 1, why: 'Where evidence is thin, saying Unknown is more honest than guessing.' },
   ]);
   K.sourceList($('#sources-list'));

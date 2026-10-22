@@ -1,4 +1,4 @@
-/* App 3 data: the 16-threat model and the protocol building blocks.
+/* App 3 data: the 17-threat model and the protocol building blocks.
    Residual scores run 1 (low) to 10 (high). Ratings: 1–3 Low, 4–6 Medium, 7–10 High.
    base.A = terrestrial operator architecture today; base.B = LEO satellite architecture under baseline licence conditions.
    All ratings are qualitative teaching judgements, not measurements. */
@@ -147,6 +147,15 @@ window.THREATS = [
     base: { A: 3, B: 8 }, unknown: {},
     why: { A: 'Control of terrestrial networks sits with Indian operators under Indian law.', B: 'Satellites and the global control plane stay under the operator’s control. Public reporting shows a provider limiting service in wartime, and the affected country could not override it. This is a property of the architecture and applies to any foreign provider.' },
     evidence: 'verified', claims: ['ukraine-oct2026', 'crimea-2022', 'pl-killswitch'], leak: 'fictional national service in a crisis', hours: 168 },
+  { id: 'T17', name: 'Social-engineering espionage (honey traps) against personnel with sensitive access', short: 'honey traps',
+    assets: 'Defence, research and government personnel, their devices, and the information they can reach.',
+    capability: 'A foreign intelligence service running fake online identities over months.',
+    pre: 'People with sensitive access using personal phones and open social media, with no reporting channel or device controls.',
+    cons: 'Leaks of classified information, malware on devices, compromised staff.',
+    mit: { A: 'Lawful, targeted interception on Indian networks; armed-forces app restrictions; awareness advisories.', B: 'The same, provided satellite traffic for Indian users comes down at Indian gateways so it can be investigated.' },
+    base: { A: 8, B: 8 }, unknown: {},
+    why: { A: 'The attack targets people, not networks, and uses end-to-end encrypted apps that no network can read. Documented Indian cases show it is active.', B: 'Same as A. Satellite must not become a blind spot: if traffic bypassed Indian gateways, targeted investigation would be harder.' },
+    evidence: 'verified', claims: ['ht-agarwal', 'ht-kurulkar', 'ht-forces', 'e2e', 'pl-blindspot'], leak: 'fictional sensitive documents', hours: 336 },
 ];
 
 window.BLOCK_GROUPS = [
@@ -156,6 +165,7 @@ window.BLOCK_GROUPS = [
   { id: 'la', title: 'Lawful access', type: 'check', blocks: ['la-auth', 'la-scope', 'la-audit', 'la-transp'] },
   { id: 'rt', title: 'Routing and control plane', type: 'check', blocks: ['rt-signed', 'rt-geo', 'rt-anom'] },
   { id: 'rs', title: 'Resilience', type: 'check', blocks: ['rs-fallback', 'rs-local', 'rs-emerg', 'rs-sovereign'] },
+  { id: 'ce', title: 'Counter-espionage', type: 'check', blocks: ['ce-parity', 'ce-meta', 'ce-devices', 'ce-bulk'] },
   { id: 'op', title: 'Openness', type: 'check', blocks: ['op-roam', 'op-multi', 'op-term', 'op-price'] },
 ];
 
@@ -184,6 +194,10 @@ window.BLOCKS = {
   'rs-local': { label: 'Local survivability', desc: 'Indian gateways and terminals keep working for a defined period if the global control plane fails.', fx: { T12: -2, T15: -3, T8: -1, T16: -3 }, resilience: 10, cost: 3 },
   'rs-emerg': { label: 'Emergency-service continuity', desc: 'Emergency calls and a break-glass procedure keep working, even during maintenance freezes.', fx: { T12: -1, T7: -1, T16: -1 }, resilience: 5, cost: 1 },
   'rs-sovereign': { label: 'Indian-controlled satellite capacity', desc: 'A share of critical capacity runs on satellites and control systems under Indian control, so it cannot be withdrawn from abroad.', fx: { T16: -3, T8: -2, T15: -1 }, resilience: 5, competition: 3, cost: 4 },
+  'ce-parity': { label: 'Lawful-interception parity', desc: 'Satellite traffic for Indian users comes down at Indian gateways, so lawful, targeted interception under the 2024 rules works exactly as on Indian mobile and fibre networks.', fx: { T17: -2, T14: +1 }, privacy: -3, cost: 1 },
+  'ce-meta': { label: 'Targeted metadata analytics under legal order', desc: 'For named suspects and designated sensitive users only, with an order: patterns such as repeated contact with foreign accounts are analysed. Never applied to everyone.', fx: { T17: -2, T3: +1 }, privacy: -5, cost: 2 },
+  'ce-devices': { label: 'Managed devices and approved apps for sensitive personnel', desc: 'Organisations issue managed phones with approved apps to people with sensitive access, train them to spot fake profiles, and give them a safe channel to report suspicious contact.', fx: { T17: -3, T11: -1 }, cost: 2 },
+  'ce-bulk': { label: 'Bulk scanning of all message content at the gateway', desc: 'Inspect every user’s messages as they leave India. Included so you can see why it fails: end-to-end encrypted content cannot be read at the gateway, and mass surveillance is unlikely to be proportionate under Puttaswamy.', fx: { T14: +3, T3: +2, T13: +1 }, privacy: -30, competition: -5, cost: 4 },
   'op-roam': { label: 'Open interfaces and roaming', desc: 'Standard interfaces let users and critical services move between satellite and terrestrial operators.', fx: { T15: -2, T12: -1, T16: -1 }, competition: 15, cost: 2 },
   'op-multi': { label: 'Two or more independent satellite providers', desc: 'Critical users can switch between providers from different jurisdictions, so no single operator or government holds a kill switch.', fx: { T16: -3, T15: -2 }, competition: 8, cost: 3 },
   'op-term': { label: 'Certified multi-vendor terminals', desc: 'Terminals from several certified vendors can be used, rather than a single source.', fx: { T5: -1 }, competition: 8, cost: 1 },
@@ -195,7 +209,7 @@ window.SOVEREIGNTY_GATE = ['T8', 'T12', 'T15', 'T16'];
 
 window.DEMO_DESIGN = {
   title: 'Demo: balanced sovereign design', team: 'Kit demo',
-  blocks: ['gw-split', 'gw-attest', 'key-joint', 'key-pq', 'pa-hw', 'pa-two', 'pa-logs', 'la-auth', 'la-scope', 'la-audit', 'rt-signed', 'rt-anom', 'rs-fallback', 'rs-local', 'rs-emerg', 'op-roam'],
+  blocks: ['gw-split', 'gw-attest', 'key-joint', 'key-pq', 'pa-hw', 'pa-two', 'pa-logs', 'la-auth', 'la-scope', 'la-audit', 'rt-signed', 'rt-anom', 'rs-fallback', 'rs-local', 'rs-emerg', 'ce-parity', 'ce-meta', 'ce-devices', 'op-roam'],
   assumptions: 'The operator agrees to an Indian trustee for joint key custody. Indian gateways have diverse fibre.',
   openQuestions: 'Who is the independent auditor? How long must local survivability last?',
 };

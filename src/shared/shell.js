@@ -98,6 +98,7 @@
     { id: 'app1', href: 'app1.html', label: '1 · Earth to Orbit' },
     { id: 'app2', href: 'app2.html', label: '2 · Inside India\'s Internet' },
     { id: 'app3', href: 'app3.html', label: '3 · Design the Protocol' },
+    { id: 'rules', href: 'rules.html', label: 'Rules' },
   ];
   const state = { teacher: false, demo: false, reduce: false, speak: false };
   const hooks = { demo: [], teacher: [], reduce: [] };
@@ -206,7 +207,7 @@
 
     const skip = h('a', { class: 'skip', href: '#main' }, 'Skip to content');
     const nav = h('nav', { 'aria-label': 'Kit navigation' },
-      h('ul', { class: 'navlinks' }, APPS.map((a) => h('li', null,
+      h('ul', { class: 'navlinks' }, APPS.filter((a) => !(window.KIT_NO_RULES && a.id === 'rules')).map((a) => h('li', null,
         h('a', { href: a.href, 'aria-current': a.id === appId ? 'page' : null }, a.label)))));
     const glossBtn = h('button', { class: 'btn', type: 'button' }, 'Glossary');
     const srcBtn = h('button', { class: 'btn', type: 'button' }, 'Sources');
@@ -218,6 +219,8 @@
     const bar = h('header', { class: 'topbar' },
       h('a', { class: 'brand', href: 'index.html' }, logo(), h('span', null, 'Trusted Satellite Internet Kit')), nav, tools);
     document.body.prepend(skip, bar);
+    // Until the rules page is published, hide every link to it.
+    if (window.KIT_NO_RULES) $$('[data-rules-link]').forEach((el) => el.remove());
 
     scrim = h('div', { class: 'scrim' });
     document.body.appendChild(scrim);

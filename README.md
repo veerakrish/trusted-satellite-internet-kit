@@ -7,7 +7,7 @@ Three linked interactive web apps and a hub page for the *Secure India's Connect
 | `index.html` | Hub: the three apps, a 20-minute presentation flow and the challenge summary |
 | `app1.html` | **From Earth to Orbit**: one HTTPS request over a LEO satellite service, hop by hop |
 | `app2.html` | **Inside India's Internet**: paths, a schematic map, who controls what, 10 controls, simulations, resilience lab |
-| `app3.html` | **Design the Protocol**: architecture comparison, 15-threat model, evidence panel, workbench, sandbox, PDF/JSON export, peer review |
+| `app3.html` | **Design the Protocol**: architecture comparison, 16-threat model with a sovereignty gate, evidence panel, workbench, sandbox, PDF/JSON export, peer review |
 
 Plain HTML, CSS and JavaScript. No framework, no backend and no third-party code.
 

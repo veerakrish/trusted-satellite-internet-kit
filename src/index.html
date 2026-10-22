@@ -27,12 +27,27 @@
     <div class="btnrow"><a class="btn primary" href="app1.html">Start with App 1 →</a><a class="btn" href="#challenge">The challenge</a></div>
   </section>
 
+  <section class="block" id="why" aria-labelledby="h-why">
+    <div class="kicker">Why this challenge</div>
+    <h2 id="h-why">No single foreign kill switch over India's connectivity</h2>
+    <p class="lead">Satellite internet can reach every village, ship and disaster zone. But when one operator controls the satellites and the software that runs them, the country using it does not control whether the service keeps running. Recent events show this is a real risk, not a theory.</p>
+    <div class="grid g2">
+      <div class="card"><h3>What the record shows</h3><div id="why-facts"></div></div>
+      <div class="card"><h3>What this means for India</h3>
+        <p>India has kept independent policy choices under outside pressure. Its critical communications should never become a lever that someone else can pull.</p>
+        <p>Routing Indian traffic through gateways in India is necessary, but it is not enough: it decides where traffic lands, not whether the satellites keep serving India. A trusted design also needs local survivability, fallback to Indian networks, more than one provider and, over time, Indian-controlled capacity.</p>
+        <p><strong>The principle is country-neutral.</strong> It applies to any foreign provider, whatever its nationality. Companies that want to serve India are welcome, on terms that put India's security first.</p>
+        <div id="why-risk"></div></div>
+    </div>
+    <div class="notice" style="margin-top:14px"><strong>Priority order for every entry.</strong> 1. India's security and control of its own connectivity: a pass/fail gate. 2. Then privacy, resilience, cost and fair competition, judged within that limit.</div>
+  </section>
+
   <section class="block" aria-labelledby="h-apps" style="padding-top:12px">
     <h2 id="h-apps">The three apps</h2>
     <div class="grid g3">
       <a class="card app-card" href="app1.html"><span class="n">1</span><h3>From Earth to Orbit</h3><p>Follow one HTTPS request through a satellite internet service: what each hop does, what it can see, and what it cannot read.</p><span class="go">Open App 1 →</span></a>
       <a class="card app-card" href="app2.html"><span class="n">2</span><h3>Inside India's Internet</h3><p>Mobile and broadband paths, a schematic of network layers, who controls what, ten security controls, and where their limits are.</p><span class="go">Open App 2 →</span></a>
-      <a class="card app-card" href="app3.html"><span class="n">3</span><h3>Design the Protocol</h3><p>Compare the two architectures, explore 15 threats, then build a protocol, stress-test it and export your entry.</p><span class="go">Open App 3 →</span></a>
+      <a class="card app-card" href="app3.html"><span class="n">3</span><h3>Design the Protocol</h3><p>Compare the two architectures, explore 16 threats, then build a protocol, stress-test it and export your entry.</p><span class="go">Open App 3 →</span></a>
     </div>
   </section>
 
@@ -59,9 +74,10 @@
         <li><strong>Policy and governance:</strong> legal, audit and accountability designs; no code required</li>
         <li><strong>Bonus prize:</strong> best post-quantum-ready key management design</li></ul></div>
       <div class="card"><h3>A valid entry contains</h3><ul class="tight">
+        <li><strong>Must pass the sovereignty gate in App 3</strong>: India keeps control of service continuity, jurisdiction and dependence on any single provider</li>
         <li>A design of 6 pages or fewer: the protocol, the threats it addresses and the threats it leaves open</li>
         <li>The JSON file exported from App 3, or an equivalent simulation or code</li>
-        <li>A map to the 15 threats, with one stated trade-off per threat</li>
+        <li>A map to the 16 threats, with one stated trade-off per threat</li>
         <li>Optional: a 3-minute video for the finale</li></ul></div>
       <div class="card"><h3>Judging</h3><div class="tablewrap"><table class="data"><tbody>
         <tr><th>Security strength</th><td>30%</td></tr><tr><th>Honesty about limits</th><td>15%</td></tr>
@@ -80,6 +96,8 @@
   K.init({ app: 'hub', demo: false, intro: 'Start with App 1. Teacher mode stays on as you move between apps.' });
   // Contest dates from the kit plan; edit here if they change.
   const DATES = [['Teaser', '26 Oct 2026'], ['Launch', '2 Nov 2026'], ['Live walkthrough', '14 Nov 2026'], ['Submissions close', '7 Dec 2026, 23:59 IST'], ['Finalists announced', '21 Dec 2026'], ['Live finale', '9 Jan 2027']];
+  document.getElementById('why-facts').append(...K.claims(['ukraine-oct2026', 'crimea-2022', 'us-tariff']));
+  document.getElementById('why-risk').append(...K.claims(['pl-killswitch']));
   const dl = document.getElementById('dates');
   for (const [k, v] of DATES) dl.append(K.h('dt', null, k), K.h('dd', null, v));
 </script>

@@ -265,12 +265,27 @@ footer.site { max-width: 1240px; margin: 0 auto; padding: 24px 16px 140px; color
     <div class="btnrow"><a class="btn primary" href="app1.html">Start with App 1 →</a><a class="btn" href="#challenge">The challenge</a></div>
   </section>
 
+  <section class="block" id="why" aria-labelledby="h-why">
+    <div class="kicker">Why this challenge</div>
+    <h2 id="h-why">No single foreign kill switch over India's connectivity</h2>
+    <p class="lead">Satellite internet can reach every village, ship and disaster zone. But when one operator controls the satellites and the software that runs them, the country using it does not control whether the service keeps running. Recent events show this is a real risk, not a theory.</p>
+    <div class="grid g2">
+      <div class="card"><h3>What the record shows</h3><div id="why-facts"></div></div>
+      <div class="card"><h3>What this means for India</h3>
+        <p>India has kept independent policy choices under outside pressure. Its critical communications should never become a lever that someone else can pull.</p>
+        <p>Routing Indian traffic through gateways in India is necessary, but it is not enough: it decides where traffic lands, not whether the satellites keep serving India. A trusted design also needs local survivability, fallback to Indian networks, more than one provider and, over time, Indian-controlled capacity.</p>
+        <p><strong>The principle is country-neutral.</strong> It applies to any foreign provider, whatever its nationality. Companies that want to serve India are welcome, on terms that put India's security first.</p>
+        <div id="why-risk"></div></div>
+    </div>
+    <div class="notice" style="margin-top:14px"><strong>Priority order for every entry.</strong> 1. India's security and control of its own connectivity: a pass/fail gate. 2. Then privacy, resilience, cost and fair competition, judged within that limit.</div>
+  </section>
+
   <section class="block" aria-labelledby="h-apps" style="padding-top:12px">
     <h2 id="h-apps">The three apps</h2>
     <div class="grid g3">
       <a class="card app-card" href="app1.html"><span class="n">1</span><h3>From Earth to Orbit</h3><p>Follow one HTTPS request through a satellite internet service: what each hop does, what it can see, and what it cannot read.</p><span class="go">Open App 1 →</span></a>
       <a class="card app-card" href="app2.html"><span class="n">2</span><h3>Inside India's Internet</h3><p>Mobile and broadband paths, a schematic of network layers, who controls what, ten security controls, and where their limits are.</p><span class="go">Open App 2 →</span></a>
-      <a class="card app-card" href="app3.html"><span class="n">3</span><h3>Design the Protocol</h3><p>Compare the two architectures, explore 15 threats, then build a protocol, stress-test it and export your entry.</p><span class="go">Open App 3 →</span></a>
+      <a class="card app-card" href="app3.html"><span class="n">3</span><h3>Design the Protocol</h3><p>Compare the two architectures, explore 16 threats, then build a protocol, stress-test it and export your entry.</p><span class="go">Open App 3 →</span></a>
     </div>
   </section>
 
@@ -297,9 +312,10 @@ footer.site { max-width: 1240px; margin: 0 auto; padding: 24px 16px 140px; color
         <li><strong>Policy and governance:</strong> legal, audit and accountability designs; no code required</li>
         <li><strong>Bonus prize:</strong> best post-quantum-ready key management design</li></ul></div>
       <div class="card"><h3>A valid entry contains</h3><ul class="tight">
+        <li><strong>Must pass the sovereignty gate in App 3</strong>: India keeps control of service continuity, jurisdiction and dependence on any single provider</li>
         <li>A design of 6 pages or fewer: the protocol, the threats it addresses and the threats it leaves open</li>
         <li>The JSON file exported from App 3, or an equivalent simulation or code</li>
-        <li>A map to the 15 threats, with one stated trade-off per threat</li>
+        <li>A map to the 16 threats, with one stated trade-off per threat</li>
         <li>Optional: a 3-minute video for the finale</li></ul></div>
       <div class="card"><h3>Judging</h3><div class="tablewrap"><table class="data"><tbody>
         <tr><th>Security strength</th><td>30%</td></tr><tr><th>Honesty about limits</th><td>15%</td></tr>
@@ -351,6 +367,16 @@ footer.site { max-width: 1240px; margin: 0 auto; padding: 24px 16px 140px; color
     outage: { title: 'Daily Maverick / Reuters — Starlink network suffers rare global outage (25 July 2025)', url: 'https://www.dailymaverick.co.za/article/2025-07-25-elon-musks-starlink-network-suffers-rare-global-outage/' },
     fips203: { title: 'NIST FIPS 203: Module-Lattice-Based Key-Encapsulation Mechanism (ML-KEM), Aug 2024', url: 'https://csrc.nist.gov/pubs/fips/203/final' },
     noPrimary: { title: 'Example of a claim type seen in public debate. The kit authors found no primary evidence for it.' },
+    eyTariff: { title: 'EY — US imposes additional tariffs on India for buying oil from Russia (Aug 2025)', url: 'https://www.ey.com/en_gl/technical/tax-alerts/us-imposes-additional-tariffs-on-india-for-buying-oil-from-russia' },
+    outlookTariff: { title: 'Outlook Business — Additional 25% tariff on India comes into effect', url: 'https://www.outlookbusiness.com/economy-and-policy/additional-25-tariff-imposed-by-us-president-trump-on-india-comes-into-effect' },
+    cbsCrimea: { title: 'CBS News — Musk says he denied Ukraine satellite request near Crimea (Sept 2023)', url: 'https://www.cbsnews.com/amp/miami/news/elon-musk-ukraine-russia-war-starlink-satellite-denied-major-act-of-war' },
+    snopesCrimea: { title: 'Snopes — Musk, internet access and Crimea', url: 'https://www.snopes.com/news/2023/09/14/musk-internet-access-crimea-ukraine/' },
+    kiMinerals: { title: 'Kyiv Independent — US threatens to shut off Starlink if Ukraine won’t sign minerals deal, sources tell Reuters (Feb 2025)', url: 'https://kyivindependent.com/us-threatens-to-shut-off-starlink-if-ukraine-wont-sign-minerals-deal-sources-tell-reuters/' },
+    hillOct: { title: 'The Hill — Questions flare over US role in Ukraine’s Starlink shut-off (Oct 2026)', url: 'https://thehill.com/policy/technology/6152345-elon-musk-starlink-ukraine-starshield/' },
+    axiosOct: { title: 'Axios — Ukraine’s Starlink restrictions (14 Oct 2026)', url: 'https://www.axios.com/2026/10/14/ukraine-starlink-zelensky-spacex-musk-trump' },
+    wsjOct: { title: 'U.S. News / WSJ — Musk ordered Starlink slowdown that blindsided Ukraine (20 Oct 2026)', url: 'https://www.usnews.com/news/world/articles/2026-10-20/musk-ordered-starlink-slowdown-that-blindsided-ukraine-wsj-reports' },
+    stripesOct: { title: 'Stars and Stripes — Lawmakers call for investigation into Starlink disruptions (21 Oct 2026)', url: 'https://www.stripes.com/theaters/us/2026-10-21/lawmakers-investigation-ukraine-starlink-disruptions-23218791.html' },
+    wikiUA: { title: 'Wikipedia — 2026 in Ukraine (secondary summary; 1 February entry)', url: 'https://en.wikipedia.org/wiki/2026_in_Ukraine' },
   };
 
   const C = {
@@ -400,6 +426,15 @@ footer.site { max-width: 1240px; margin: 0 auto; padding: 24px 16px 140px; color
     'satcom-conditions': { tag: 'verified', text: 'DoT security conditions for satcom operators, as reported, require network traffic and monitoring systems to be located in India.', sources: [S.print] },
     'ml-kem': { tag: 'verified', text: 'NIST published ML-KEM (FIPS 203) in August 2024 as a standard post-quantum key-establishment method.', sources: [S.fips203] },
 
+
+    /* ---------------- Dependency and leverage: the case for the challenge ---------------- */
+    'us-tariff': { tag: 'verified', text: 'In August 2025 the US imposed an additional 25% tariff on Indian goods, citing India’s purchases of Russian oil. India’s Ministry of External Affairs called it "unfair, unjustified and unreasonable".', sources: [S.eyTariff, S.outlookTariff] },
+    'crimea-2022': { tag: 'verified', text: 'Elon Musk has said that in 2022 he declined a Ukrainian government request to activate Starlink coverage near Crimea for an attack. Ukraine could not override that decision.', sources: [S.cbsCrimea, S.snopesCrimea] },
+    'ukraine-feb2026': { tag: 'verified', text: 'In February 2026 SpaceX switched off unapproved Starlink terminals across Ukraine because Russian forces were using the service. Terminals approved by Ukraine’s defence ministry kept working.', sources: [S.wikiUA] },
+    'ukraine-oct2026': { tag: 'verified', text: 'In October 2026 the military version of Starlink (Starshield) used by Ukraine was capped at about 100 mph (160 km/h), so fast drones lost connection. The Wall Street Journal reported that Musk ordered the slowdown. Musk said limits are decided by the US military and ultimately the President; the White House and Pentagon denied any role. Zelensky said access was "still limited", and US lawmakers have called for an investigation.', sources: [S.stripesOct, S.wsjOct, S.hillOct, S.axiosOct] },
+    'reuters-minerals': { tag: 'unverified', text: 'Reported, not confirmed: in February 2025 Reuters, citing anonymous sources, reported that US negotiators raised cutting Ukraine’s Starlink access to secure a minerals deal. Elon Musk denied it.', sources: [S.kiMinerals] },
+    'pl-killswitch': { tag: 'plausible', text: 'A country that relies on one foreign-controlled network for critical connectivity can have that service limited by the operator or by the operator’s home government, and cannot override the decision. This applies to any foreign provider, whatever its nationality.', sources: [S.kitArch, S.hillOct, S.cbsCrimea] },
+
     /* ---------------- App 3: plausible risks ---------------- */
     'pl-central': { tag: 'plausible', text: 'When one operator runs the control plane for every terminal, a single failure or misconfiguration can disconnect all users at once. The July 2025 outage shows that this failure mode is real, but it is not evidence of intent.', sources: [S.kitArch, S.outage] },
     'pl-jurisdiction': { tag: 'plausible', text: 'An operator subject to laws in several countries can face conflicting legal orders, for example on data access or service suspension.', sources: [S.kitArch] },
@@ -408,7 +443,7 @@ footer.site { max-width: 1240px; margin: 0 auto; padding: 24px 16px 140px; color
     'pl-harvest': { tag: 'plausible', text: 'Traffic recorded today could be decrypted later if a large quantum computer breaks today\'s key exchange ("harvest now, decrypt later"). Post-quantum key exchange reduces this risk.', sources: [S.kitArch, S.fips203] },
 
     /* ---------------- App 3: unverified allegations (examples of claim types) ---------------- */
-    'un-killswitch': { tag: 'unverified', text: 'Claim type: "A foreign government can make a satellite operator switch off every user in India instantly." No primary evidence of such an order affecting India was found. The underlying risk of centralised control is covered as a plausible risk.', sources: [S.noPrimary] },
+    'un-killswitch': { tag: 'unverified', text: 'Claim type: "The October 2026 restriction in Ukraine was ordered because of US–Russia fuel or energy deals." Reports note that it followed an announced Russia–Ukraine "energy ceasefire" and US moves to ease some Russia sanctions over fuel costs, but no source establishes that this was the reason, and who ordered it is disputed. The verified point is narrower: the restriction happened, and Ukraine could not stop it.', sources: [S.noPrimary, S.stripesOct] },
     'un-bypass': { tag: 'unverified', text: 'Claim type: "Satellite internet lets users bypass Indian lawful interception entirely." This is contradicted by reported licence conditions requiring in-India gateways and monitoring, and it has not been shown for any licensed operator.', sources: [S.noPrimary, S.print] },
     'un-backdoor': { tag: 'unverified', text: 'Claim type: "Satellite terminals contain hidden backdoors." No public technical evidence was found. Supply-chain compromise remains a plausible risk category for any vendor.', sources: [S.noPrimary] },
   };
@@ -822,6 +857,8 @@ window.GLOSSARY = {
   K.init({ app: 'hub', demo: false, intro: 'Start with App 1. Teacher mode stays on as you move between apps.' });
   // Contest dates from the kit plan; edit here if they change.
   const DATES = [['Teaser', '26 Oct 2026'], ['Launch', '2 Nov 2026'], ['Live walkthrough', '14 Nov 2026'], ['Submissions close', '7 Dec 2026, 23:59 IST'], ['Finalists announced', '21 Dec 2026'], ['Live finale', '9 Jan 2027']];
+  document.getElementById('why-facts').append(...K.claims(['ukraine-oct2026', 'crimea-2022', 'us-tariff']));
+  document.getElementById('why-risk').append(...K.claims(['pl-killswitch']));
   const dl = document.getElementById('dates');
   for (const [k, v] of DATES) dl.append(K.h('dt', null, k), K.h('dd', null, v));
 </script>

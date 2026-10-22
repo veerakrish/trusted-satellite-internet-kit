@@ -1,4 +1,4 @@
-/* App 3 data: the 15-threat model and the protocol building blocks.
+/* App 3 data: the 16-threat model and the protocol building blocks.
    Residual scores run 1 (low) to 10 (high). Ratings: 1–3 Low, 4–6 Medium, 7–10 High.
    base.A = terrestrial operator architecture today; base.B = LEO satellite architecture under baseline licence conditions.
    All ratings are qualitative teaching judgements, not measurements. */
@@ -138,6 +138,15 @@ window.THREATS = [
     base: { A: 3, B: 8 }, unknown: {},
     why: { A: 'Competition between several operators spreads control.', B: 'By design, one operator controls the whole constellation.' },
     evidence: 'plausible', claims: ['pl-central'], leak: 'fictional nationwide service', hours: 24 },
+  { id: 'T16', name: 'Service withdrawal under the provider’s home-country politics (kill switch)', short: 'kill switch',
+    assets: 'National connectivity in a crisis or dispute: defence, emergency services, government and the public.',
+    capability: 'The operator, or a government with power over it, decides to limit or withdraw service.',
+    pre: 'Critical users depend on one foreign-controlled network with no Indian-controlled fallback.',
+    cons: 'Connectivity lost or degraded at the moment it matters most; the service becomes leverage in a dispute.',
+    mit: { A: 'Indian operators are under Indian law; several of them compete.', B: 'In-India gateways decide where traffic lands, but not whether the satellites keep serving India.' },
+    base: { A: 3, B: 8 }, unknown: {},
+    why: { A: 'Control of terrestrial networks sits with Indian operators under Indian law.', B: 'Satellites and the global control plane stay under the operator’s control. Public reporting shows a provider limiting service in wartime, and the affected country could not override it. This is a property of the architecture and applies to any foreign provider.' },
+    evidence: 'verified', claims: ['ukraine-oct2026', 'crimea-2022', 'pl-killswitch'], leak: 'fictional national service in a crisis', hours: 168 },
 ];
 
 window.BLOCK_GROUPS = [
@@ -146,8 +155,8 @@ window.BLOCK_GROUPS = [
   { id: 'pa', title: 'Privileged access', type: 'check', blocks: ['pa-hw', 'pa-two', 'pa-time', 'pa-logs'] },
   { id: 'la', title: 'Lawful access', type: 'check', blocks: ['la-auth', 'la-scope', 'la-audit', 'la-transp'] },
   { id: 'rt', title: 'Routing and control plane', type: 'check', blocks: ['rt-signed', 'rt-geo', 'rt-anom'] },
-  { id: 'rs', title: 'Resilience', type: 'check', blocks: ['rs-fallback', 'rs-local', 'rs-emerg'] },
-  { id: 'op', title: 'Openness', type: 'check', blocks: ['op-roam', 'op-term', 'op-price'] },
+  { id: 'rs', title: 'Resilience', type: 'check', blocks: ['rs-fallback', 'rs-local', 'rs-emerg', 'rs-sovereign'] },
+  { id: 'op', title: 'Openness', type: 'check', blocks: ['op-roam', 'op-multi', 'op-term', 'op-price'] },
 ];
 
 /* fx: change in residual per threat (negative = better). privacy/resilience/competition: points added to those scores. cost: deployment cost units. */
@@ -171,13 +180,18 @@ window.BLOCKS = {
   'rt-signed': { label: 'Signed route and configuration changes', desc: 'Every routing or configuration change must be cryptographically signed and verified before it applies.', fx: { T6: -3, T1: -1 }, cost: 1 },
   'rt-geo': { label: 'Geographic policy checks', desc: 'Automatic checks block paths that would take Indian traffic abroad without reason.', fx: { T6: -1, T8: -1, T3: -1 }, cost: 1 },
   'rt-anom': { label: 'Anomaly alerts', desc: 'Unusual routes, traffic volumes or admin behaviour trigger alerts to an Indian security operations centre.', fx: { T6: -1, T7: -1, T9: -1 }, cost: 1 },
-  'rs-fallback': { label: 'Fallback to terrestrial links', desc: 'Critical users switch automatically to mobile or fibre if satellite service fails.', fx: { T12: -3, T7: -2, T15: -1 }, resilience: 10, cost: 3 },
-  'rs-local': { label: 'Local survivability', desc: 'Indian gateways and terminals keep working for a defined period if the global control plane fails.', fx: { T12: -2, T15: -3, T8: -1 }, resilience: 10, cost: 3 },
-  'rs-emerg': { label: 'Emergency-service continuity', desc: 'Emergency calls and a break-glass procedure keep working, even during maintenance freezes.', fx: { T12: -1, T7: -1 }, resilience: 5, cost: 1 },
-  'op-roam': { label: 'Open interfaces and roaming', desc: 'Standard interfaces let users and critical services move between satellite and terrestrial operators.', fx: { T15: -2, T12: -1 }, competition: 15, cost: 2 },
+  'rs-fallback': { label: 'Fallback to terrestrial links', desc: 'Critical users switch automatically to mobile or fibre if satellite service fails.', fx: { T12: -3, T7: -2, T15: -1, T16: -2 }, resilience: 10, cost: 3 },
+  'rs-local': { label: 'Local survivability', desc: 'Indian gateways and terminals keep working for a defined period if the global control plane fails.', fx: { T12: -2, T15: -3, T8: -1, T16: -3 }, resilience: 10, cost: 3 },
+  'rs-emerg': { label: 'Emergency-service continuity', desc: 'Emergency calls and a break-glass procedure keep working, even during maintenance freezes.', fx: { T12: -1, T7: -1, T16: -1 }, resilience: 5, cost: 1 },
+  'rs-sovereign': { label: 'Indian-controlled satellite capacity', desc: 'A share of critical capacity runs on satellites and control systems under Indian control, so it cannot be withdrawn from abroad.', fx: { T16: -3, T8: -2, T15: -1 }, resilience: 5, competition: 3, cost: 4 },
+  'op-roam': { label: 'Open interfaces and roaming', desc: 'Standard interfaces let users and critical services move between satellite and terrestrial operators.', fx: { T15: -2, T12: -1, T16: -1 }, competition: 15, cost: 2 },
+  'op-multi': { label: 'Two or more independent satellite providers', desc: 'Critical users can switch between providers from different jurisdictions, so no single operator or government holds a kill switch.', fx: { T16: -3, T15: -2 }, competition: 8, cost: 3 },
   'op-term': { label: 'Certified multi-vendor terminals', desc: 'Terminals from several certified vendors can be used, rather than a single source.', fx: { T5: -1 }, competition: 8, cost: 1 },
   'op-price': { label: 'No lock-in of gateways or spectrum', desc: 'Gateway sites and access rules are open to other operators on fair terms.', fx: { T15: -1 }, competition: 12, cost: 0 },
 };
+
+/* Sovereignty gate: a design is eligible only if every one of these threats reaches Low. */
+window.SOVEREIGNTY_GATE = ['T8', 'T12', 'T15', 'T16'];
 
 window.DEMO_DESIGN = {
   title: 'Demo: balanced sovereign design', team: 'Kit demo',

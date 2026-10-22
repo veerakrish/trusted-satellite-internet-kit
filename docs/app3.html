@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Secure India's Connected Future</title>
-<meta name="description" content="Compare India's terrestrial internet with a LEO satellite architecture, explore a 15-threat model, and design and stress-test a trusted satellite internet protocol.">
+<meta name="description" content="Compare India's terrestrial internet with a LEO satellite architecture, explore a 16-threat model, and design and stress-test a trusted satellite internet protocol.">
 <style>
 /* Shared design system: navy, gold, restrained neon. Used by the hub and all three apps. */
 :root {
@@ -291,7 +291,7 @@ label.fld input, label.fld textarea, .to-row input { display: block; width: 100%
   <section class="block" aria-labelledby="h1" style="padding-top:40px">
     <div class="kicker">App 3 of 3 · The challenge</div>
     <h1 id="h1">Secure India's Connected Future: Designing a Trusted Satellite Internet Protocol</h1>
-    <p class="lead">Compare India's terrestrial internet with a Starlink-style LEO satellite architecture. Explore 15 threats, then design a protocol and test it against all of them.</p>
+    <p class="lead">Compare India's terrestrial internet with a Starlink-style LEO satellite architecture. Explore 16 threats, then design a protocol and test it against all of them.</p>
     <div class="notice"><strong>Architecture, not nationality.</strong> This app assesses how systems are designed and who controls them. It does not state or imply that any named company has done anything wrong. Ratings are qualitative judgements, never measurements.</div>
   </section>
 
@@ -309,7 +309,7 @@ label.fld input, label.fld textarea, .to-row input { display: block; width: 100%
 
   <section class="block" id="threats" aria-labelledby="h-thr">
     <div class="kicker">2 · Threat model</div>
-    <h2 id="h-thr">15 threats, both architectures</h2>
+    <h2 id="h-thr">16 threats, both architectures</h2>
     <p class="lead">Select a threat to see the assets at risk, the attacker, the preconditions and the consequences, plus the reasoning behind each rating.</p>
     <div class="tablewrap"><table class="data" id="thr-table"></table></div>
     <div class="card" id="thr-detail" style="margin-top:14px" aria-live="polite"></div>
@@ -325,7 +325,8 @@ label.fld input, label.fld textarea, .to-row input { display: block; width: 100%
   <section class="block" id="workbench" aria-labelledby="h-wb">
     <div class="kicker">4 · Protocol design workbench</div>
     <h2 id="h-wb">Build your protocol</h2>
-    <p class="lead">Pick building blocks. The 15 threats and the scorecard update immediately. Watch for warnings: some fixes create new problems.</p>
+    <p class="lead">Pick building blocks. The 16 threats and the scorecard update immediately. Watch for warnings: some fixes create new problems.</p>
+    <div class="notice"><strong>India's security comes first.</strong> A design is eligible only when it passes the sovereignty gate: India keeps control of service continuity, data jurisdiction and dependence on any single provider. Cost, privacy and competition are then compared within that limit.</div>
     <div class="btnrow"><button class="btn" type="button" id="wb-demo">Load demo design</button><button class="btn" type="button" id="wb-clear">Clear design</button><a class="btn ghost" href="#how-scoring">How scoring works</a></div>
     <div class="wb">
       <div id="wb-blocks"></div>
@@ -340,9 +341,9 @@ label.fld input, label.fld textarea, .to-row input { display: block; width: 100%
 
   <section class="block" id="sandbox" aria-labelledby="h-sb">
     <div class="kicker">5 · Attack-simulation sandbox</div>
-    <h2 id="h-sb">Replay the 15 threats against your design</h2>
+    <h2 id="h-sb">Replay the 16 threats against your design</h2>
     <p class="muted">Fictional scenarios with invented data. Nothing connects to a real network, and no attack instructions are given.</p>
-    <div class="btnrow"><button class="btn primary" type="button" id="sb-run">▶ Run all 15 scenarios</button><button class="btn" type="button" id="sb-clear">Clear</button></div>
+    <div class="btnrow"><button class="btn primary" type="button" id="sb-run">▶ Run all 16 scenarios</button><button class="btn" type="button" id="sb-clear">Clear</button></div>
     <div id="sb-summary" aria-live="polite"></div>
     <div class="grid g3" id="sb-out"></div>
   </section>
@@ -423,6 +424,16 @@ label.fld input, label.fld textarea, .to-row input { display: block; width: 100%
     outage: { title: 'Daily Maverick / Reuters — Starlink network suffers rare global outage (25 July 2025)', url: 'https://www.dailymaverick.co.za/article/2025-07-25-elon-musks-starlink-network-suffers-rare-global-outage/' },
     fips203: { title: 'NIST FIPS 203: Module-Lattice-Based Key-Encapsulation Mechanism (ML-KEM), Aug 2024', url: 'https://csrc.nist.gov/pubs/fips/203/final' },
     noPrimary: { title: 'Example of a claim type seen in public debate. The kit authors found no primary evidence for it.' },
+    eyTariff: { title: 'EY — US imposes additional tariffs on India for buying oil from Russia (Aug 2025)', url: 'https://www.ey.com/en_gl/technical/tax-alerts/us-imposes-additional-tariffs-on-india-for-buying-oil-from-russia' },
+    outlookTariff: { title: 'Outlook Business — Additional 25% tariff on India comes into effect', url: 'https://www.outlookbusiness.com/economy-and-policy/additional-25-tariff-imposed-by-us-president-trump-on-india-comes-into-effect' },
+    cbsCrimea: { title: 'CBS News — Musk says he denied Ukraine satellite request near Crimea (Sept 2023)', url: 'https://www.cbsnews.com/amp/miami/news/elon-musk-ukraine-russia-war-starlink-satellite-denied-major-act-of-war' },
+    snopesCrimea: { title: 'Snopes — Musk, internet access and Crimea', url: 'https://www.snopes.com/news/2023/09/14/musk-internet-access-crimea-ukraine/' },
+    kiMinerals: { title: 'Kyiv Independent — US threatens to shut off Starlink if Ukraine won’t sign minerals deal, sources tell Reuters (Feb 2025)', url: 'https://kyivindependent.com/us-threatens-to-shut-off-starlink-if-ukraine-wont-sign-minerals-deal-sources-tell-reuters/' },
+    hillOct: { title: 'The Hill — Questions flare over US role in Ukraine’s Starlink shut-off (Oct 2026)', url: 'https://thehill.com/policy/technology/6152345-elon-musk-starlink-ukraine-starshield/' },
+    axiosOct: { title: 'Axios — Ukraine’s Starlink restrictions (14 Oct 2026)', url: 'https://www.axios.com/2026/10/14/ukraine-starlink-zelensky-spacex-musk-trump' },
+    wsjOct: { title: 'U.S. News / WSJ — Musk ordered Starlink slowdown that blindsided Ukraine (20 Oct 2026)', url: 'https://www.usnews.com/news/world/articles/2026-10-20/musk-ordered-starlink-slowdown-that-blindsided-ukraine-wsj-reports' },
+    stripesOct: { title: 'Stars and Stripes — Lawmakers call for investigation into Starlink disruptions (21 Oct 2026)', url: 'https://www.stripes.com/theaters/us/2026-10-21/lawmakers-investigation-ukraine-starlink-disruptions-23218791.html' },
+    wikiUA: { title: 'Wikipedia — 2026 in Ukraine (secondary summary; 1 February entry)', url: 'https://en.wikipedia.org/wiki/2026_in_Ukraine' },
   };
 
   const C = {
@@ -472,6 +483,15 @@ label.fld input, label.fld textarea, .to-row input { display: block; width: 100%
     'satcom-conditions': { tag: 'verified', text: 'DoT security conditions for satcom operators, as reported, require network traffic and monitoring systems to be located in India.', sources: [S.print] },
     'ml-kem': { tag: 'verified', text: 'NIST published ML-KEM (FIPS 203) in August 2024 as a standard post-quantum key-establishment method.', sources: [S.fips203] },
 
+
+    /* ---------------- Dependency and leverage: the case for the challenge ---------------- */
+    'us-tariff': { tag: 'verified', text: 'In August 2025 the US imposed an additional 25% tariff on Indian goods, citing India’s purchases of Russian oil. India’s Ministry of External Affairs called it "unfair, unjustified and unreasonable".', sources: [S.eyTariff, S.outlookTariff] },
+    'crimea-2022': { tag: 'verified', text: 'Elon Musk has said that in 2022 he declined a Ukrainian government request to activate Starlink coverage near Crimea for an attack. Ukraine could not override that decision.', sources: [S.cbsCrimea, S.snopesCrimea] },
+    'ukraine-feb2026': { tag: 'verified', text: 'In February 2026 SpaceX switched off unapproved Starlink terminals across Ukraine because Russian forces were using the service. Terminals approved by Ukraine’s defence ministry kept working.', sources: [S.wikiUA] },
+    'ukraine-oct2026': { tag: 'verified', text: 'In October 2026 the military version of Starlink (Starshield) used by Ukraine was capped at about 100 mph (160 km/h), so fast drones lost connection. The Wall Street Journal reported that Musk ordered the slowdown. Musk said limits are decided by the US military and ultimately the President; the White House and Pentagon denied any role. Zelensky said access was "still limited", and US lawmakers have called for an investigation.', sources: [S.stripesOct, S.wsjOct, S.hillOct, S.axiosOct] },
+    'reuters-minerals': { tag: 'unverified', text: 'Reported, not confirmed: in February 2025 Reuters, citing anonymous sources, reported that US negotiators raised cutting Ukraine’s Starlink access to secure a minerals deal. Elon Musk denied it.', sources: [S.kiMinerals] },
+    'pl-killswitch': { tag: 'plausible', text: 'A country that relies on one foreign-controlled network for critical connectivity can have that service limited by the operator or by the operator’s home government, and cannot override the decision. This applies to any foreign provider, whatever its nationality.', sources: [S.kitArch, S.hillOct, S.cbsCrimea] },
+
     /* ---------------- App 3: plausible risks ---------------- */
     'pl-central': { tag: 'plausible', text: 'When one operator runs the control plane for every terminal, a single failure or misconfiguration can disconnect all users at once. The July 2025 outage shows that this failure mode is real, but it is not evidence of intent.', sources: [S.kitArch, S.outage] },
     'pl-jurisdiction': { tag: 'plausible', text: 'An operator subject to laws in several countries can face conflicting legal orders, for example on data access or service suspension.', sources: [S.kitArch] },
@@ -480,7 +500,7 @@ label.fld input, label.fld textarea, .to-row input { display: block; width: 100%
     'pl-harvest': { tag: 'plausible', text: 'Traffic recorded today could be decrypted later if a large quantum computer breaks today\'s key exchange ("harvest now, decrypt later"). Post-quantum key exchange reduces this risk.', sources: [S.kitArch, S.fips203] },
 
     /* ---------------- App 3: unverified allegations (examples of claim types) ---------------- */
-    'un-killswitch': { tag: 'unverified', text: 'Claim type: "A foreign government can make a satellite operator switch off every user in India instantly." No primary evidence of such an order affecting India was found. The underlying risk of centralised control is covered as a plausible risk.', sources: [S.noPrimary] },
+    'un-killswitch': { tag: 'unverified', text: 'Claim type: "The October 2026 restriction in Ukraine was ordered because of US–Russia fuel or energy deals." Reports note that it followed an announced Russia–Ukraine "energy ceasefire" and US moves to ease some Russia sanctions over fuel costs, but no source establishes that this was the reason, and who ordered it is disputed. The verified point is narrower: the restriction happened, and Ukraine could not stop it.', sources: [S.noPrimary, S.stripesOct] },
     'un-bypass': { tag: 'unverified', text: 'Claim type: "Satellite internet lets users bypass Indian lawful interception entirely." This is contradicted by reported licence conditions requiring in-India gateways and monitoring, and it has not been shown for any licensed operator.', sources: [S.noPrimary, S.print] },
     'un-backdoor': { tag: 'unverified', text: 'Claim type: "Satellite terminals contain hidden backdoors." No public technical evidence was found. Supply-chain compromise remains a plausible risk category for any vendor.', sources: [S.noPrimary] },
   };
@@ -536,7 +556,7 @@ window.GLOSSARY = {
 
 </script>
 <script>
-/* App 3 data: the 15-threat model and the protocol building blocks.
+/* App 3 data: the 16-threat model and the protocol building blocks.
    Residual scores run 1 (low) to 10 (high). Ratings: 1–3 Low, 4–6 Medium, 7–10 High.
    base.A = terrestrial operator architecture today; base.B = LEO satellite architecture under baseline licence conditions.
    All ratings are qualitative teaching judgements, not measurements. */
@@ -676,6 +696,15 @@ window.THREATS = [
     base: { A: 3, B: 8 }, unknown: {},
     why: { A: 'Competition between several operators spreads control.', B: 'By design, one operator controls the whole constellation.' },
     evidence: 'plausible', claims: ['pl-central'], leak: 'fictional nationwide service', hours: 24 },
+  { id: 'T16', name: 'Service withdrawal under the provider’s home-country politics (kill switch)', short: 'kill switch',
+    assets: 'National connectivity in a crisis or dispute: defence, emergency services, government and the public.',
+    capability: 'The operator, or a government with power over it, decides to limit or withdraw service.',
+    pre: 'Critical users depend on one foreign-controlled network with no Indian-controlled fallback.',
+    cons: 'Connectivity lost or degraded at the moment it matters most; the service becomes leverage in a dispute.',
+    mit: { A: 'Indian operators are under Indian law; several of them compete.', B: 'In-India gateways decide where traffic lands, but not whether the satellites keep serving India.' },
+    base: { A: 3, B: 8 }, unknown: {},
+    why: { A: 'Control of terrestrial networks sits with Indian operators under Indian law.', B: 'Satellites and the global control plane stay under the operator’s control. Public reporting shows a provider limiting service in wartime, and the affected country could not override it. This is a property of the architecture and applies to any foreign provider.' },
+    evidence: 'verified', claims: ['ukraine-oct2026', 'crimea-2022', 'pl-killswitch'], leak: 'fictional national service in a crisis', hours: 168 },
 ];
 
 window.BLOCK_GROUPS = [
@@ -684,8 +713,8 @@ window.BLOCK_GROUPS = [
   { id: 'pa', title: 'Privileged access', type: 'check', blocks: ['pa-hw', 'pa-two', 'pa-time', 'pa-logs'] },
   { id: 'la', title: 'Lawful access', type: 'check', blocks: ['la-auth', 'la-scope', 'la-audit', 'la-transp'] },
   { id: 'rt', title: 'Routing and control plane', type: 'check', blocks: ['rt-signed', 'rt-geo', 'rt-anom'] },
-  { id: 'rs', title: 'Resilience', type: 'check', blocks: ['rs-fallback', 'rs-local', 'rs-emerg'] },
-  { id: 'op', title: 'Openness', type: 'check', blocks: ['op-roam', 'op-term', 'op-price'] },
+  { id: 'rs', title: 'Resilience', type: 'check', blocks: ['rs-fallback', 'rs-local', 'rs-emerg', 'rs-sovereign'] },
+  { id: 'op', title: 'Openness', type: 'check', blocks: ['op-roam', 'op-multi', 'op-term', 'op-price'] },
 ];
 
 /* fx: change in residual per threat (negative = better). privacy/resilience/competition: points added to those scores. cost: deployment cost units. */
@@ -709,13 +738,18 @@ window.BLOCKS = {
   'rt-signed': { label: 'Signed route and configuration changes', desc: 'Every routing or configuration change must be cryptographically signed and verified before it applies.', fx: { T6: -3, T1: -1 }, cost: 1 },
   'rt-geo': { label: 'Geographic policy checks', desc: 'Automatic checks block paths that would take Indian traffic abroad without reason.', fx: { T6: -1, T8: -1, T3: -1 }, cost: 1 },
   'rt-anom': { label: 'Anomaly alerts', desc: 'Unusual routes, traffic volumes or admin behaviour trigger alerts to an Indian security operations centre.', fx: { T6: -1, T7: -1, T9: -1 }, cost: 1 },
-  'rs-fallback': { label: 'Fallback to terrestrial links', desc: 'Critical users switch automatically to mobile or fibre if satellite service fails.', fx: { T12: -3, T7: -2, T15: -1 }, resilience: 10, cost: 3 },
-  'rs-local': { label: 'Local survivability', desc: 'Indian gateways and terminals keep working for a defined period if the global control plane fails.', fx: { T12: -2, T15: -3, T8: -1 }, resilience: 10, cost: 3 },
-  'rs-emerg': { label: 'Emergency-service continuity', desc: 'Emergency calls and a break-glass procedure keep working, even during maintenance freezes.', fx: { T12: -1, T7: -1 }, resilience: 5, cost: 1 },
-  'op-roam': { label: 'Open interfaces and roaming', desc: 'Standard interfaces let users and critical services move between satellite and terrestrial operators.', fx: { T15: -2, T12: -1 }, competition: 15, cost: 2 },
+  'rs-fallback': { label: 'Fallback to terrestrial links', desc: 'Critical users switch automatically to mobile or fibre if satellite service fails.', fx: { T12: -3, T7: -2, T15: -1, T16: -2 }, resilience: 10, cost: 3 },
+  'rs-local': { label: 'Local survivability', desc: 'Indian gateways and terminals keep working for a defined period if the global control plane fails.', fx: { T12: -2, T15: -3, T8: -1, T16: -3 }, resilience: 10, cost: 3 },
+  'rs-emerg': { label: 'Emergency-service continuity', desc: 'Emergency calls and a break-glass procedure keep working, even during maintenance freezes.', fx: { T12: -1, T7: -1, T16: -1 }, resilience: 5, cost: 1 },
+  'rs-sovereign': { label: 'Indian-controlled satellite capacity', desc: 'A share of critical capacity runs on satellites and control systems under Indian control, so it cannot be withdrawn from abroad.', fx: { T16: -3, T8: -2, T15: -1 }, resilience: 5, competition: 3, cost: 4 },
+  'op-roam': { label: 'Open interfaces and roaming', desc: 'Standard interfaces let users and critical services move between satellite and terrestrial operators.', fx: { T15: -2, T12: -1, T16: -1 }, competition: 15, cost: 2 },
+  'op-multi': { label: 'Two or more independent satellite providers', desc: 'Critical users can switch between providers from different jurisdictions, so no single operator or government holds a kill switch.', fx: { T16: -3, T15: -2 }, competition: 8, cost: 3 },
   'op-term': { label: 'Certified multi-vendor terminals', desc: 'Terminals from several certified vendors can be used, rather than a single source.', fx: { T5: -1 }, competition: 8, cost: 1 },
   'op-price': { label: 'No lock-in of gateways or spectrum', desc: 'Gateway sites and access rules are open to other operators on fair terms.', fx: { T15: -1 }, competition: 12, cost: 0 },
 };
+
+/* Sovereignty gate: a design is eligible only if every one of these threats reaches Low. */
+window.SOVEREIGNTY_GATE = ['T8', 'T12', 'T15', 'T16'];
 
 window.DEMO_DESIGN = {
   title: 'Demo: balanced sovereign design', team: 'Kit demo',
@@ -1332,7 +1366,7 @@ window.DEMO_DESIGN = {
 (function () {
   'use strict';
   const { h, s, $, clear, fill, add, claim, claims, narrate, seg, toggle, chip, store } = window.K;
-  const THREATS = window.THREATS, BLOCKS = window.BLOCKS, GROUPS = window.BLOCK_GROUPS;
+  const THREATS = window.THREATS, BLOCKS = window.BLOCKS, GROUPS = window.BLOCK_GROUPS, GATE = window.SOVEREIGNTY_GATE;
   const TBY = Object.fromEntries(THREATS.map((t) => [t.id, t]));
 
   K.init({ app: 'app3', intro: 'App 3 compares the two architectures, sets out the threat model and lets you design and test a protocol.' });
@@ -1479,9 +1513,9 @@ window.DEMO_DESIGN = {
     h('p', null, h('strong', null, 'An unverified allegation'), ' claims something happened or exists without evidence. Do not treat it as fact or build a design argument on it.'),
     h('p', { class: 'muted' }, 'In the challenge, argue from facts and risks only. A claim without a source and date is not shown here.'));
   const EV = [
-    ['verified', 'A · Verified facts', ['starlink-gmpcs', 'starlink-inspace', 'satcom-pending', 'starlink-gateways', 'satcom-conditions', 'outage-2025', 'trusted-source', 'certin', 'ml-kem']],
-    ['plausible', 'B · Plausible architectural risks', ['pl-central', 'pl-jurisdiction', 'pl-metadata', 'pl-supply', 'pl-harvest']],
-    ['unverified', 'C · Unverified allegations (do not treat as fact)', ['un-killswitch', 'un-bypass', 'un-backdoor']],
+    ['verified', 'A · Verified facts', ['starlink-gmpcs', 'starlink-inspace', 'satcom-pending', 'starlink-gateways', 'satcom-conditions', 'outage-2025', 'us-tariff', 'crimea-2022', 'ukraine-feb2026', 'ukraine-oct2026', 'trusted-source', 'certin', 'ml-kem']],
+    ['plausible', 'B · Plausible architectural risks', ['pl-killswitch', 'pl-central', 'pl-jurisdiction', 'pl-metadata', 'pl-supply', 'pl-harvest']],
+    ['unverified', 'C · Unverified allegations (do not treat as fact)', ['reuters-minerals', 'un-killswitch', 'un-bypass', 'un-backdoor']],
   ];
   for (const [tag, title, ids] of EV) $('#ev-groups').appendChild(h('div', { class: 'card ev-group' }, h('h3', null, chip(tag), title), claims(ids)));
 
@@ -1543,7 +1577,7 @@ window.DEMO_DESIGN = {
     const scores = {
       security: clamp(Math.round(100 - 10 * (mean - 1))),
       privacy: clamp(privacy),
-      resilience: clamp(Math.round(100 - 10 * ((res.T7 + res.T12 + res.T15) / 3 - 1)) + resil),
+      resilience: clamp(Math.round(100 - 10 * ((res.T7 + res.T12 + res.T15 + res.T16) / 4 - 1)) + resil),
       cost: costIdx,
       competition: clamp(comp - (costIdx > 60 ? 10 : 0)),
     };
@@ -1560,14 +1594,19 @@ window.DEMO_DESIGN = {
     if (costIdx > 60) warnings.push(`The cost index is ${costIdx}. Costs this high may reach consumers as higher prices: the competition score is reduced by 10.`);
     if (scores.privacy < 40) warnings.push('This design gains control at the expense of privacy.');
     if (![...sel].some((x) => x.startsWith('la-'))) warnings.push('No lawful-access safeguards selected. The baseline 2024 rules still apply, but nothing extra limits or audits access.');
-    return { res, unk, scores, warnings, mean };
+    const failing = GATE.filter((id) => rating(res[id], unk[id]) !== 'Low');
+    if (sel.has('gw-india') && !sel.has('rs-local') && !sel.has('op-multi') && !sel.has('rs-sovereign')) warnings.push('In-India gateways decide where traffic lands, not whether the satellites keep serving India. Add local survivability, a second provider or Indian-controlled capacity to cover the kill-switch threat (T16).');
+    return { res, unk, scores, warnings, mean, gate: { passed: failing.length === 0, failing } };
   }
 
   const SC = [['security', 'Security'], ['privacy', 'Privacy'], ['resilience', 'Resilience'], ['cost', 'Cost (lower is better)'], ['competition', 'Competition']];
   function update() {
     syncInputs(); persist();
     const r = compute(design.sel);
-    fill($('#wb-score'), h('h3', null, 'Scorecard ', chip('illustrative')),
+    const gateEl = r.gate.passed
+      ? h('div', { class: 'notice', style: { margin: '0 0 10px', borderColor: 'var(--green)' } }, h('strong', null, '✓ Sovereignty gate met. '), 'India keeps control of continuity, jurisdiction and dependence (T8, T12, T15, T16 all Low).')
+      : h('div', { class: 'notice bad', style: { margin: '0 0 10px' } }, h('strong', null, '✖ Sovereignty gate not met. '), `Not eligible until ${r.gate.failing.map((id) => id + ' (' + TBY[id].short + ')').join(', ')} ${r.gate.failing.length > 1 ? 'are' : 'is'} Low. Scores below are shown for guidance only.`);
+    fill($('#wb-score'), h('h3', null, 'Scorecard ', chip('illustrative')), gateEl,
       ...SC.map(([k, l]) => h('div', { class: 'score-row' }, h('span', null, l), h('div', { class: 'bar' }, h('i', { class: k === 'cost' ? 'cost' : '', style: { width: r.scores[k] + '%' } })), h('strong', null, r.scores[k]))));
     const wb = clear($('#wb-warn'));
     r.warnings.forEach((w) => wb.appendChild(h('div', { class: 'notice warn', style: { margin: '0 0 8px' } }, '⚠ ' + w)));
@@ -1581,11 +1620,12 @@ window.DEMO_DESIGN = {
     return r;
   }
   add($('#scoring-rules'), 
+    h('p', null, h('strong', null, 'Sovereignty gate (pass/fail): '), 'a design is eligible only if T8 (foreign jurisdiction), T12 (crisis connectivity), T15 (centralisation) and T16 (kill switch) all reach Low. India’s security comes first; within that limit, designs are compared on the five scores below.'),
     h('p', null, 'Each threat starts at its satellite baseline (1–10, from the threat model). Each building block adds or subtracts points, shown on the block as T-numbers. Scores are clamped to 1–10. Ratings: 1–3 Low, 4–6 Medium, 7–10 High. A threat rated Unknown stays Unknown until a block addresses it.'),
     h('div', { class: 'formula', style: { fontFamily: 'var(--mono)', fontSize: '.85em', background: '#0a1736', padding: '10px', borderRadius: '8px', whiteSpace: 'pre-wrap' } },
-      `Security    = 100 − 10 × (mean residual of 15 threats − 1)
+      `Security    = 100 − 10 × (mean residual of 16 threats − 1)
 Privacy     = 50 + Σ block privacy points
-Resilience  = 100 − 10 × (mean of T7, T12, T15 − 1) + Σ block resilience points
+Resilience  = 100 − 10 × (mean of T7, T12, T15, T16 − 1) + Σ block resilience points
 Cost index  = 4 × Σ block cost units          (lower is better)
 Competition = 50 + Σ block competition points − 10 if cost index > 60
 All scores are clamped to 0–100.`),
@@ -1612,7 +1652,7 @@ All scores are clamped to 0–100.`),
       const hrs = Math.max(1, Math.round(t.hours * v / t.base.B));
       return h('div', { class: 'card sb-card' },
         h('h3', null, `${t.id} · ${t.name}`),
-        h('p', { class: 'muted', style: { fontSize: '.86em', margin: '0 0 6px' } }, `Fictional scenario: ${t.capability.toLowerCase().replace(/\.$/, '')} exploits ${t.pre.toLowerCase().replace(/\.$/, '')}`),
+        h('p', { class: 'muted', style: { fontSize: '.86em', margin: '0 0 6px' } }, h('strong', null, 'Fictional scenario. '), `Who: ${t.capability} Weak point: ${t.pre}`),
         h('div', { class: 'res ' + lvl }, { contained: '✓ Contained', partial: '◐ Partly contained', serious: '✖ Not contained' }[lvl]),
         h('div', { style: { fontSize: '.86em', marginTop: '4px' } }, h('strong', null, 'Controls triggered: '), trig.length ? trig.join(', ') : 'none from your design'),
         h('div', { style: { fontSize: '.86em' } }, h('strong', null, 'What leaked: '), leaked),
@@ -1654,6 +1694,7 @@ All scores are clamped to 0–100.`),
       blocks: [...design.sel],
       blockLabels: [...design.sel].map((id) => BLOCKS[id].label),
       scores: r.scores,
+      sovereigntyGate: { passed: r.gate.passed, required: GATE, failing: r.gate.failing },
       threats: THREATS.map((t) => ({ id: t.id, name: t.name, baseline: t.base.B, residual: r.res[t.id], rating: rating(r.res[t.id], r.unk[t.id]), tradeoff: design.notes[t.id] || '' })),
       warnings: r.warnings, assumptions: design.assumptions, openQuestions: design.openQuestions,
       note: 'Ratings are qualitative teaching judgements from the kit\'s model, not measurements.',
@@ -1683,7 +1724,9 @@ All scores are clamped to 0–100.`),
     pdf.text(36, y, `Team: ${o.team || '-'}`, 9.5, true); pdf.text(330, y, `Exported: ${o.exported.slice(0, 10)}`, 9.5, false, grey);
     y += 20;
     SC.forEach(([k, l], i) => { const x = 36 + i * 106; pdf.text(x, y, l.replace(' (lower is better)', ' (low=good)'), 7.5, false, grey); pdf.text(x, y + 14, String(o.scores[k]), 13, true, navy); });
-    y += 32; pdf.line(36, y, 559, y);
+    y += 30;
+    pdf.text(36, y, o.sovereigntyGate.passed ? 'Sovereignty gate: MET (T8, T12, T15, T16 all Low)' : `Sovereignty gate: NOT MET - still above Low: ${o.sovereigntyGate.failing.join(', ')}`, 9, true, o.sovereigntyGate.passed ? [20, 130, 80] : [190, 40, 40]);
+    y += 8; pdf.line(36, y, 559, y);
     y += 14; pdf.text(36, y, 'Building blocks', 10, true, gold); y += 12;
     for (const g of GROUPS) {
       const chosen = [...g.blocks, ...(g.extra || [])].filter((b) => design.sel.has(b)).map((b) => BLOCKS[b].label);
@@ -1721,6 +1764,7 @@ All scores are clamped to 0–100.`),
     add(out, h('div', { class: 'tablewrap' }, h('table', { class: 'data' },
       h('thead', null, h('tr', null, h('th', null, ''), h('th', null, name(a) + (a.team ? ` (${a.team})` : '')), h('th', null, name(b) + (b.team ? ` (${b.team})` : '')))),
       h('tbody', null,
+        h('tr', null, h('th', null, 'Sovereignty gate'), ...[ra, rb].map((x) => h('td', { class: x.gate.passed ? 'diff-yes' : '' , style: x.gate.passed ? null : { color: 'var(--red)' } }, x.gate.passed ? '✓ Met' : '✖ Not met: ' + x.gate.failing.join(', ')))),
         SC.map(([k, l]) => h('tr', null, h('th', null, l), h('td', null, String(ra.scores[k])), h('td', null, String(rb.scores[k])))),
         THREATS.map((t) => h('tr', null, h('th', null, `${t.id} ${t.name}`),
           h('td', null, rateEl(rating(ra.res[t.id], ra.unk[t.id])), ' ', h('span', { class: 'muted', style: { fontSize: '.85em' } }, ((a.threats || []).find((x) => x.id === t.id) || {}).tradeoff || '')),
@@ -1752,6 +1796,7 @@ All scores are clamped to 0–100.`),
     { q: 'What does in-India termination mainly reduce?', options: ['Radio jamming', 'Foreign-jurisdiction exposure and metadata leaving India', 'Cost', 'Insider risk'], answer: 1, why: 'Keeping traffic and systems in India lowers T8 and T3, but concentrates traffic at a few gateways.' },
     { q: 'Why can India-held keys lower the privacy score?', options: ['They are slower', 'They concentrate lawful-access power unless strongly audited', 'They break TLS', 'They need more satellites'], answer: 1, why: 'Stronger state control can mean weaker privacy without scope limits and audit.' },
     { q: 'What protects recorded traffic against future quantum computers?', options: ['Longer passwords', 'Post-quantum-ready key exchange such as ML-KEM', 'More gateways', 'Transparency reports'], answer: 1, why: 'Hybrid post-quantum key exchange defends against "harvest now, decrypt later".' },
+    { q: 'Why do in-India gateways alone not remove the kill-switch threat (T16)?', options: ['Gateways are too slow', 'The operator still controls the satellites and the global control plane', 'Gateways cannot be encrypted', 'They do remove it'], answer: 1, why: 'Gateway location decides where traffic lands. Local survivability, a second provider or Indian-controlled capacity are needed so service cannot be withdrawn from abroad.' },
     { q: 'Why is T5 (supply chain) rated Unknown for satellite?', options: ['It is impossible', 'There is not enough public information to rate it', 'It is always high', 'Satellites have no supply chain'], answer: 1, why: 'Where evidence is thin, saying Unknown is more honest than guessing.' },
   ]);
   K.sourceList($('#sources-list'));

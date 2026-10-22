@@ -2,7 +2,7 @@
 (function () {
   'use strict';
   const { h, s, $, clear, fill, add, claim, claims, narrate, seg, toggle, chip, store } = window.K;
-  const THREATS = window.THREATS, BLOCKS = window.BLOCKS, GROUPS = window.BLOCK_GROUPS;
+  const THREATS = window.THREATS, BLOCKS = window.BLOCKS, GROUPS = window.BLOCK_GROUPS, GATE = window.SOVEREIGNTY_GATE;
   const TBY = Object.fromEntries(THREATS.map((t) => [t.id, t]));
 
   K.init({ app: 'app3', intro: 'App 3 compares the two architectures, sets out the threat model and lets you design and test a protocol.' });
@@ -149,9 +149,9 @@
     h('p', null, h('strong', null, 'An unverified allegation'), ' claims something happened or exists without evidence. Do not treat it as fact or build a design argument on it.'),
     h('p', { class: 'muted' }, 'In the challenge, argue from facts and risks only. A claim without a source and date is not shown here.'));
   const EV = [
-    ['verified', 'A · Verified facts', ['starlink-gmpcs', 'starlink-inspace', 'satcom-pending', 'starlink-gateways', 'satcom-conditions', 'outage-2025', 'trusted-source', 'certin', 'ml-kem']],
-    ['plausible', 'B · Plausible architectural risks', ['pl-central', 'pl-jurisdiction', 'pl-metadata', 'pl-supply', 'pl-harvest']],
-    ['unverified', 'C · Unverified allegations (do not treat as fact)', ['un-killswitch', 'un-bypass', 'un-backdoor']],
+    ['verified', 'A · Verified facts', ['starlink-gmpcs', 'starlink-inspace', 'satcom-pending', 'starlink-gateways', 'satcom-conditions', 'outage-2025', 'us-tariff', 'crimea-2022', 'ukraine-feb2026', 'ukraine-oct2026', 'trusted-source', 'certin', 'ml-kem']],
+    ['plausible', 'B · Plausible architectural risks', ['pl-killswitch', 'pl-central', 'pl-jurisdiction', 'pl-metadata', 'pl-supply', 'pl-harvest']],
+    ['unverified', 'C · Unverified allegations (do not treat as fact)', ['reuters-minerals', 'un-killswitch', 'un-bypass', 'un-backdoor']],
   ];
   for (const [tag, title, ids] of EV) $('#ev-groups').appendChild(h('div', { class: 'card ev-group' }, h('h3', null, chip(tag), title), claims(ids)));
 
@@ -213,7 +213,7 @@
     const scores = {
       security: clamp(Math.round(100 - 10 * (mean - 1))),
       privacy: clamp(privacy),
-      resilience: clamp(Math.round(100 - 10 * ((res.T7 + res.T12 + res.T15) / 3 - 1)) + resil),
+      resilience: clamp(Math.round(100 - 10 * ((res.T7 + res.T12 + res.T15 + res.T16) / 4 - 1)) + resil),
       cost: costIdx,
       competition: clamp(comp - (costIdx > 60 ? 10 : 0)),
     };
@@ -230,14 +230,19 @@
     if (costIdx > 60) warnings.push(`The cost index is ${costIdx}. Costs this high may reach consumers as higher prices: the competition score is reduced by 10.`);
     if (scores.privacy < 40) warnings.push('This design gains control at the expense of privacy.');
     if (![...sel].some((x) => x.startsWith('la-'))) warnings.push('No lawful-access safeguards selected. The baseline 2024 rules still apply, but nothing extra limits or audits access.');
-    return { res, unk, scores, warnings, mean };
+    const failing = GATE.filter((id) => rating(res[id], unk[id]) !== 'Low');
+    if (sel.has('gw-india') && !sel.has('rs-local') && !sel.has('op-multi') && !sel.has('rs-sovereign')) warnings.push('In-India gateways decide where traffic lands, not whether the satellites keep serving India. Add local survivability, a second provider or Indian-controlled capacity to cover the kill-switch threat (T16).');
+    return { res, unk, scores, warnings, mean, gate: { passed: failing.length === 0, failing } };
   }
 
   const SC = [['security', 'Security'], ['privacy', 'Privacy'], ['resilience', 'Resilience'], ['cost', 'Cost (lower is better)'], ['competition', 'Competition']];
   function update() {
     syncInputs(); persist();
     const r = compute(design.sel);
-    fill($('#wb-score'), h('h3', null, 'Scorecard ', chip('illustrative')),
+    const gateEl = r.gate.passed
+      ? h('div', { class: 'notice', style: { margin: '0 0 10px', borderColor: 'var(--green)' } }, h('strong', null, '✓ Sovereignty gate met. '), 'India keeps control of continuity, jurisdiction and dependence (T8, T12, T15, T16 all Low).')
+      : h('div', { class: 'notice bad', style: { margin: '0 0 10px' } }, h('strong', null, '✖ Sovereignty gate not met. '), `Not eligible until ${r.gate.failing.map((id) => id + ' (' + TBY[id].short + ')').join(', ')} ${r.gate.failing.length > 1 ? 'are' : 'is'} Low. Scores below are shown for guidance only.`);
+    fill($('#wb-score'), h('h3', null, 'Scorecard ', chip('illustrative')), gateEl,
       ...SC.map(([k, l]) => h('div', { class: 'score-row' }, h('span', null, l), h('div', { class: 'bar' }, h('i', { class: k === 'cost' ? 'cost' : '', style: { width: r.scores[k] + '%' } })), h('strong', null, r.scores[k]))));
     const wb = clear($('#wb-warn'));
     r.warnings.forEach((w) => wb.appendChild(h('div', { class: 'notice warn', style: { margin: '0 0 8px' } }, '⚠ ' + w)));
@@ -251,11 +256,12 @@
     return r;
   }
   add($('#scoring-rules'), 
+    h('p', null, h('strong', null, 'Sovereignty gate (pass/fail): '), 'a design is eligible only if T8 (foreign jurisdiction), T12 (crisis connectivity), T15 (centralisation) and T16 (kill switch) all reach Low. India’s security comes first; within that limit, designs are compared on the five scores below.'),
     h('p', null, 'Each threat starts at its satellite baseline (1–10, from the threat model). Each building block adds or subtracts points, shown on the block as T-numbers. Scores are clamped to 1–10. Ratings: 1–3 Low, 4–6 Medium, 7–10 High. A threat rated Unknown stays Unknown until a block addresses it.'),
     h('div', { class: 'formula', style: { fontFamily: 'var(--mono)', fontSize: '.85em', background: '#0a1736', padding: '10px', borderRadius: '8px', whiteSpace: 'pre-wrap' } },
-      `Security    = 100 − 10 × (mean residual of 15 threats − 1)
+      `Security    = 100 − 10 × (mean residual of 16 threats − 1)
 Privacy     = 50 + Σ block privacy points
-Resilience  = 100 − 10 × (mean of T7, T12, T15 − 1) + Σ block resilience points
+Resilience  = 100 − 10 × (mean of T7, T12, T15, T16 − 1) + Σ block resilience points
 Cost index  = 4 × Σ block cost units          (lower is better)
 Competition = 50 + Σ block competition points − 10 if cost index > 60
 All scores are clamped to 0–100.`),
@@ -282,7 +288,7 @@ All scores are clamped to 0–100.`),
       const hrs = Math.max(1, Math.round(t.hours * v / t.base.B));
       return h('div', { class: 'card sb-card' },
         h('h3', null, `${t.id} · ${t.name}`),
-        h('p', { class: 'muted', style: { fontSize: '.86em', margin: '0 0 6px' } }, `Fictional scenario: ${t.capability.toLowerCase().replace(/\.$/, '')} exploits ${t.pre.toLowerCase().replace(/\.$/, '')}`),
+        h('p', { class: 'muted', style: { fontSize: '.86em', margin: '0 0 6px' } }, h('strong', null, 'Fictional scenario. '), `Who: ${t.capability} Weak point: ${t.pre}`),
         h('div', { class: 'res ' + lvl }, { contained: '✓ Contained', partial: '◐ Partly contained', serious: '✖ Not contained' }[lvl]),
         h('div', { style: { fontSize: '.86em', marginTop: '4px' } }, h('strong', null, 'Controls triggered: '), trig.length ? trig.join(', ') : 'none from your design'),
         h('div', { style: { fontSize: '.86em' } }, h('strong', null, 'What leaked: '), leaked),
@@ -324,6 +330,7 @@ All scores are clamped to 0–100.`),
       blocks: [...design.sel],
       blockLabels: [...design.sel].map((id) => BLOCKS[id].label),
       scores: r.scores,
+      sovereigntyGate: { passed: r.gate.passed, required: GATE, failing: r.gate.failing },
       threats: THREATS.map((t) => ({ id: t.id, name: t.name, baseline: t.base.B, residual: r.res[t.id], rating: rating(r.res[t.id], r.unk[t.id]), tradeoff: design.notes[t.id] || '' })),
       warnings: r.warnings, assumptions: design.assumptions, openQuestions: design.openQuestions,
       note: 'Ratings are qualitative teaching judgements from the kit\'s model, not measurements.',
@@ -353,7 +360,9 @@ All scores are clamped to 0–100.`),
     pdf.text(36, y, `Team: ${o.team || '-'}`, 9.5, true); pdf.text(330, y, `Exported: ${o.exported.slice(0, 10)}`, 9.5, false, grey);
     y += 20;
     SC.forEach(([k, l], i) => { const x = 36 + i * 106; pdf.text(x, y, l.replace(' (lower is better)', ' (low=good)'), 7.5, false, grey); pdf.text(x, y + 14, String(o.scores[k]), 13, true, navy); });
-    y += 32; pdf.line(36, y, 559, y);
+    y += 30;
+    pdf.text(36, y, o.sovereigntyGate.passed ? 'Sovereignty gate: MET (T8, T12, T15, T16 all Low)' : `Sovereignty gate: NOT MET - still above Low: ${o.sovereigntyGate.failing.join(', ')}`, 9, true, o.sovereigntyGate.passed ? [20, 130, 80] : [190, 40, 40]);
+    y += 8; pdf.line(36, y, 559, y);
     y += 14; pdf.text(36, y, 'Building blocks', 10, true, gold); y += 12;
     for (const g of GROUPS) {
       const chosen = [...g.blocks, ...(g.extra || [])].filter((b) => design.sel.has(b)).map((b) => BLOCKS[b].label);
@@ -391,6 +400,7 @@ All scores are clamped to 0–100.`),
     add(out, h('div', { class: 'tablewrap' }, h('table', { class: 'data' },
       h('thead', null, h('tr', null, h('th', null, ''), h('th', null, name(a) + (a.team ? ` (${a.team})` : '')), h('th', null, name(b) + (b.team ? ` (${b.team})` : '')))),
       h('tbody', null,
+        h('tr', null, h('th', null, 'Sovereignty gate'), ...[ra, rb].map((x) => h('td', { class: x.gate.passed ? 'diff-yes' : '' , style: x.gate.passed ? null : { color: 'var(--red)' } }, x.gate.passed ? '✓ Met' : '✖ Not met: ' + x.gate.failing.join(', ')))),
         SC.map(([k, l]) => h('tr', null, h('th', null, l), h('td', null, String(ra.scores[k])), h('td', null, String(rb.scores[k])))),
         THREATS.map((t) => h('tr', null, h('th', null, `${t.id} ${t.name}`),
           h('td', null, rateEl(rating(ra.res[t.id], ra.unk[t.id])), ' ', h('span', { class: 'muted', style: { fontSize: '.85em' } }, ((a.threats || []).find((x) => x.id === t.id) || {}).tradeoff || '')),
@@ -422,6 +432,7 @@ All scores are clamped to 0–100.`),
     { q: 'What does in-India termination mainly reduce?', options: ['Radio jamming', 'Foreign-jurisdiction exposure and metadata leaving India', 'Cost', 'Insider risk'], answer: 1, why: 'Keeping traffic and systems in India lowers T8 and T3, but concentrates traffic at a few gateways.' },
     { q: 'Why can India-held keys lower the privacy score?', options: ['They are slower', 'They concentrate lawful-access power unless strongly audited', 'They break TLS', 'They need more satellites'], answer: 1, why: 'Stronger state control can mean weaker privacy without scope limits and audit.' },
     { q: 'What protects recorded traffic against future quantum computers?', options: ['Longer passwords', 'Post-quantum-ready key exchange such as ML-KEM', 'More gateways', 'Transparency reports'], answer: 1, why: 'Hybrid post-quantum key exchange defends against "harvest now, decrypt later".' },
+    { q: 'Why do in-India gateways alone not remove the kill-switch threat (T16)?', options: ['Gateways are too slow', 'The operator still controls the satellites and the global control plane', 'Gateways cannot be encrypted', 'They do remove it'], answer: 1, why: 'Gateway location decides where traffic lands. Local survivability, a second provider or Indian-controlled capacity are needed so service cannot be withdrawn from abroad.' },
     { q: 'Why is T5 (supply chain) rated Unknown for satellite?', options: ['It is impossible', 'There is not enough public information to rate it', 'It is always high', 'Satellites have no supply chain'], answer: 1, why: 'Where evidence is thin, saying Unknown is more honest than guessing.' },
   ]);
   K.sourceList($('#sources-list'));

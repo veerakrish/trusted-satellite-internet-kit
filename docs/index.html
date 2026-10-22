@@ -253,6 +253,9 @@ footer.site { max-width: 1240px; margin: 0 auto; padding: 24px 16px 140px; color
   .flow { counter-reset: s; list-style: none; padding: 0; display: grid; gap: 10px; }
   .flow li { counter-increment: s; display: grid; grid-template-columns: 54px 1fr auto; gap: 12px; align-items: center; }
   .flow li::before { content: counter(s); display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--panel-2); color: var(--gold-2); font-weight: 800; }
+  .partner { margin-top: 14px; color: var(--muted); font-size: .95em; }
+  .partner a { color: var(--gold-2); text-decoration: none; }
+  .partner a:hover { text-decoration: underline; }
   .flow .min { color: var(--cyan); font-weight: 700; white-space: nowrap; }
 </style>
 <script>window.KIT_NO_RULES = true;</script></head>
@@ -263,6 +266,7 @@ footer.site { max-width: 1240px; margin: 0 auto; padding: 24px 16px 140px; color
     <h1>Secure India's Connected Future</h1>
     <p class="lead">Three linked interactive apps: how satellite internet works, how India's networks are built and secured today, and a workbench to design a trusted satellite internet protocol. Together they make a 20-minute presentation that ends with an open challenge for students and engineers.</p>
     <div class="btnrow"><a class="btn primary" href="app1.html">Start with App 1 →</a><a class="btn" href="#challenge">The challenge</a></div>
+    <p class="partner">In partnership with <a href="https://srkrec.ac.in/" target="_blank" rel="noopener"><strong>SRKR Engineering College</strong></a>, Bhimavaram, Andhra Pradesh</p>
   </section>
 
   <section class="block" id="why" aria-labelledby="h-why">
@@ -323,7 +327,7 @@ footer.site { max-width: 1240px; margin: 0 auto; padding: 24px 16px 140px; color
         <tr><th>Openness and competition</th><td>10%</td></tr><tr><th>Clarity and demo</th><td>15%</td></tr></tbody></table></div></div>
     </div>
     <div class="notice" style="margin-top:14px">
-      <strong>Ground rules.</strong> Use only the simulator and fictional data: no testing against real networks, systems or accounts. Entries are submitted through the official form, not through likes or comments. Participants keep ownership of their work. This is an independent contest and is not run or endorsed by any government body or company.
+      <strong>Ground rules.</strong> Use only the simulator and fictional data: no testing against real networks, systems or accounts. Entries are submitted through the official form, not through likes or comments. Participants keep ownership of their work. The challenge is organised by Viswanath Veera Krishna in partnership with SRKR Engineering College, Bhimavaram. It is independent: it is not run or endorsed by any government body or company.
     </div>
     <p style="margin-top:14px" data-rules-link><a class="btn primary" href="rules.html">Read the full rules →</a></p>
   </section>
@@ -768,7 +772,7 @@ window.GLOSSARY = {
     setMode('teacher', store.get('mode:teacher', false), true);
 
     const foot = h('footer', { class: 'site' },
-      h('p', null, 'An independent educational kit. It is not run or endorsed by any government body or company. All simulations use invented data and never touch a real network.'),
+      h('p', null, 'An independent educational kit, in partnership with SRKR Engineering College, Bhimavaram. It is not run or endorsed by any government body or company. All simulations use invented data and never touch a real network.'),
       h('p', null, 'Every claim carries a tag, a source and a check date. Open ', h('a', { href: '#', onclick: (e) => { e.preventDefault(); srcBtn.click(); } }, 'Sources'), ' to see them all.'));
     document.body.appendChild(foot);
   }

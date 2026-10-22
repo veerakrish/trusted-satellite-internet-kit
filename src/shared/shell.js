@@ -246,7 +246,7 @@
     setMode('teacher', store.get('mode:teacher', false), true);
 
     const foot = h('footer', { class: 'site' },
-      h('p', null, 'An independent educational kit. It is not run or endorsed by any government body or company. All simulations use invented data and never touch a real network.'),
+      h('p', null, 'An independent educational kit, in partnership with SRKR Engineering College, Bhimavaram. It is not run or endorsed by any government body or company. All simulations use invented data and never touch a real network.'),
       h('p', null, 'Every claim carries a tag, a source and a check date. Open ', h('a', { href: '#', onclick: (e) => { e.preventDefault(); srcBtn.click(); } }, 'Sources'), ' to see them all.'));
     document.body.appendChild(foot);
   }
